@@ -1,0 +1,29 @@
+/* -------------------------- LOGO - TITLE -------------------------- */
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+.logo-container {
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  position: relative;
+}
+
+.logo-container h1{
+    font-family: 'Anton', sans-serif;
+    font-size:10rem;
+    color: #fff;
+    margin-right: 10vw;
+    transform: skewX(-10deg);
+    -webkit-text-stroke: #000 1px;
+    text-shadow: 
+    -3px -3px 0 black, 
+     3px -3px 0 black, 
+    -3px  3px 0 black, 
+     3px  3px 0 black;
+}
+.logo-container img{
+   position: absolute;
+   width: 300px;
+   left: 23%;
+}
+
