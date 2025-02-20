@@ -1,18 +1,35 @@
+
+
 /* -------------------------- LOGO - TITLE -------------------------- */
-@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Antonio:wght@100..700&family=Manjari:wght@100;400;700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+*{
+  padding: 0;
+}
 
 .logo-container {
   display: flex;
-  margin-top: 20px;
   align-items: center;
-  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  width: auto;
+  margin: auto;
+ 
 }
 
-.logo-container h1{
+.logo-up{
+  margin-top: 10%;
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+  width: 100%;
+  justify-content: center;
+  gap: 8%;
+}
+
+.logo-up h1{
     font-family: 'Anton', sans-serif;
     font-size:10rem;
     color: #fff;
-    margin-right: 10vw;
     transform: skewX(-10deg);
     -webkit-text-stroke: #000 1px;
     text-shadow: 
@@ -21,9 +38,90 @@
     -3px  3px 0 black, 
      3px  3px 0 black;
 }
-.logo-container img{
+
+.logo-up img{
+   width: 18vh;
    position: absolute;
-   width: 300px;
-   left: 23%;
+   transform: translateX(10%);  
 }
+
+.logo-container h3{
+  font-family: 'Poppins', sans-serif;
+  text-align: center;
+  z-index: 100;
+  color: #fff;
+  font-size: 2rem;
+  text-shadow: 
+  -1px -1px 0 black, 
+   1px -1px 0 black, 
+  -1px  1px 0 black, 
+   1px  1px 0 black;
+
+   letter-spacing: 1.2px;
+}
+/* -------------------------- LOGO - TITLE -------------------------- */
+
+
+/* -------------------------- CREDITS -------------------------- */
+
+  @font-face {
+  font-family: 'Manjari Bold';
+  font-style: normal;
+  font-weight: normal;
+  src: local('Manjari Bold'), url('Manjari-Bold.woff') format('woff');
+  }
+
+.credit-button{
+  font-family: 'Manjari Bold', sans-serif;
+  text-transform: uppercase;
+  background-color: #4943C6;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min-content;
+  padding: 15px 25px;
+  border-radius: 12px;
+  font-size: 1.4rem;
+  
+  .manjari{
+    font-family: 'Manjari', sans-serif;
+    transform: translateY(5px);
+  }
+ 
+}
+/* -------------------------- CREDITS -------------------------- */
+
+
+/* -------------------------- SELECT MODE -------------------------- */
+
+.select-mode{
+  background-color: #4943c6c8;
+  width: 17vw;
+  height: 22vw;
+  border-radius: 5%;
+  display: flex;
+  justify-content: end;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.select-mode .mode{
+  padding: 10% 10% 0;
+  font-size: 1.2rem;
+}
+
+.select-img{
+  position: absolute;
+  bottom: 0;
+}
+
+.mode .manjari{
+  color:#fff;
+  text-shadow: 0px 4px 6px rgba(0, 0, 0, 0.92);
+}
+
+
+
+
 
