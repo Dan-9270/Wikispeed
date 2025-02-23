@@ -2,13 +2,13 @@ import "./App.css";
 import { Button } from "./components.tsx";
 import { List } from "./components.tsx";
 
+function SoloShare() {
 
-function MultiShare() {
-  return (
-    
+return(
+
     <div className="big">
-      <div className="container">
-        <div className="left">
+      <div className="container solo">
+      <div className="left">
           <span className="title">Parametre</span>
           <table className="container_ul">
 
@@ -36,6 +36,7 @@ function MultiShare() {
                   <input type="submit" />
                   </form></td>
             </tr>
+           
           
 
           </table>
@@ -46,24 +47,13 @@ function MultiShare() {
             <li>incrr</li>
           </ul></div>
         </div>
-        <div className="right">
-          <div className="title">Joueurs</div>
-          <div className="container_ul">
-            <ul>
-                <li>Kabuto </li>
-                <li>Kabuto</li>
-                <li>Kabuto</li>
-                <li>Kabuto</li>
-            </ul>
-          </div>
-        </div>
+
       </div>
       <div className="container_button">
-        <button className="button">Partager</button>
+       
         <button className="button">Demarrer</button>
       </div>
     </div>
-  );
+)
 }
-
-export default MultiShare;
+export default SoloShare;
