@@ -1,6 +1,6 @@
-import "./App.css";
-import { Button } from "./components.tsx";
-import { List } from "./components.tsx";
+import "./style/App.css";
+import { Button } from "./component/Component.tsx";
+import { List } from "./component/Component.tsx";
 
 
 function MultiShare() {
