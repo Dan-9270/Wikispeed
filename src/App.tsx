@@ -8,6 +8,7 @@ import EndGame from './EndGame'
  
 import './style/App.css'
 import './style/wikispeed.css'
+import SoloGame from "./SoloGame";
 
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
         <Route path="/multicreation" element={<MultiCreation />} />
         <Route path="/multishare" element={<MultiShare />} />
         <Route path="/multigame" element={<MultiGame />} />
+        <Route path="/sologame" element={<SoloGame />} />
         <Route path="/solocreation" element={<SoloCreation />} />
         <Route path="/endgame" element={<EndGame/>} />
 

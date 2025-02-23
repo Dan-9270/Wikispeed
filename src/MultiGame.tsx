@@ -26,7 +26,7 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
             <ArticleList names={articles} />
           </div>
           <div className='game-down'>
-            <ArticleDisplayer title='Nazisme'content="deddezzeda" />
+            <ArticleDisplayer title='France'/>
             <div className="game-info">
               <PlayerInfo player={[{name:'Damien',score:0},{name:'Bibabo',score:0}]} names={articles} />
               <Inventory artifact1={{name:'mine',description:'',img:mine}} artifact2={{name:'map',description:'',img:map}} />
