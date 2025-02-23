@@ -45,7 +45,7 @@ function Home() {
 
                  <div className="selection-container">
                     <div className="selection">                 
-                    <SelectMode title='Solo' img={images.green} link='multigame'/>
+                    <SelectMode title='Solo' img={images.green} link='solocreation'/>
                     <SetProfile image={images.damien} username={undefined} />
                     <SelectMode title='Multijoueur' img={images.bibabo} link='multicreation'/> 
                     </div>
@@ -67,6 +67,7 @@ function Home() {
                   <ArtifactsList imgs={artifactImages}/>
                   <PlayButton/>
                   <Link to="/multigame">Aller à Multigame</Link>
+                  <Link to="/sologame">Aller à SoloGame</Link>
                   <Footer content1='Aide' content2='Confidentialités' content3='Mentions Légales'></Footer>
   
 

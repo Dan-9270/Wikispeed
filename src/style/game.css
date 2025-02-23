@@ -80,14 +80,61 @@ height: 100%;}
     height:80%;
     margin: 0 5% 3%;
     padding: 15px;
+    padding-top: 2%;
     border-radius: 10px;
     background-color: #4943C6;
     box-sizing: border-box;
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     overflow-y: scroll;
+    flex-direction: column;
+    gap: 20px;
+    font-family: 'Manjari', sans-serif;
 }
+
+.article-content h2,.article-content h3, .article-content h4{
+    margin: 2% 0;
+    color:#FFD230;
+}
+
+.article_title{
+    font-size: 32px;
+    font-weight: bold;
+    color:#FFD230;
+    text-decoration: none;
+}
+
+.article-content{
+    width: 95%;
+    font-size: 16px;
+}
+
+.article-content a {
+    color:#ffe792 ;
+    cursor: pointer;
+}
+
+.article-content a:hover {
+    color:#ffc42e;
+}
+
+.bandeau-container{
+    display: none;
+}
+
+sup{
+    display: none;
+}
+
+/* #mwO7Y{
+    display: none;
+}
+
+#mwIP4{
+    display: none;
+} */
+
 
 .game-info{
     width: 20%;
