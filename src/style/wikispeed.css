@@ -8,19 +8,29 @@
 }
 
 .logo{
-  margin: auto;
+  margin:20px;
   justify-content: center;
   align-items: center;
   display: flex;
-  height: 40vh;
-
+  height: 30vh;
 }
 .logo img{
   height:100%;
   width: auto;
   object-fit: cover;
- 
+
 }
+@media screen and (max-width: 500px) {
+  .logo{
+    height:auto;
+    width:50vw;
+  }
+  .logo img{
+    width:100%;
+    height:auto;
+  }
+}
+
 
 .background {
   position: absolute;
@@ -42,25 +52,25 @@
   .background {
     transform: translateX(-50%) translateY(0) !important;
   }
-  
+
 }
 @media screen and (max-width: 1350px) and (min-height: 1100px) {
   .background {
     transform: translateX(-50%) translateY(-10%) !important;
   }
-  
+
 }
 @media screen and (max-height: 900px) {
   .background {
     transform: translateX(-50%) translateY(10%) !important;
   }
-  
+
 }
 @media screen and (max-height: 800px) {
   .background {
     transform: translateX(-50%) translateY(20%) !important;
   }
-  
+
 }
 
 
@@ -82,7 +92,7 @@
 
 .credit-button{
   font-family: 'Manjari Bold', sans-serif;
- 
+
   background-color: #4943C6;
   color: white;
   display: flex;
@@ -91,10 +101,15 @@
   width: min-content;
   padding: 12px 22px;
   border-radius: 12px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   position: absolute;
   top: 30px;
   right:40px
+}
+@media screen and (max-width: 500px) {
+  .credit-button{
+    display: none;
+  }
 }
 .manjari{
   font-family: 'Manjari', sans-serif;
@@ -134,7 +149,7 @@
 .select-mode:hover{
   transform: scale(1.1) rotate(4deg);
   cursor: pointer;
-  
+
 }
 
 .select-mode:last-child:hover {
@@ -224,7 +239,7 @@
   justify-content: space-around;
   align-items: center;
   width:80%
-  
+
 }
 .setProfile{
   width: 20vw;
@@ -496,4 +511,132 @@ input:focus {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+}
+/* -------------------------- ENDGAME -------------------------- */
+.podium{
+  display: flex;
+  align-items: end;
+  justify-content: center;
+  flex-direction: row;
+  list-style: none;
+  width:35vw;
+  min-width:450px;
+  li{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex:1;
+    .avatar{
+      display: flex;
+      flex-direction: column;
+      width:100%;
+      align-items: center;
+      img:last-child{
+        width: 80%;
+      }
+      img{
+        width:40%;
+      }
+    }
+    .block{
+      padding-top:10%;
+      width: 100%;
+      overflow-wrap: break-word;
+      word-break: break-word;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      background: #4943C6;
+      text-align: center;
+    }
+  }
+  .first{
+    .block{
+
+      padding-bottom: 50%;
+      border-radius: 15px 15px 0 0;
+
+    }
+  }
+  .second{
+    .block{
+      padding-bottom: 30%;
+      border-radius: 15px 0 0 15px;
+    }
+  }
+  .third{
+    .block{
+      padding-bottom: 10%;
+      border-radius: 0 15px 15px 0;
+    }
+  }
+}
+@media screen and (max-width: 500px) {
+  .podium{
+    width:90vw;
+    min-width:0;
+  }
+}
+.ranking{
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  gap: 40px;
+  width:20vw;
+  min-width:450px;
+  .playerRank{
+    background: #4943C6;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding:20px;
+    border-radius: 10px;
+    font-size:20px;
+    img{
+      width:20%;
+      height:auto;
+    }
+
+    p{
+      overflow-wrap: break-word;
+      word-break: break-word;
+      text-align: center;
+    }
+  }
+  .playerRank p:nth-child(1){
+    width:6%;
+  }
+  .playerRank p:nth-child(3){
+    width:25%;
+  }
+  .playerRank p:nth-child(4){
+    width:20%;
+  }
+  .playerRank p:nth-child(5){
+    width:20%;
+  }
+}
+@media screen and (max-width: 500px) {
+  .ranking{
+    width:90vw;
+    min-width:0;
+  }
+}
+.hero{
+  height:100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+  flex-direction: column;
+  gap:0;
+}
+main{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width:100vw;
+
 }

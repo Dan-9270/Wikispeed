@@ -105,10 +105,10 @@ export const Podium=(props:{ranking:Array<Player>})=>{
     );
 }
 const Rank = (props :{player:Player,position:number}) => {
-    return <li className="playerRank"><h1>{props.position}</h1><img src={props.player.avatar} alt={props.player.name}/><p>{props.player.name}</p></li>
+    return <li className="playerRank"><p>{props.position}</p><img src={props.player.avatar} alt={props.player.name}/><p>{props.player.name}</p><p>{props.player.time}</p><p>{props.player.score}</p></li>
 }
 export const Ranking=(props :{ranking:Array<Player>})=>{
-    return <ul className="ranking">{
+    return <ul className="ranking manjari" id="bottom">{
         props.ranking.map((r, i) => {
             return <Rank player={r} position={i + 1}/>
         })

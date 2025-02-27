@@ -68,7 +68,9 @@ function Home() {
                   <PlayButton/>
                   <Link to="/multigame">Aller à Multigame</Link>
                   <Link to="/sologame">Aller à SoloGame</Link>
-                  <Footer content1='Aide' content2='Confidentialités' content3='Mentions Légales'></Footer>
+                  <Link to="/endgame">Aller à EndGame Multi</Link>
+
+            <Footer content1='Aide' content2='Confidentialités' content3='Mentions Légales'></Footer>
   
 
                 
