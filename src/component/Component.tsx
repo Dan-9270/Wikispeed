@@ -116,8 +116,17 @@ export const Ranking=(props :{ranking:Array<Player>})=>{
 }
 
 
-export function Button(props: { children: string }) {
-  return <button>{props.children}</button>;
+
+export function Button(props: { choix: string; value: string }) {
+  const id = `${props.choix}-${props.value}`;
+  return (
+    <span className="span-radio"> 
+      <input type="radio" name={props.choix} id={id} className="input-radio" />
+      <label htmlFor={id} className="input-label" id={props.value == 'OUI' ? 'oui' : 'non'}>
+        {props.value}
+      </label>
+    </span>
+  );
 }
 
 export function List(props: { children: string }) {
