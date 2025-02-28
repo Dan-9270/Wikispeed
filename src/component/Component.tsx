@@ -110,7 +110,7 @@ const Rank = (props :{player:Player,position:number}) => {
 export const Ranking=(props :{ranking:Array<Player>})=>{
     return <ul className="ranking manjari" id="bottom">{
         props.ranking.map((r, i) => {
-            return <Rank player={r} position={i + 1}/>
+            return <Rank key={i} player={r} position={i + 1}/>
         })
     }</ul>
 }
