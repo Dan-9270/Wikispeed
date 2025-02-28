@@ -931,3 +931,42 @@ main{
 .chatbutton:hover{
   transform: scale(1.1);
 }
+
+.SoloRanking{
+  background-color: #4943C6;
+  border-radius: 15px;
+  width: 32vw;
+  min-width: 530px;
+  min-height: 330px;
+  height: auto;
+  padding: 2%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.SoloRanking p{
+  font-family: 'Manjari Bold';
+  padding: 2%;
+}
+
+.rank_title{
+  font-size: 24px;
+}
+
+.rank_avatar{
+  width: 15%;
+  height: auto;
+}
+
+@media screen and (max-width: 500px) {
+  .SoloRanking{
+    min-width: 75vw;
+    min-height: auto;
+  }
+}
+
+.container_button{
+  margin-top: 3%;
+}
