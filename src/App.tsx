@@ -5,6 +5,8 @@ import MultiShare from './MultiShare'
 import MultiGame from './MultiGame'
 import SoloCreation from './SoloCreation'
 import EndGame from './EndGame'
+import EndGameSolo from './EndGameSolo'
+
  
 import './style/App.css'
 import './style/wikispeed.css'
@@ -24,7 +26,7 @@ function App() {
         <Route path="/sologame" element={<SoloGame />} />
         <Route path="/solocreation" element={<SoloCreation />} />
         <Route path="/endgame" element={<EndGame/>} />
-
+        <Route path="/endgamesolo" element={<EndGameSolo/>} />
       </Routes>
     </Router>
   );

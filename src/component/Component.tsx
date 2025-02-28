@@ -1,6 +1,6 @@
 import logo from '../assets/Logo.svg'
-import mine from '../assets/artifact/mine.svg'
-import map from '../assets/artifact/map.svg'
+import { FaShare } from "react-icons/fa";
+import { FaPlay } from "react-icons/fa";
 import crown from '../assets/icons/crown.svg'
 
 import type { Player } from '../types/Player.ts';
@@ -142,5 +142,28 @@ export function List(props: { children: string }) {
       <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? 8 : '--'}</option>
       
   </select>;
+}
 
+export const SoloRanking=(props:{ranking:Array<Player>})=>{
+  return (
+
+    <div className='SoloRanking'>
+        <p className='rank_title'>Partie terminée !</p>
+        <img className='rank_avatar' src={props.ranking[1].avatar} alt={props.ranking[1].name} />
+        <p>{props.ranking[1].name}</p>
+        <p className='rank_title'>Récap de la partie :</p>
+        <p>Temps : 2:30</p>
+        <p>Nombre d’articles trouvées : 5/5</p>
+        <p>Nombre d’articles parcourus : 16</p>
+    </div>
+  );
+}
+
+export const PlayShare=() =>{
+  return(
+    <div className="container_button">
+      <button className="button">Partager<FaShare/></button>
+      <button className="button">Demarrer<FaPlay/> </button>
+    </div>
+  );
 }

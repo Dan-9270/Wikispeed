@@ -91,6 +91,8 @@ function Home() {
                   <Link to="/multigame">Aller à Multigame</Link>
                   <Link to="/sologame">Aller à SoloGame</Link>
                   <Link to="/endgame">Aller à EndGame Multi</Link>
+                  <Link to="/endgamesolo">Aller à EndGame Solo</Link>
+
 
             <Footer content1='Aide' content2='Confidentialités' content3='Mentions Légales'></Footer>
   
