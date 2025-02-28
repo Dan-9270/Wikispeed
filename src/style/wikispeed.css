@@ -639,48 +639,42 @@ main{
   width:100vw;
 
 }
-.chatBox {
+.chatBox{
   display: flex;
-  position: fixed;
-  bottom: 5%;
-  left: 5%;
-  z-index: 1000;
+  position:fixed;
+  bottom:5%;
+  left:5%;
+  z-index:1000;
   background: rgba(73, 67, 198, 0.90);
-  flex-direction: column;
+  flex-direction:column;
   justify-content: space-between;
-  padding: 20px;
-  width: 450px;
-  height: 500px;
-  max-height: 90vh;
+  padding:20px;
+  width:450px;
+  height:500px;
+  max-height:90vh;
   backdrop-filter: blur(10px);
   align-items: center;
-  border-radius: 10px;
-  opacity: 0;
-  transform: translateY(100%);
-  transition: opacity 0.3s ease, transform 0.3s ease;
-  h1 {
-    color: white;
-    text-decoration: none;
-    border: none;
+  border-radius:10px;
+  h1{
+    color:white;
+    text-decoration:none;
+    border:none;
   }
-  input[type="text"] {
+  input[type="text"]{
     background: rgba(255, 255, 255, 0.10);
     border: 1px solid #000;
-    font-size: 16px;
-    color: white;
-    outline: none;
+    font-size:16px;
+    color:white;
+    outline:none;
     border-radius: 20px;
-    width: 90%;
-    padding: 5px 10px;
-  }
-  input[type="text"]::placeholder {
-    color: #A0A0A0;
-  }
-}
+    width:90%;
+    padding:5px 10px;
 
-.chatBox.visible {
-  opacity: 1;
-  transform: translateY(0);
+  }
+  input[type="text"]::placeholder{
+    color: #A0A0A0;
+
+  }
 }
 .messageArea{
   align-items: center;
@@ -726,12 +720,12 @@ main{
     display: flex;
     flex-direction: row-reverse;
   }
-  .name{
-    text-align: right;
+  .content{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
   }
-  .text{
-    text-align: right;
-  }
+
 }
 .messagebox_chat{
   background: #FFB700;
