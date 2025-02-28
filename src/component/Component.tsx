@@ -2,6 +2,8 @@ import logo from '../assets/Logo.svg'
 import { FaShare } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa";
 import crown from '../assets/icons/crown.svg'
+import images from '../assets/monster/images'
+
 
 import type { Player } from '../types/Player.ts';
 export const LogoTitle = () =>{
@@ -45,7 +47,7 @@ export const Title = (props :{title : string}) => {
 }
 
 
-export const Footer = (props :{content1 : string, content2 : string, content3 : string}) => {
+export const Footer = (props :{content1 : string, content2 : string, content3 : string, children?: React.ReactNode }) => {
   return (
     <div className='footer'>
       <p> {props.content1}</p>
@@ -87,6 +89,11 @@ export const Podium=(props:{ranking:Array<Player>})=>{
                         <h1>1</h1>
                         <p className="name">{props.ranking[0].name}</p>
                         <p className="time">{props.ranking[0].time}s</p>
+
+                        <div id="monster_11">
+                          <img className='monsters' id='m11' src={images.neuille} alt="" />
+                        </div>
+
                     </div>
                 </li>
             )}

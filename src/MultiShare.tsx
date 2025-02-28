@@ -3,12 +3,13 @@ import { Button } from "./component/Component.tsx";
 import { List } from "./component/Component.tsx";
 import { LogoTitle } from './component/Component'
 import {CreditButton} from './component/Component'
-import back from './assets/back.svg'
 import { FaShare } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareXmark} from "@fortawesome/free-solid-svg-icons";
 import { Background } from "./assets/back.tsx";
+import images from './assets/monster/images'
+
 
 
 
@@ -21,6 +22,15 @@ function MultiShare() {
          <div className="big">
     <form action="">
       <div className="container">
+
+          <div id="monster_16">
+            <img className='monsters' id='m16' src={images.cornu} alt="" />
+          </div>
+
+          <div id="monster_17">
+            <img className='monsters' id='m17' src={images.titouan} alt="" />
+          </div>
+
         <div className="left">
           <span className="title">Parametre</span>
        

@@ -1,4 +1,4 @@
-import {LogoTitle, Podium, Ranking, SoloRanking} from './component/Component'
+import {LogoTitle, SoloRanking} from './component/Component'
 import {CreditButton} from './component/Component'
 import {PlayShare} from './component/Component'
 
@@ -17,6 +17,14 @@ function EndGameSolo(){
         <main>
             <section className="hero">
 
+            <div id="monster_13">
+              <img className='monsters' id='m13' src={images.daniel} alt="" />
+            </div>
+
+            <div id="monster_14">
+              <img className='monsters' id='m14' src={images.degrado} alt="" />
+            </div>
+            
     <CreditButton/>
     <LogoTitle/>
 

@@ -1,19 +1,23 @@
 import { useRedirect } from "../script/Redirection";
 
-export const CreateGame = () =>{
+export const CreateGame = (props: { children?: React.ReactNode })=>{
   const redirectTo = useRedirect();
 
   return <div className="CreateGame" onClick={() => redirectTo("/multishare")}>
         <p> Creer une partie</p>
+        {props.children}
     </div>
   } 
   
-  export const JoinGame = () =>{
-    return <div className='JoinGame'>
-        <p> Rejoindre une partie</p>
-        <input type='text' placeholder='Entrez le code de la partie'/>
-    </div>
-  } 
+  export const JoinGame = (props: { children?: React.ReactNode }) => {
+    return (
+        <div className='JoinGame'>
+            <p>Rejoindre une partie</p>
+            <input type='text' placeholder='Entrez le code de la partie'/>
+            {props.children}
+        </div>
+    );
+}
 
   export const Setting = () =>{
     return <div className="setting">

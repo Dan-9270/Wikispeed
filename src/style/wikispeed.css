@@ -223,8 +223,8 @@
   
   #monster_7{
    position: absolute;
-   bottom: -154vh;
-   left: 25vw;
+   top: 0vh;
+   left: 0vw;
   }
   
   #m7{
@@ -236,12 +236,12 @@
   
   #monster_8{
    position: absolute;
-   bottom: 45vh;
-   right: 39vw;
+   right: 0vw;
+   top: 0vh;
   }
   
   #m8{
-   width: 10vw;
+   width: 7vw;
    height: auto;
    transform: scaleX(-1);
   }
@@ -260,12 +260,12 @@
   
   #monster_11{
    position: absolute;
-   top: 63vh;
-   left: 23vw;
+   top: 29vh;
+   left: -7vw;
   }
   
   #m11{
-   width: 10vw;
+   width: 7vw;
    height: auto;
   }
   
@@ -281,7 +281,72 @@
    height: auto;
   }
   
+  #monster_13{
+    position: absolute;
+    top: 65vh;
+    left: 16.5vw;
+    transform: scaleX(-1);
+   }
 
+   #m13{
+    width: 17vw;
+    height: auto;
+   }
+
+   #monster_14{
+    position: absolute;
+    top: 35vh;
+    right: 20vw;
+   }
+
+   #m14{
+    width: 20vw;
+    height: auto;
+   }
+
+   #monster_15{
+    position: absolute;
+    left: 13vw;
+   }
+
+   #m15{
+    width: 17vw;
+    height: auto;
+   }
+
+   #monster_16{
+    position: absolute;
+    left: 6.1vw;
+    top: 40vh;
+   }
+
+   #m16{
+    width: 14vw;
+    height: auto;
+    transform: scaleX(-1);
+   }
+
+   #monster_17{
+    position: absolute;
+    right: 20vw;
+    top: 40vh;
+   }
+
+   #m17{
+    width: 17vw;
+    height: auto;
+   }
+
+   #monster_18{
+    position: absolute;
+    top: -16vh;
+    left: 2vw;
+   }
+
+   #m18{
+    width: 8vw;
+    height: auto;
+   }
 
 /* -------------------------- SELECT MODE -------------------------- */
 

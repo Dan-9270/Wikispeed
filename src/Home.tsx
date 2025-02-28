@@ -51,9 +51,7 @@ function Home() {
             </div> */}
 
 
-            <div id="monster_7">
-              <img className='monsters' id='m7' src={images.neuille} alt="" />
-            </div>
+
 
             <Background/>
                 <section className="main-page">
@@ -77,11 +75,11 @@ function Home() {
                       <RuleBlox content='1. Crées une partie Lance une partie en solo ou avec des amis.' /> 
                       <RuleBlox content='2. Découvre ta liste d’articles Tu reçois une liste d’articles Wikipédia à visiter.' />
                       <RuleBlox content='3. Navigue d’article en articles Clique sur les liens internes de Wikipédia pour avancer d’un article à l’autre.' />
+                      
                       <RuleBlox content='4. Sois le plus rapide !Le premier à avoir visité tous ses articles remporte la partie.'>
                       <div id="monster_6">
-              <img className='monsters' id='m6' src={images.cornu} alt="" />
-            </div>
-
+                        <img className='monsters' id='m6' src={images.cornu} alt="" />
+                      </div>
                       </RuleBlox>
                   </div>
 
@@ -94,7 +92,11 @@ function Home() {
                   <Link to="/endgamesolo">Aller à EndGame Solo</Link>
 
 
-            <Footer content1='Aide' content2='Confidentialités' content3='Mentions Légales'></Footer>
+            <Footer content1='Aide' content2='Confidentialités' content3='Mentions Légales'>
+              {/* <div id="monster_7">
+                <img className='monsters' id='m7' src={images.neuille} alt="" />
+              </div> */}
+            </Footer>
   
 
                 

@@ -21,10 +21,6 @@ function EndGame(){
               <img className='monsters' id='m10' src={images.titouan} alt="" />
             </div>
 
-            <div id="monster_11">
-              <img className='monsters' id='m11' src={images.neuille} alt="" />
-            </div>
-
             <div id="monster_12">
               <img className='monsters' id='m12' src={images.degrado} alt="" />
             </div>

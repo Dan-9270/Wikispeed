@@ -1,11 +1,10 @@
 import "./style/App.css";
 import { Button } from "./component/Component.tsx";
 import { List } from "./component/Component.tsx";
-import { LogoTitle } from './component/Component'
 import {CreditButton} from './component/Component'
 import { FaPlay } from "react-icons/fa";
-import back from './assets/back.svg'
 import { Background } from "./assets/back.tsx";
+import images from './assets/monster/images'
 
 
 function SoloCreation() {
@@ -18,6 +17,11 @@ return(
     <div className="big">
      <form action="">
       <div className="container solo">
+
+          <div id="monster_15">
+            <img className='monsters' id='m15' src={images.degrado} alt="" />
+          </div>
+
       <div className="left">
           <span className="title">Parametre</span>
        

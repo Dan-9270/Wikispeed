@@ -16,13 +16,18 @@ function MultiCreation() {
             <CreditButton />
             <LogoTitle />
 
-            <div id="monster_8">
-              <img className='monsters' id='m8' src={images.daniel} alt="" />
-            </div>
+
 
             <div className='MultiCreation'>
+
+              
                 <CreateGame/>
-                <JoinGame/>
+                <JoinGame>
+                  <div id="monster_8">
+                    <img className='monsters' id='m8' src={images.daniel} alt="" />
+                  </div>
+                </JoinGame>
+                
             </div>
         </>
   )
