@@ -21,6 +21,7 @@ import images from './assets/monster/images'
 
 
 import './style/wikispeed.css'
+import { Background } from './assets/back'
 
 function Home() {
   const artifactImages = [mine,map,map,map,map,map,map
@@ -51,7 +52,7 @@ function Home() {
                     </div>
                  </div>
                  <BottomRedirection content="How To Play" link="#rules"/>
-                 <figure className='background'><img src={back} alt="" /></figure>  
+                 <Background/>
                  </section>
 
                 
