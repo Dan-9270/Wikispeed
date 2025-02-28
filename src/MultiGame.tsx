@@ -13,11 +13,13 @@ import './style/wikispeed.css'
 import './style/timer.css'
 import './style/game.css'
 import { ArticleDisplayer } from './component/Article'
+import { Background } from "./assets/back.tsx";
 
 function MultiGame() {
 const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
   return (
         <>
+        <Background></Background>
             <ChatBox messages={[{player:{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},text:"Salut"},{player:{id:2,name:"lksjdklqjsdkq",time:200,avatar:Damien,score:20},text:"nnn"},{player:{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},text:"Salut"}]} player={{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20}}/>
             <section className='main-page game'>
           <figure className='logo-solo'>
@@ -37,9 +39,7 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
               <Inventory artifact1={{name:'mine',description:'',img:mine}} artifact2={{name:'map',description:'',img:map}} />
             </div>
           </div>
-        </div>
-        <figure className='background'><img src={back} alt="" /></figure> 
-        <ChatRedirection link='chat' content='ACCEDER AU CHAT' /> 
+        </div>        <ChatRedirection link='chat' content='ACCEDER AU CHAT' /> 
         </section>
         </>
   )

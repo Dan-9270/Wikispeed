@@ -5,14 +5,15 @@ import { LogoTitle } from './component/Component'
 import {CreditButton} from './component/Component'
 import { FaPlay } from "react-icons/fa";
 import back from './assets/back.svg'
+import { Background } from "./assets/back.tsx";
 
 
 function SoloCreation() {
 
 return(
   <div className="page">
+    <Background></Background>
      <CreditButton />
-     <figure className='background'><img src={back} alt="" /></figure> 
    
     <div className="big">
      <form action="">

@@ -55,9 +55,9 @@ function Home() {
               <img className='monsters' id='m7' src={images.neuille} alt="" />
             </div>
 
-
+            <Background/>
                 <section className="main-page">
-                <Background/>
+ 
               <CreditButton />
                <LogoTitle />
 

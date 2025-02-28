@@ -8,6 +8,7 @@ import { FaShare } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareXmark} from "@fortawesome/free-solid-svg-icons";
+import { Background } from "./assets/back.tsx";
 
 
 
@@ -15,10 +16,9 @@ import { faSquareXmark} from "@fortawesome/free-solid-svg-icons";
 function MultiShare() {
   return (
     <div className="page">
+      <Background></Background>
        <CreditButton />
-     
-       <figure className='background'><img src={back} alt="" /></figure> 
-    <div className="big">
+         <div className="big">
     <form action="">
       <div className="container">
         <div className="left">

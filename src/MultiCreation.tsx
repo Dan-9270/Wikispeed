@@ -6,11 +6,13 @@ import images from './assets/monster/images'
 
 
 import './style/wikispeed.css'
+import { Background } from './assets/back'
 
 function MultiCreation() {
 
   return (
         <>
+          <Background></Background>
             <CreditButton />
             <LogoTitle />
 
