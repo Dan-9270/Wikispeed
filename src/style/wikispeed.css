@@ -8,18 +8,36 @@
   
 }
 
+
 .logo{
   margin:20px;
   justify-content: center;
   align-items: center;
   display: flex;
   height: 30vh;
+  animation: heartbeat 6s ease-in-out infinite;
+  
+  
 }
 .logo img{
   height:100%;
   width: auto;
   object-fit: cover;
+  transition: 0.3s;
+}
 
+a{
+  text-decoration: none;
+  color: white;
+}
+
+a:visited{
+  color: white;
+}
+.logo img:hover{
+  transform: scale(1.1);
+  
+  cursor: pointer;
 }
 @media screen and (max-width: 500px) {
   .logo{
@@ -93,20 +111,42 @@
 
 .credit-button{
   font-family: 'Manjari Bold', sans-serif;
-
+text-transform: uppercase;
   background-color: #4943C6;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
   width: min-content;
-  padding: 12px 22px;
+  padding: 10px 22px;
   border-radius: 12px;
   font-size: 1rem;
   position: absolute;
-  top: 30px;
-  right:40px
+  top: 0px;
+  right:-120px;
+  transition: 0.3s;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+
 }
+
+.credit-button:hover{
+  transform: scale(1.05);
+  background-color: #423bc7;
+  cursor: pointer;
+}
+
+@keyframes vibrate {
+  0% { transform: translateY(0); }
+  25% { transform: translateY(-2px); }
+  50% { transform: translateY(2px); }
+  75% { transform: translateY(-2px); }
+  100% { transform: translateY(0); }
+}
+
+.vibrating {
+  animation: vibrate 0.2s ease-in-out infinite;
+}
+
 @media screen and (max-width: 500px) {
   .credit-button{
     display: none;
@@ -114,11 +154,11 @@
 }
 .manjari{
   font-family: 'Manjari', sans-serif;
-  transform:translateY(5px);
+  transform:translateY(2px);
 }
 .manjariB{
   font-family: 'Manjari Bold', sans-serif;
-  transform:translateY(5px);
+  transform:translateY(4px);
 }
 /* -------------------------- CREDITS -------------------------- */
 
@@ -404,6 +444,13 @@
   align-items: center;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
+  transition: 0.4s;
+}
+
+
+.rule-bloc:hover{
+  transform: translateY(-5px);
+  cursor: pointer;
 }
 
 .rules{
@@ -420,11 +467,19 @@
   font-family: 'Manjari', sans-serif;
   background-color : #FFB700;
   border-radius: 25px;
-  margin: 15%;
+  margin: 15% 50%;
   border: none;
   width: 10%;
   padding: 10px 5px;
   cursor: pointer;
+ transform: translateX(-50%);
+  transition: 0.3s;
+}
+.PlayButton:hover{
+  background-color : #eca900;
+  transform:  translateX(-50%) scale(1.1);
+  cursor: pointer;
+  color: white;
 }
 
 .PlayButton:active{
@@ -529,6 +584,11 @@
   align-items: center;
   width: 90px;
   height: 90px;
+  transition: 0.3s;
+}
+.artifact-border:hover{
+  transform: scale(1.1);
+  cursor: pointer;
 }
 
 .artifacts-list{
@@ -658,15 +718,32 @@ input:focus {
   font-size:20px;
   align-items: center;
   position: absolute;
-  bottom: 5%;
+  bottom: 8%;
   left: 50%;
   transform: translateX(-50%);
+  transition: 0.1s;
+
 }
 
 .bottomredirection svg{
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  path{
+    transition: 0.1s;
+  }
+}
+
+
+
+.bottomredirection:hover {
+  color: #FFB700;
+  cursor: pointer;
+  transform:  translateX(-50%) scale(1.05);
+  svg path{
+
+    fill: #FFB700;
+  }
 }
 /* -------------------------- ENDGAME -------------------------- */
 .podium{
@@ -969,4 +1046,64 @@ main{
 
 .container_button{
   margin-top: 3%;
+}
+
+
+@keyframes heartbeat {
+  0% {
+    transform: scale(1);
+  }
+  25% {
+    transform: scale(1.05);
+  }
+  30% {
+    transform: scale(1); /* Pause après avoir agrandi */
+  }
+  50% {
+    transform: scale(1.06);
+  }
+  55% {
+    transform: scale(1); /* Pause avant de revenir à la taille normale */
+  }
+  75% {
+    transform: scale(1.02); /* Pause avant de revenir à la taille normale */
+  }
+  100% {
+    transform: scale(1); /* Retour à la taille normale */
+  }
+}
+
+
+#inputBox {
+  background: rgba(255, 255, 255, 0.10);
+  border: 2px solid #000;
+  font-size:16px;
+  color:white;
+  outline:none;
+  border-radius: 10px;
+  width:100%;
+  padding:5px 10px;
+  transition: 0.3s;
+ 
+}
+
+#inputBox:focus {
+  border-color:  #FFB700;
+}
+
+#inputBox:focus::placeholder {
+  color: transparent;
+}
+
+#inputBox:hover {
+  border-color:  #FFB700;
+  
+}
+
+.footer p{
+  transition: 0.3s;
+}
+.footer p:hover {
+transform: translateY(-5px);
+cursor: pointer;
 }

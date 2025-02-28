@@ -14,6 +14,7 @@ import { Link } from "react-router-dom";
 import images from './assets/monster/images'
 
 
+
 import {BottomRedirection} from './component/Component'
 
 
@@ -86,10 +87,7 @@ function Home() {
                   <Title title='Artéfacts'></Title>
                   <ArtifactsList imgs={artifactImages}/>
                   <PlayButton/>
-                  <Link to="/multigame">Aller à Multigame</Link>
-                  <Link to="/sologame">Aller à SoloGame</Link>
-                  <Link to="/endgame">Aller à EndGame Multi</Link>
-                  <Link to="/endgamesolo">Aller à EndGame Solo</Link>
+                  
 
 
             <Footer content1='Aide' content2='Confidentialités' content3='Mentions Légales'>
@@ -99,7 +97,8 @@ function Home() {
             </Footer>
   
 
-                
+          
+
         </>
       
       
