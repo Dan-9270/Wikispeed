@@ -1,39 +1,19 @@
-import back from '../assets/back1.svg'
+import "../style/back.css";
 export const Background = () => {
     return (
-        <figure className="background">
-            <img src={back} alt="" />
-      {/* <svg className="rotate" width="200" height="59" viewBox="0 0 2000 500" fill="none" xmlns="http://www.w3.org/2000/svg" transform="translate(0 0)">
-<g filter="url(#filter0_d_183_34)" >
-<path  d="M76.9406 778.227L264.126 489.19L1127.64 150.061L418.007 730.748L76.9406 778.227Z" fill="#FFB700"/>
-</g>
-<g filter="url(#filter1_d_183_34)">
-<path d="M1998.1 778.227L1810.92 489.19L947.405 150.061L1657.03 730.748L1998.1 778.227Z" fill="#FFB700"/>
-</g>
-<defs>
-<filter id="filter0_d_183_34" x="72.9406" y="150.061" width="1058.7" height="636.166" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_183_34"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_183_34" result="shape"/>
-</filter>
-<filter id="filter1_d_183_34" x="943.405" y="150.061" width="1058.7" height="636.166" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-<feFlood flood-opacity="0" result="BackgroundImageFix"/>
-<feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-<feOffset dy="4"/>
-<feGaussianBlur stdDeviation="2"/>
-<feComposite in2="hardAlpha" operator="out"/>
-<feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.25 0"/>
-<feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_183_34"/>
-<feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_183_34" result="shape"/>
-</filter>
-</defs>
-</svg>  */}
-        </figure>
+        <div className="back-container">
+        <div className="_container_18hdx_1" >
+  <svg viewBox="0 0 100 100" className="_rays_18hdx_7">
+    <g fill="white" opacity="0.1">
+      <path d="M50 50 V268 L-17.34 257.30 L50 50Z"></path><path d="M50 50 L-157.20 117.30 L-167.90 50 H50Z"></path>
+      <path d="M50 -167.90 L117.30 -157.20 L50 50 V-167.90Z"></path><path d="M50 50 L257.30 -17.34 L268 50 H50Z"></path>
+      <path d="M50 50 L257.30 117.30 L226.40 178.20 L50 50Z"></path><path d="M50 50 L-78.10 226.40 L-126.30 178.20 L50 50Z"></path>
+      <path d="M117.30 257.30 L178.20 226.40 L50 50 L117.30 257.30Z"></path><path d="M50 50 L178.20 -126.30 L226.40 -78.10 L50 50Z"></path>
+      <path d="M-17.34 -157.20 L-78.10 -126.30 L50 50 L-17.34 -157.20Z"></path><path d="M-126.30 -78.10 L-157.20 -17.34 L50 50 L-126.30 -78.10Z"></path>
+    </g>
+  </svg>
+</div>
+</div>
     );
 
 

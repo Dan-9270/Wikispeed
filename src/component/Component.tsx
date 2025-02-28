@@ -33,9 +33,10 @@ export const ArtifactsList = (props:{imgs : string[]}) => {
 
 
 
-export const RuleBlox = (props :{content : string}) =>{
+export const RuleBlox = (props :{content : string ,children?: React.ReactNode }) =>{
     return <div className='rule-bloc'>
       <span className='rules'> {props.content}</span>
+      {props.children}
       </div>
 } 
 

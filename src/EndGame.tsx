@@ -3,6 +3,8 @@ import {CreditButton} from './component/Component'
 import {BottomRedirection} from './component/Component'
 
 import Damien from './assets/avatar/Avatar_damien.svg'
+import images from './assets/monster/images'
+
 
 
 import './style/wikispeed.css'
@@ -12,6 +14,19 @@ function EndGame(){
     return <>
         <main>
             <section className="hero">
+
+            <div id="monster_10">
+              <img className='monsters' id='m10' src={images.titouan} alt="" />
+            </div>
+
+            <div id="monster_11">
+              <img className='monsters' id='m11' src={images.neuille} alt="" />
+            </div>
+
+            <div id="monster_12">
+              <img className='monsters' id='m12' src={images.degrado} alt="" />
+            </div>
+
         <CreditButton/>
     <LogoTitle/>
         <Podium ranking={ranking}></Podium>
