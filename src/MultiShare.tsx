@@ -1,6 +1,8 @@
 import "./style/App.css";
 import { Button } from "./component/Component.tsx";
 import { List } from "./component/Component.tsx";
+import {ChatBox} from "./component/Chat.tsx";
+import Damien from "./assets/avatar/Avatar_damien.svg";
 
 
 function MultiShare() {
@@ -10,7 +12,8 @@ function MultiShare() {
       <div className="container">
         <div className="left">
           <span className="title">Parametre</span>
-          <table className="container_ul">
+            <ChatBox messages={[{player:{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},text:"Salut"},{player:{id:2,name:"lksjdklqjsdkq",time:200,avatar:Damien,score:20},text:"nnn"},{player:{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},text:"Salut"}]} player={{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20}}/>
+            <table className="container_ul">
 
             <tr>
               <td>     <span className="nbreArticle opt">Nombre d'articles</span></td>
