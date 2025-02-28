@@ -10,14 +10,12 @@ import {PlayButton} from './component/RouteComponent'
 import {ArtifactsList} from './component/Component'
 import {Footer} from './component/Component'
 import {Title} from './component/Component'
-import {CreateGame} from './component/GameComponent'
-import {JoinGame} from './component/GameComponent'
-import {Setting} from './component/GameComponent'
 import { Link } from "react-router-dom";
+import images from './assets/monster/images'
+
 
 import {BottomRedirection} from './component/Component'
 
-import images from './assets/monster/images'
 
 
 import './style/wikispeed.css'
@@ -31,13 +29,34 @@ function Home() {
   return (
 
         <>
-
               
-            <img className='monsters' src={images.green} alt="" />
+            <div id='monster_1'>
+              <img className='monsters' id='m1' src={images.benjamin} alt="" />
+            </div>
 
+            <div id="monster_2">
+              <img className='monsters' id='m2' src={images.pommier} alt="" />
+            </div>
 
+            <div id="monster_3">
+              <img className='monsters' id='m3' src={images.daniel} alt="" />
+            </div>
 
+            <div id="monster_4">
+              <img className='monsters' id='m4' src={images.titouan} alt="" />
+            </div>
 
+            {/* <div id="monster_5">
+              <img className='monsters' id='m5' src={images.damien} alt="" />
+            </div> */}
+
+            <div id="monster_6">
+              <img className='monsters' id='m6' src={images.cornu} alt="" />
+            </div>
+
+            <div id="monster_7">
+              <img className='monsters' id='m7' src={images.neuille} alt="" />
+            </div>
 
 
                 <section className="main-page">

@@ -127,7 +127,158 @@
   position: absolute;
 }
 
-
+.monsters{
+  position: absolute;
+  }
+  
+  @keyframes slideInOut {
+    0% {
+      left: -30vw; 
+    }
+    20% {
+      left: 19vw;
+    }
+    80% {
+      left: 19vw; 
+    }
+    100% {
+      left: -30vw;
+    }
+  }
+  
+  
+  #monster_1 {
+   position: absolute;
+   top: 0vh;
+   left: -30vw; 
+   transform: rotate(90deg);
+   z-index: 1;
+   animation: slideInOut 7s ease-in-out infinite;
+  }
+  
+  #m1 {
+   width: 20vw;
+   height: auto;
+  }
+  
+  #monster_2{
+   position: absolute;
+   top: 16vh;
+   right: 13.4vw;
+  }
+  
+  #m2{
+   width: 17vw;
+   height: auto;
+  }
+  
+  #monster_3{
+   position: absolute;
+   bottom: 14vh;
+   right: 13vw;
+  }
+  
+  #m3{
+   width: 14vw;
+   height: auto;
+  }
+  
+  #monster_4{
+   position: absolute;
+   bottom: -12.5vh;
+   left: 0vw;
+   z-index: 1;
+  }
+  
+  #m4{
+   width: 16vw;
+   height: auto;
+  }
+  
+  #monster_5{
+   position: absolute;
+   bottom: 1.3vh;
+   left: 48.6vw;
+  }
+  
+  #m5{
+   width: 6vw;
+   height: auto;
+   transform: rotate(8deg);
+  }
+  
+  #monster_6{
+   position: absolute;
+   bottom: -63vh;
+   right: 20vw;
+  }
+  
+  #m6{
+   width: auto;
+   height: 25vh;
+   transform: rotate(90deg);
+  }
+  
+  #monster_7{
+   position: absolute;
+   bottom: -154vh;
+   left: 25vw;
+  }
+  
+  #m7{
+   width: 13vw;
+   height: auto;
+   transform: rotate(90deg);
+   position: absolute;
+  }
+  
+  #monster_8{
+   position: absolute;
+   bottom: 45vh;
+   right: 39vw;
+  }
+  
+  #m8{
+   width: 10vw;
+   height: auto;
+   transform: scaleX(-1);
+  }
+  
+  #monster_10{
+   position: absolute;
+   top: 25vh;
+   right: 0vw;
+   transform: scaleX(-1);
+  }
+  
+  #m10{
+   width: 20vw;
+   height: auto;
+  }
+  
+  #monster_11{
+   position: absolute;
+   top: 63vh;
+   left: 23vw;
+  }
+  
+  #m11{
+   width: 10vw;
+   height: auto;
+  }
+  
+  #monster_12{
+   position: absolute;
+   top: 85vh;
+   left: 19vw;
+   transform: scaleX(-1);
+  }
+  
+  #m12{
+   width: 20vw;
+   height: auto;
+  }
+  
 
 
 /* -------------------------- SELECT MODE -------------------------- */
@@ -326,11 +477,15 @@
 .CreateGame{
   background-color: #4943c6c8;
   width: 22vw;
+  min-width: 350px;
+  min-height: 90px;
   padding: 2.5%;
   border-radius: 15px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
   transition: transform 0.3s ease-in-out;
+  display: flex;
+  justify-content: center;
 }
 
 .CreateGame:active{
@@ -351,6 +506,8 @@
 .JoinGame{
   background-color: #4943c6c8;
   width: 22vw;
+  min-width: 350px;
+  min-height: 145px;
   padding: 2.5%;
   border-radius: 15px;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
@@ -383,6 +540,7 @@
   font-size: 16px;
   transition: 0.5s;
   margin-top: 5%;
+  min-width: 200px;
 }
 
 .JoinGame input::placeholder{
@@ -407,74 +565,6 @@ input:focus {
   top: 60px;
 }
 
-@media screen and (max-width: 1600px) {
- .JoinGame,.CreateGame{
-    width: 25vw;
- }
- .JoinGame input{
-  width: 18vw;
-  }
-}
-
-@media screen and (max-width: 1400px) {
-  .JoinGame,.CreateGame{
-     width: 30vw;
-     padding: 3.5%;
-  }
-  .JoinGame input{
-    width: 23vw;
-    }
- }
-
- @media screen and (max-width: 1120px) {
-  .JoinGame,.CreateGame{
-     width: 38vw;
-     padding: 4.5%;
-  }
-  .JoinGame input{
-    width: 25vw;
-    }
- }
-
- @media screen and (max-width: 900px) {
-  .JoinGame,.CreateGame{
-     width: 47vw;
-     padding: 5.5%;
-  }
-  .JoinGame input{
-    width: 33vw;
-    }
- }
-
- @media screen and (max-width: 720px) {
-  .JoinGame,.CreateGame{
-     width: 55vw;
-     padding: 6%;
-  }
-  .JoinGame input{
-    width: 38vw;
-    }
- }
-
- @media screen and (max-width: 600px) {
-  .JoinGame,.CreateGame{
-     width: 67vw;
-     padding: 7%;
-  }
-  .JoinGame input{
-    width: 45vw;
-    }
- }
-
- @media screen and (max-width: 600px) {
-  .JoinGame,.CreateGame{
-     width: 80vw;
-     padding: 8%;
-  }
-  .JoinGame input{
-    width: 55vw;
-    }
- }
 
 
 /* -------------------------- Footer -------------------------- */
