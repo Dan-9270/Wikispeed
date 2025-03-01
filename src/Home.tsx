@@ -32,19 +32,19 @@ function Home() {
         <>
               
             <div id='monster_1'>
-              <img className='monsters' id='m1' src={images.benjamin} alt="" />
+              <img className='monsters mleft-rotate' id='m1' src={images.benjamin} alt="" />
             </div>
 
             <div id="monster_2">
-              <img className='monsters' id='m2' src={images.pommier} alt="" />
+              <img className='monsters mright' id='m2' src={images.pommier} alt="" />
             </div>
 
             <div id="monster_3">
-              <img className='monsters' id='m3' src={images.daniel} alt="" />
+              <img className='monsters mright' id='m3' src={images.daniel} alt="" />
             </div>
 
             <div id="monster_4">
-              <img className='monsters' id='m4' src={images.titouan} alt="" />
+              <img className='monsters mleft' id='m4' src={images.titouan} alt="" />
             </div>
 
             {/* <div id="monster_5">

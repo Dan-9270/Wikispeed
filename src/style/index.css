@@ -196,6 +196,7 @@ display: flex;
   border-radius:0.7vw;
   padding-left: 10px;
   max-width: 10.4vw;
+  transition: 0.3s;
   
 }
 
@@ -284,3 +285,40 @@ display: none;
 svg:not(:root).svg-inline--fa, svg:not(:host).svg-inline--fa{
   color: red;
 }
+
+
+.mleft:hover{
+transform: translateX(-130px);
+}
+
+.mleft , .mright ,.mleft-rotate{
+  transition: 1s;
+}
+.mright:hover{
+transform: translateX(130px);
+}
+
+.mleft-rotate:hover{
+  transform: translateY(150px);
+ 
+}
+
+.button:hover{
+  background-color: #535bf2;
+  transform: translateY(-5px);
+  cursor : pointer;
+}
+
+.input-label:hover{
+  
+  transform: scaleX(1.02);
+
+}
+  
+.delete-player:hover{
+  color: #ff0101;
+  cursor: pointer;
+  scale: 1.1;
+}
+
+
