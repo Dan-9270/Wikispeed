@@ -14,11 +14,12 @@ export const ArticleDisplayer = (props: {title: string}) => {
 
     return (
         <div className="article-container">
+            {/*
             <p className="article_title">{props.title}</p>
                 <div 
                     className="article-content"
                     dangerouslySetInnerHTML={{ __html: content }}
-                />
+                />*/}
         </div>
     );
 };
