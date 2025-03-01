@@ -25,7 +25,7 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
             <Timer />
             <ArticleList names={articles} />
           </div>
-          <div className='game-down'>
+          <div className='game-down-solo'>
             <ArticleDisplayer title='Nazisme'content="deddezzeda" />
             <div className="game-info">
               <Inventory artifact1={{name:'mine',description:'',img:mine}} artifact2={{name:'map',description:'',img:map}} />

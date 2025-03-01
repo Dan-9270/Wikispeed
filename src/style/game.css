@@ -1,21 +1,34 @@
 .game{
-    overflow: hidden;
 }
-
- .game-container{width: 100%;
-height: 100%;}
+.game-up{
+    display: flex;
+    height:25%;
+    flex-direction: column;
+}
+ .game-container{
+     width: 100vw;
+    height: 100vh;
+ }
  .game-down{
     width:100%;
-    height: 80%;
+    height: 75%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+ .game-down-solo{
+     width:100%;
+     height: 75%;
+     display: flex;
+     justify-content: space-between;
+     align-items: center;
+     flex-direction: column;
+ }
 
 .logo-solo{
     position: absolute;
     top:2%;
-    left: 0%;
+    left: 0;
     width: 14%;
     height: 14%;
 }
@@ -26,8 +39,7 @@ height: 100%;}
 
 /* -------------------GameUp ------------------- */
 .article-list{
-    width: fit-content; 
-    max-width: 900px ; 
+    width: fit-content;
     margin: 0 auto ;
     padding: 15px;
     border-radius: 10px;
@@ -36,6 +48,7 @@ height: 100%;}
     display: flex;
     justify-content: center;
     align-items: center;
+    max-width:900px;
 }
 .article-list ul {
     list-style: none; 
@@ -75,10 +88,10 @@ height: 100%;}
 
 /* -------------------GameDown ------------------- */
 
-.article-container{
-    width: 70% ; 
+.game-down .article-container{
+    width: 70% ;
     height:80%;
-    margin: 0 5% 3%;
+    margin: 0 5% 0;
     padding: 15px;
     padding-top: 2%;
     border-radius: 10px;
@@ -92,7 +105,49 @@ height: 100%;}
     gap: 20px;
     font-family: 'Manjari', sans-serif;
 }
+.game-down-solo .article-container{
+    width:75%;
+    height: 65%;
+    padding: 15px;
+    padding-top: 2%;
+    border-radius: 10px;
+    margin:0;
+    background-color: #4943C6;
+    box-sizing: border-box;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    overflow-y: scroll;
+    flex-direction: column;
+    gap: 20px;
+    font-family: 'Manjari', sans-serif;
 
+}
+.article-container::-webkit-scrollbar,.article-list::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+}
+.article-container::-webkit-scrollbar-track ,.article-list::-webkit-scrollbar-track{
+    background-color: transparent;
+}
+.article-list::-webkit-scrollbar-thumb,.article-container::-webkit-scrollbar-thumb {
+    background-color: red;
+    border-radius: 10px;
+    opacity:0;
+}
+.article-list:hover::-webkit-scrollbar-thumb,.article-container:hover::-webkit-scrollbar-thumb{
+    background-color:  #22D231;
+    border-radius: 10px;
+}
+.article-container,.article-list {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+    transition:0.2s ease-out;
+}
+.article-container,.article-list:hover {
+    scrollbar-width: thin;
+    scrollbar-color: #FFD230 transparent;
+}
 .article-content h2,.article-content h3, .article-content h4{
     margin: 2% 0;
     color:#FFD230;
@@ -136,13 +191,15 @@ sup{
 } */
 
 
-.game-info{
-    width: 20%;
-    height: 100%;
-    margin: 0 3%;
+.game-down .game-info{
+    height: 80%;
     display: flex;
     flex-direction: column;
-    justify-content: space-evenly;
+    justify-content: space-between;
+}
+.game-down-solo .game-info{
+        width:50%;
+
 }
 
 .player-info{
@@ -154,7 +211,7 @@ sup{
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    overflow-y: scroll;
+
 }
 .player-info h2{
     color:#fff;
@@ -176,10 +233,15 @@ sup{
     font-style: normal;
     font-weight: 700;
     line-height: normal;
+    width: 50%;
+    overflow-x:clip;
+    word-break: keep-all;
 }
-
+.player-score::before{
+    content: '  : ';
+}
 .inventory{
-    height: 30%;
+    height: fit-content;
     width: 100%; 
     padding: 15px;
     border-radius: 10px;
@@ -188,17 +250,11 @@ sup{
     display: flex;
     flex-direction: column;
     align-items: center;
+    justify-content: center;
+
 }
 .inventory h2{
     color:#fff;
     text-align: center;
-    margin: 7% 0;
     font-size: 30px;
 }
-
-.chat{color: #FFB700;
-    text-shadow: 0px 4px 4px #000;
-    font-size: 1.5vw;
-    font-style: normal;
-    font-weight: 700;
-    line-height: normal;}
