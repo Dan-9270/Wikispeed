@@ -1107,3 +1107,7 @@ main{
 transform: translateY(-5px);
 cursor: pointer;
 }
+
+/* .game-container img{
+  display: none;
+} */
