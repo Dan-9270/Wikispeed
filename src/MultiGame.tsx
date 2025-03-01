@@ -1,11 +1,10 @@
 import Damien from "./assets/avatar/Avatar_damien.svg";
-import back from './assets/back.svg'
 import mine from './assets/artifact/mine.svg'
 import map from './assets/artifact/map.svg'
 import {ChatBox} from "./component/Chat.tsx";
 
 
-import { ArticleList, ChatRedirection, Inventory, PlayerInfo, Timer } from './component/EventComponent'
+import { ArticleList, Inventory, PlayerInfo, Timer } from './component/EventComponent'
 
 
 
@@ -35,11 +34,11 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
           <div className='game-down'>
             <ArticleDisplayer title='France'/>
             <div className="game-info">
-              <PlayerInfo player={[{name:'Damien',score:0},{name:'Bibabo',score:0}]} names={articles} />
+              <PlayerInfo player={[{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},{id:2,name:"Bibabo",time:200,avatar:Damien,score:20}]} names={articles} />
               <Inventory artifact1={{name:'mine',description:'',img:mine}} artifact2={{name:'map',description:'',img:map}} />
             </div>
           </div>
-        </div>        <ChatRedirection link='chat' content='ACCEDER AU CHAT' /> 
+        </div>
         </section>
         </>
   )

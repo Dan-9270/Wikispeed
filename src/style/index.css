@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Antonio:wght@100..700&family=Manjari:wght@100;400;700&family=Oswald:wght@200..700&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
 :root {
 
   color: rgba(255, 255, 255, 0.87);
@@ -32,7 +33,7 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Manjari ', sans-serif;
+  font-family: 'Manjari', sans-serif;
 }
 
 
