@@ -39,16 +39,7 @@ a:visited{
   
   cursor: pointer;
 }
-@media screen and (max-width: 500px) {
-  .logo{
-    height:auto;
-    width:50vw;
-  }
-  .logo img{
-    width:100%;
-    height:auto;
-  }
-}
+
 
 .background{
   width: fit-content;
@@ -207,6 +198,7 @@ text-transform: uppercase;
    position: absolute;
    top: 16vh;
    right: 13.4vw;
+   z-index: 1;
   }
   
   #m2{
@@ -218,6 +210,7 @@ text-transform: uppercase;
    position: absolute;
    bottom: 14vh;
    right: 13vw;
+   z-index: 1;
   }
   
   #m3{
@@ -229,7 +222,7 @@ text-transform: uppercase;
    position: absolute;
    bottom: -12.5vh;
    left: 0vw;
-   z-index: 1;
+   z-index: 3;
   }
   
   #m4{
@@ -238,6 +231,7 @@ text-transform: uppercase;
   }
   
   #monster_5{
+    z-index: 1;
    position: absolute;
    bottom: 1.3vh;
    left: 48.6vw;
@@ -513,6 +507,106 @@ text-transform: uppercase;
   width:80%
 
 }
+.selection .button{
+  display: none ;
+}
+
+.profilePicture {
+  width: 10vw ;
+  height: 10vw;
+  border-radius: 50%; /* Rend le conteneur parfaitement rond */
+  border: 3px solid black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: #60E513; /* Ajoute un fond en cas d'image transparente */
+}
+
+/* Assure que l'image s'adapte bien */
+.profilePicture img {
+  width: 25vh;
+  height: 25vh;
+  transform: translateY(20%);
+}
+
+@media (max-width: 1400px) {
+
+}
+
+#inputBox {
+  background: rgba(255, 255, 255, 0.10);
+  border: 2px solid #000;
+  font-size:16px;
+  color:white;
+  outline:none;
+  border-radius: 10px;
+  width:100%;
+  padding:5px 10px;
+  transition: 0.3s;
+ 
+}
+
+#inputBox:focus {
+  border-color:  #FFB700;
+}
+
+#inputBox:focus::placeholder {
+  color: transparent;
+}
+
+#inputBox:hover , .words:hover{
+  border-color:  #FFB700;
+  
+}
+
+
+
+
+
+
+.phone-selection{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 80%;
+    height: 45vh;
+    flex-direction: column;
+
+}
+/* -------------------------- SELECT MODE -------------------------- */
+
+
+/* -------------------------- Artifact -------------------------- */
+
+
+.artifact-border{
+  border: 8px solid #D9D9D9;
+  background-color: #FFB700;
+  border-radius: 50%;
+  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90px;
+  height: 90px;
+  transition: 0.3s;
+}
+.artifact-border:hover{
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+.artifacts-list{
+  flex-wrap: wrap;
+  display: flex;
+  justify-content: center;
+  gap: 3vw;
+  margin-top: 20px;
+}
+
+
 .setProfile{
   width: 20vw;
   height: 20vw;
@@ -541,61 +635,6 @@ text-transform: uppercase;
       height: 3vw;
       width: 14vw;
     }
-}
-.profilePicture {
-  width: 10vw ;
-  height: 10vw;
-  border-radius: 50%; /* Rend le conteneur parfaitement rond */
-  border: 3px solid black;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  cursor: pointer;
-  background-color: #60E513; /* Ajoute un fond en cas d'image transparente */
-}
-
-/* Assure que l'image s'adapte bien */
-.profilePicture img {
-  width: 25vh;
-  height: 25vh;
-  transform: translateY(20%);
-}
-
-@media (max-width: 1400px) {
-
-}
-
-
-
-/* -------------------------- SELECT MODE -------------------------- */
-
-
-/* -------------------------- Artifact -------------------------- */
-
-
-.artifact-border{
-  border: 8px solid #D9D9D9;
-  background-color: #FFB700;
-  border-radius: 50%;
-  box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 90px;
-  height: 90px;
-  transition: 0.3s;
-}
-.artifact-border:hover{
-  transform: scale(1.1);
-  cursor: pointer;
-}
-
-.artifacts-list{
-  display: flex;
-  justify-content: center;
-  gap: 3vw;
-  margin-top: 20px;
 }
 
 
@@ -1074,31 +1113,7 @@ main{
 }
 
 
-#inputBox {
-  background: rgba(255, 255, 255, 0.10);
-  border: 2px solid #000;
-  font-size:16px;
-  color:white;
-  outline:none;
-  border-radius: 10px;
-  width:100%;
-  padding:5px 10px;
-  transition: 0.3s;
- 
-}
 
-#inputBox:focus {
-  border-color:  #FFB700;
-}
-
-#inputBox:focus::placeholder {
-  color: transparent;
-}
-
-#inputBox:hover , .words:hover{
-  border-color:  #FFB700;
-  
-}
 
 .footer p{
   transition: 0.3s;
@@ -1111,3 +1126,208 @@ cursor: pointer;
 /* .game-container img{
   display: none;
 } */
+
+@media screen and (max-width: 550px){
+.or{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+@keyframes wait{
+  0%{
+    width: 79px;
+    background: rgba(255, 255, 255, 0.7);
+  }
+  100%{
+    width: 30px;
+    background-color:#FFB700 ;
+  }
+}
+@keyframes wait2{
+  0%{
+    color:white
+  }
+  100%{
+  color:#FFB700 ;
+  }
+}
+  
+  .or::after, .or::before{
+    content:"";
+    display: block;
+    width: 79px;
+    height: 2px;
+    background: rgba(255, 255, 255, 0.7);
+    animation: wait 1.2s ease-in alternate infinite ;
+  }
+
+  
+  .or span{
+    margin: 10px;
+    font-size: 1.5rem;
+    animation: wait2 1.2s ease-in alternate infinite ;
+
+  }
+  
+  .or:hover span{
+    color:#FFB700
+
+
+  }
+  
+  @keyframes slideInOut {
+    
+    0% {
+      left: -30vw; 
+    }
+    20% {
+      left: -3vw;
+    }
+    80% {
+      left: -3vw; 
+    }
+    100% {
+      left: -30vw;
+    }
+  
+  }
+.main-page{
+  overflow: hidden;
+}
+  .logo{
+    height: 20vh;
+    margin: 0;
+  }
+.selection{
+  flex-direction: column;
+   height:45vh
+}
+  .selection .select-mode{
+  display: none;
+}
+.selection-container{
+  position: absolute;
+  top:50%;
+  transform:translateY(-50%) ;
+}
+.selection .setProfile{
+  width: 30vh;
+  height: 30vh;
+}
+
+.selection .button{
+  width: 30vh;
+  height: 7vh;
+  display: flex;
+  position: relative;
+  font-size: 1.5rem;
+
+}
+.selection .button .manjari{
+  transform: translateY(7px);
+  text-transform: uppercase;
+  color: #FFB700
+}
+.profilePicture{
+  width: 24vw;
+  height: 24vw;
+}
+#inputBox{
+  padding: 22px 10px
+}
+.second-part{
+  display: none;
+}
+#monster_4{
+  position: unset;
+  bottom: 10vh;
+}
+#monster_2{
+position: unset;
+}
+
+#monster_1{
+  position: unset;
+  transform:rotate(0);
+}
+#monster_3{
+  position: unset;
+right: 0;
+}
+#monster_6{
+right: 29vw;
+}
+#m6{
+  height: 12vh;
+}
+
+#m1{
+  position: absolute;
+  left: -3vw;
+  width: 18vh;
+  transform: rotate(90deg);
+  animation: slideInOut 7s ease-in-out infinite;
+}
+#m2{
+  position: absolute;
+  right: 0;
+  top:16vh;
+  width: 15vh ;
+}
+#m3{
+  position: absolute;
+  right: 0;
+  bottom:14vh;
+  width: 12vh ;
+}
+#m4{
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 14vh;
+  animation: slideInOut 7s ease-in-out infinite;
+
+}
+
+.main-page{
+  padding-top: 2vh;
+}
+
+.phone-selection .select-mode{
+  width: 25vh;
+  height: 13vh;
+  justify-content: space-between;
+}
+.phone-selection .select-mode img{
+  position: unset;
+  height: 100%;
+  width: auto;
+}
+.rule-list{
+  flex-direction: column;
+  align-items: center;
+}
+.rule-bloc{
+  width: 55vw;
+  padding: 9% 4% ;
+}
+
+.artifacts-list{
+  margin-top: 30px;
+}
+.artifact-border{
+  width: 80px;
+  height: 80px;
+}
+.artifact-border figure {
+  width: 80%;
+  height: 80%;
+}
+.artifact-border figure img{
+  width: 100%;
+  height: 100%;
+}
+.PlayButton{
+  width: 35%;
+}
+} 

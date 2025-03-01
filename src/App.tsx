@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from './Home'
+import HomePhone from './HomePhone'
 import MultiCreation from './MultiCreation'
 import MultiShare from './MultiShare'
 import MultiGame from './MultiGame'
@@ -20,6 +21,7 @@ function App() {
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/homephone" element={<HomePhone />} />
         <Route path="/multicreation" element={<MultiCreation />} />
         <Route path="/multishare" element={<MultiShare />} />
         <Route path="/multigame" element={<MultiGame />} />
