@@ -7,19 +7,21 @@ import { Background } from "./assets/back.tsx";
 import images from './assets/monster/images'
 
 
+
 function SoloCreation() {
 
 return(
   <div className="page">
-    <Background></Background>
      <CreditButton />
+    <Background></Background>
+    
    
     <div className="big">
      <form action="">
       <div className="container solo">
 
           <div id="monster_15">
-            <img className='monsters' id='m15' src={images.degrado} alt="" />
+            <img className='monsters ' id='m15' src={images.degrado} alt="" />
           </div>
 
       <div className="left">

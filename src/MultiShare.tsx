@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareXmark} from "@fortawesome/free-solid-svg-icons";
 import { Background } from "./assets/back.tsx";
 import images from './assets/monster/images'
+import { DeletePLayer } from './component/Component'
 
 
 
@@ -74,11 +75,13 @@ function MultiShare() {
           <div className="title">Joueurs</div>
           <div className="container_ul">
             <ul>
-                <li>Kabuto <FontAwesomeIcon icon={faSquareXmark} /></li>
-                <li>Kabuto <FontAwesomeIcon icon={faSquareXmark} /></li>
-                <li>Kabuto <FontAwesomeIcon icon={faSquareXmark} /></li>
-                <li>Kabuto <FontAwesomeIcon icon={faSquareXmark} /></li>
-                <li>Kabuto <FontAwesomeIcon icon={faSquareXmark} /></li>
+                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
+                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
+                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
+                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
+                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
+                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
+             
              
             </ul>
           </div>

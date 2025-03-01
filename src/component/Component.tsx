@@ -3,6 +3,8 @@ import { FaShare } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa";
 import crown from '../assets/icons/crown.svg'
 import images from '../assets/monster/images'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSquareXmark} from "@fortawesome/free-solid-svg-icons";
 
 
 import type { Player } from '../types/Player.ts';
@@ -172,5 +174,12 @@ export const PlayShare=() =>{
       <button className="button">Partager<FaShare/></button>
       <button className="button">Demarrer<FaPlay/> </button>
     </div>
+  );
+}
+
+
+export const DeletePLayer=(props:{player: string})=>{
+  return (
+    <FontAwesomeIcon icon={faSquareXmark} id={props.player} className='delete-player'/>
   );
 }

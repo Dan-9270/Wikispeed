@@ -1095,7 +1095,7 @@ main{
   color: transparent;
 }
 
-#inputBox:hover {
+#inputBox:hover , .words:hover{
   border-color:  #FFB700;
   
 }
