@@ -55,9 +55,9 @@ function Home() {
 
 
             <Background/>
+            <CreditButton />
                 <section className="main-page">
  
-              <CreditButton />
                <LogoTitle />
 
                  <div className="selection-container">
