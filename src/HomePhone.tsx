@@ -23,7 +23,10 @@ import './style/wikispeed.css'
 import { Background } from './assets/back'
 
 function Home() {
-  const artifactImages = [mine,map,map,map,map,map,map
+  const artifactImages1 = [mine,map,map
+    
+  ]; 
+  const artifactImages2 = [map,map,map
     
   ]; 
 
@@ -61,16 +64,14 @@ function Home() {
                <LogoTitle />
 
                  <div className="selection-container">
-                    <div className="selection">                 
+                    <div className="phone-selection">                 
                     <SelectMode title='Solo' img={images.green} link='solocreation'/>
-                    <SetProfile image={images.damien} username={undefined} />
-                    <NextHome title="Jouer" link="homephone"></NextHome>
-                    <SelectMode title='Multijoueur' img={images.bibabo} link='multicreation'/> 
+                    <div className="or"> <span className='manjari'>OU</span></div>
+                    <SelectMode title='Multi' img={images.bibabo} link='multicreation'/> 
                     </div>
                  </div>
                  </section>
 
-                <section className='second-part'> 
                 <BottomRedirection content="How To Play" link="#rules"/>
                 <Title title='How to play ?'></Title>
                   <div className="rule-list" id="rules">
@@ -86,7 +87,8 @@ function Home() {
                   </div>
 
                   <Title title='Artéfacts'></Title>
-                  <ArtifactsList imgs={artifactImages}/>
+                  <ArtifactsList imgs={artifactImages1}/>
+                  <ArtifactsList imgs={artifactImages2}/>
                   <PlayButton/>
                   
 
@@ -96,7 +98,6 @@ function Home() {
                 <img className='monsters' id='m7' src={images.neuille} alt="" />
               </div> */}
             </Footer>
-            </section>
 
   
 
