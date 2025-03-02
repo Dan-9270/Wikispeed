@@ -31,7 +31,7 @@ function Home() {
 
         <>
               
-            <div id='monster_1'>
+            <div id='monster_1' >
               <img className='monsters mleft-rotate' id='m1' src={images.benjamin} alt="" />
             </div>
 
@@ -57,7 +57,7 @@ function Home() {
             <Background/>
             <CreditButton />
             <MusicPlayer />
-                <section className="main-page">
+                <section className="main-page" id='top'>
  
                <LogoTitle />
 
@@ -71,10 +71,10 @@ function Home() {
                  </div>
                  </section>
 
-                <section className='second-part'> 
+                <section className='second-part' id="rules"> 
                 <BottomRedirection content="How To Play" link="#rules"/>
                 <Title title='How to play ?'></Title>
-                  <div className="rule-list" id="rules">
+                  <div className="rule-list" >
                       <RuleBlox content='1. Crées une partie Lance une partie en solo ou avec des amis.' /> 
                       <RuleBlox content='2. Découvre ta liste d’articles Tu reçois une liste d’articles Wikipédia à visiter.' />
                       <RuleBlox content='3. Navigue d’article en articles Clique sur les liens internes de Wikipédia pour avancer d’un article à l’autre.' />
