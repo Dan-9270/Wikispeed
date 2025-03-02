@@ -2,23 +2,26 @@ import React, { useState, useRef, useEffect } from 'react'
 import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from 'react-icons/fa'
 import musicFile from '../assets/music/music1.mp3'
 
-
 export const MusicPlayer: React.FC = () => {
   const audioRef = useRef<HTMLAudioElement>(new Audio(musicFile))
-  const [isPlaying, setIsPlaying] = useState<boolean>(false)
-  const [volume, setVolume] = useState<number>(1)
+  const [isPlaying, setIsPlaying] = useState<boolean>(true) 
+  const [volume, setVolume] = useState<number>(0.5) 
   const [isMuted, setIsMuted] = useState(false)
   const [isHovered, setIsHovered] = useState(false)
 
   useEffect(() => {
     audioRef.current.volume = volume
+
     if (isPlaying) {
       audioRef.current.play()
     } else {
       audioRef.current.pause()
     }
-  }, [isPlaying, volume])
 
+    return () => {
+      audioRef.current.pause()
+    }
+  }, [isPlaying, volume])
   const togglePlayPause = () => {
     setIsPlaying(!isPlaying)
   }
@@ -30,7 +33,7 @@ export const MusicPlayer: React.FC = () => {
 
   const toggleMute = () => {
     setIsMuted(!isMuted)
-    setVolume(isMuted ? 1 : 0)
+    setVolume(isMuted ? 0.5 : 0)
   }
 
   return (
