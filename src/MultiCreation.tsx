@@ -3,6 +3,7 @@ import {CreditButton} from './component/Component'
 import {CreateGame} from './component/GameComponent'
 import {JoinGame} from './component/GameComponent'
 import images from './assets/monster/images'
+import { MusicPlayer } from './component/MusicComponent'
 
 
 import './style/wikispeed.css'
@@ -15,6 +16,7 @@ function MultiCreation() {
           <Background></Background>
             <CreditButton />
             <LogoTitle />
+            <MusicPlayer />
 
 
 

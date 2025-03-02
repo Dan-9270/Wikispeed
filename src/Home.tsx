@@ -10,7 +10,7 @@ import {PlayButton} from './component/RouteComponent'
 import {ArtifactsList} from './component/Component'
 import {Footer} from './component/Component'
 import {Title} from './component/Component'
-import { Link } from "react-router-dom";
+import { MusicPlayer } from './component/MusicComponent'
 import images from './assets/monster/images'
 
 
@@ -56,6 +56,7 @@ function Home() {
 
             <Background/>
             <CreditButton />
+            <MusicPlayer />
                 <section className="main-page">
  
                <LogoTitle />
