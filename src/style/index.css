@@ -138,6 +138,7 @@ align-items : stretch;
   color: white;
   text-transform: none;
   text-shadow: none;
+  padding-top: 0;
  
 }
 .container .opt{
@@ -371,11 +372,7 @@ transform: translateX(130px);
     gap: 3vh;
     display: flex;
   }
-  .monsters
-  
-  {
-    display: none;
-  }
+
 
   .page .right{
     display: none;
@@ -429,12 +426,13 @@ g{
 }
 
 
-.main-page {
-  background: linear-gradient(to bottom, #6b11cb66, #2575fc);
+.main-page, .page ,body{
+  background: linear-gradient(to bottom, #6b11cb66, #2574fcab, #153082);
   width: 100vw;
 }
-.second-part{
-  background-color : #2575fc;
+.second-part, .phone-second{
+  background-color : #153082;
+  
   width: 100vw;}
 
 

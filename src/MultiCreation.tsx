@@ -13,13 +13,14 @@ function MultiCreation() {
 
   return (
         <>
+              <div className="page">
           <Background></Background>
             <CreditButton />
             <LogoTitle />
             <MusicPlayer />
 
 
-
+      
             <div className='MultiCreation'>
 
               
@@ -30,6 +31,7 @@ function MultiCreation() {
                   </div>
                 </JoinGame>
                 
+            </div>
             </div>
         </>
   )

@@ -55,7 +55,7 @@ function MultiShare() {
             </tr>
             <tr> 
             <td>   <span className="random opt span-phone">Mots aleatoires</span></td> 
-            <td className="td-phone">  <Button choix="random" value="OUI " /> <Button choix="random" value="NON"/>   </td>
+            <td className="td-phone">  <Button choix="random" value="OUI" /> <Button choix="random" value="NON"/>   </td>
             </tr>
             <tr> 
             <td>  <span className="word opt span-phone">Choisir ses mots</span></td> 
