@@ -328,40 +328,9 @@ transform: translateX(130px);
   cursor: pointer;
   scale: 1.1;
 }
-.logo{
-}
 
 
-.container-phone{
-  width: 80vw;
-  height: 60vh;
-}
 
-
-.left-phone{
-  width: 100%;
-  height: 100%;
-
-  padding: 2%;
-}
-
-.span-phone{
- font-size: 1rem !important;
-
-}
-
-.input-phone{
-  width: 100%;
-  height: 2.2vw;
-  border: 1px solid white;
-  background-color: rgba(74, 50, 50, 0.34);
-  color: white;
-  font-size: 1.2vw;
-  cursor: pointer;
-  transition: 0.3s;
- border-radius: 0.7vw;
- padding-left: 5px;
-}
 
 @media screen and (max-width: 550px){
   .words{
@@ -407,4 +376,49 @@ transform: translateX(130px);
   {
     display: none;
   }
+
+  .page .right{
+    display: none;
+  }
+  .container-phone{
+    width: 80vw;
+    height: 60vh;
+  }
+  
+  
+  .left-phone{
+    width: 100%;
+    height: 100%;
+  
+    padding: 2%;
+  }
+  
+  .span-phone{
+   font-size: 1rem !important;
+  
+  }
+  
+  .input-phone{
+    width: 100%;
+    
+    border: 1px solid white;
+    background-color: rgba(74, 50, 50, 0.34);
+    color: white;
+    font-size: 1.2vw;
+    cursor: pointer;
+    transition: 0.3s;
+   border-radius: 0.7vw;
+   padding-left: 5px;
+  }
+  .page2{
+    display: flex !important;
+  }
+  .solo{
+    width: 80vw !important;
+  }
+}
+
+
+.page2{
+  display: none;
 }
