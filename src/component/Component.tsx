@@ -140,7 +140,7 @@ export function Button(props: { choix: string; value: string }) {
 }
 
 export function List(props: { children: string }) {
-  return <select name="list" id="list" className="input-phone">
+  return <select name="list" id="list" className="">
       <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? '1 article' : '3 minutes'}</option>
       <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? 2 : 5}</option>
       <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? 3 : 10}</option>
