@@ -17,7 +17,9 @@ import { DeletePLayer } from './component/Component'
 
 function MultiShare() {
   return (
+   
     <div className="page">
+       <LogoTitle />
       <Background></Background>
        <CreditButton />
          <div className="big">

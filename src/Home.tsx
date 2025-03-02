@@ -55,10 +55,11 @@ function Home() {
 
 
             <Background/>
+            <CreditButton />
+            <LogoTitle />
                 <section className="main-page">
  
-              <CreditButton />
-               <LogoTitle />
+             
 
                  <div className="selection-container">
                     <div className="selection">                 

@@ -321,5 +321,7 @@ transform: translateX(130px);
   cursor: pointer;
   scale: 1.1;
 }
-
+.logo{
+  position: absolute;
+}
 
