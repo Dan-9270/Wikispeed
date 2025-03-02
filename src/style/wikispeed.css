@@ -501,6 +501,8 @@ text-transform: uppercase;
   cursor: pointer;
  transform: translateX(-50%);
   transition: 0.3s;
+  text-align: center;
+  display: block;
 }
 .PlayButton:hover{
   background-color : #eca900;
