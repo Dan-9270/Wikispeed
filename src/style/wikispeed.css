@@ -1353,4 +1353,8 @@ right: 29vw;
 .PlayButton{
   width: 35%;
 }
+
 } 
+.phone-second{
+  overflow-x: hidden;
+}
