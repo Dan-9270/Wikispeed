@@ -9,7 +9,7 @@ import { useRedirect } from "../script/Redirection";
 
 
 import type { Player } from '../types/Player.ts';
-
+import {Artifact} from "./Artifact.tsx";
 export const LogoTitle = () =>{
   const redirectTo = useRedirect();
     return <figure className='logo'><img src={logo} alt=""  onClick={() => redirectTo("/")}/></figure>
@@ -21,18 +21,18 @@ export const CreditButton = () =>{
       <p className='manjari'>Credits</p>
       </div>
 }
-const Artifacts = (props:{img:string}) =>{
+const Artifacts = (props:{artifact:Artifact}) =>{
     return <div className='artifact-border'>
-        <figure> <img src={props.img} alt="" /></figure>
+        <figure> <img src={props.artifact.img} alt={props.artifact.name} /></figure>
       </div>
 }
 
-export const ArtifactsList = (props:{imgs : string[]}) => {
+export const ArtifactsList = (props:{artifacts : Artifact[]}) => {
 
   return (
     <div className="artifacts-list">
-      {props.imgs.map((img, index) => (
-        <Artifacts key={index} img={img} />
+      {props.artifacts.map((artifact, index) => (
+        <Artifacts key={index} artifact={artifact} />
       ))}
     </div>
   );

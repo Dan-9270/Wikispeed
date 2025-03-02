@@ -16,6 +16,7 @@
 .timer h3 {
     font-size:x-large;
     color: white;
+    text-align: center ;
 }
 
 .timer p {
@@ -26,7 +27,7 @@
 
 @media (max-width: 480px) {
     .timer {
-        width: 85%; 
+        width: 60%;
         margin: 20px auto;
         padding: 15px;
     }

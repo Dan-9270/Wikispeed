@@ -1,6 +1,5 @@
 import { LogoTitle } from './component/Component'
 import {CreditButton} from './component/Component'
-import back from './assets/back.svg'
 import mine from './assets/artifact/mine.svg'
 import map from './assets/artifact/map.svg'
 import {NextHome, SelectMode} from './component/SelectMode'
@@ -23,9 +22,7 @@ import './style/wikispeed.css'
 import { Background } from './assets/back'
 
 function Home() {
-  const artifactImages = [mine,map,map,map,map,map,map
-    
-  ]; 
+  const artifacts = [{name:'mine',description:'',img:mine},{name:'map',description:'',img:map},{name:'map',description:'',img:map},{name:'map',description:'',img:map},{name:'map',description:'',img:map}];
 
   return (
 
@@ -87,7 +84,7 @@ function Home() {
                   </div>
 
                   <Title title='Artéfacts'></Title>
-                  <ArtifactsList imgs={artifactImages}/>
+                  <ArtifactsList artifacts={artifacts}/>
                   <PlayButton/>
                   
 
