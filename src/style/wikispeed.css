@@ -151,10 +151,7 @@ text-transform: uppercase;
   font-family: 'Manjari Bold', sans-serif;
   transform:translateY(4px);
 }
-/* -------------------------- CREDITS -------------------------- */
-
-
-
+/* -------------------------- MONSTER -------------------------- */
 
 .monsters{
   position: absolute;
@@ -382,6 +379,32 @@ text-transform: uppercase;
     height: auto;
    }
 
+/* -------------------------- MUSIC -------------------------- */
+
+   .musicGestion{
+    display: flex;
+    flex: row;
+    gap:20px;
+    position: absolute;
+    top: 80px;
+    right:45px;
+  }
+  
+  .musicButton {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    color: #fff;
+  }
+  
+  .musicButton:hover{
+  color: #FFB700;
+  }
+  
+  .volumeControl:hover {
+    color: #FFB700; /* Changement de couleur au survol */
+  }
+  
 /* -------------------------- SELECT MODE -------------------------- */
 
 .select-mode{
