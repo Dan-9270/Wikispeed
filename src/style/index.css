@@ -422,3 +422,19 @@ transform: translateX(130px);
 .page2{
   display: none;
 }
+
+g{
+
+  opacity: 0.2;
+}
+
+
+.main-page {
+  background: linear-gradient(to bottom, #6b11cb66, #2575fc);
+  width: 100vw;
+}
+.second-part{
+  background-color : #2575fc;
+  width: 100vw;}
+
+

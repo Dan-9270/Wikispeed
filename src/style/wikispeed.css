@@ -117,6 +117,7 @@ text-transform: uppercase;
   right:25px;
   transition: 0.3s;
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+  z-index: 100;
 
 }
 
@@ -388,6 +389,7 @@ text-transform: uppercase;
     position: absolute;
     top: 80px;
     right:45px;
+    z-index: 100;
   }
   
   .musicButton {
@@ -505,7 +507,7 @@ text-transform: uppercase;
 }
 
 .title{
-  margin-top: 15%;
+  padding-top: 15%;
   color: #FFB700;
   text-shadow: 0px 4px 6px rgba(0, 0, 0, 1);
   font-weight: 400;
@@ -1051,6 +1053,8 @@ main{
     width:fit-content;
   }
 }
+
+
 .chatbutton{
   position: fixed;
   bottom:5%;
@@ -1197,7 +1201,9 @@ cursor: pointer;
 
 
   }
-  
+
+
+ 
   @keyframes slideInOut {
     
     0% {
@@ -1260,6 +1266,7 @@ cursor: pointer;
 }
 .second-part{
   display: none;
+
 }
 #monster_4{
   position: unset;
