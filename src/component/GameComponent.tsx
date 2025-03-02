@@ -1,3 +1,4 @@
+import { FaPlay } from "react-icons/fa";
 import { useRedirect } from "../script/Redirection";
 
 export const CreateGame = (props: { children?: React.ReactNode })=>{
@@ -17,6 +18,12 @@ export const CreateGame = (props: { children?: React.ReactNode })=>{
             {props.children}
         </div>
     );
+}
+export const PlayGame =(props:{link : string}) =>{
+  const redirectTo = useRedirect();
+  return         <button onClick={()=> redirectTo(`/${props.link}`)}
+  className="button">Demarrer<FaPlay></FaPlay> </button>
+  
 }
 
   export const Setting = () =>{

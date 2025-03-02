@@ -67,6 +67,7 @@ align-items : stretch;
  gap: 2%;
  padding: 3%;
  height: auto;
+ position: relative;
  
  
 }

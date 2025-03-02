@@ -6,6 +6,7 @@ import { FaPlay } from "react-icons/fa";
 import { Background } from "./assets/back.tsx";
 import images from './assets/monster/images'
 import { LogoTitle } from './component/Component'
+import { PlayGame } from "./component/GameComponent.tsx";
 
 
 
@@ -73,7 +74,7 @@ return(
       </div>
       <div className="container_button">
        
-        <button className="button">Demarrer<FaPlay/> </button>
+        <PlayGame link="sologame"></PlayGame>
       </div>
       </form>
     </div>

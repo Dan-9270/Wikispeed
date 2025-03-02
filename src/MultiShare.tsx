@@ -10,6 +10,8 @@ import { faSquareXmark} from "@fortawesome/free-solid-svg-icons";
 import { Background } from "./assets/back.tsx";
 import images from './assets/monster/images'
 import { DeletePLayer } from './component/Component'
+import { PlayButton } from "./component/RouteComponent.tsx";
+import { PlayGame } from "./component/GameComponent.tsx";
 
 
 
@@ -92,7 +94,7 @@ function MultiShare() {
       </div>
       <div className="container_button">
         <button className="button">Partager<FaShare/></button>
-        <button className="button">Demarrer<FaPlay/> </button>
+        <PlayGame link="multigame"></PlayGame>
       </div>
       </form>
     </div>
