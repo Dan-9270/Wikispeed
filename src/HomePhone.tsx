@@ -3,7 +3,7 @@ import {CreditButton} from './component/Component'
 import back from './assets/back.svg'
 import mine from './assets/artifact/mine.svg'
 import map from './assets/artifact/map.svg'
-import {SelectMode} from './component/SelectMode'
+import {NextHome, SelectMode} from './component/SelectMode'
 import {SetProfile} from './component/SetProfile'
 import {RuleBlox} from './component/Component'
 import {PlayButton} from './component/RouteComponent'
@@ -23,7 +23,10 @@ import './style/wikispeed.css'
 import { Background } from './assets/back'
 
 function Home() {
-  const artifactImages = [mine,map,map,map,map,map,map
+  const artifactImages1 = [mine,map,map
+    
+  ]; 
+  const artifactImages2 = [map,map,map
     
   ]; 
 
@@ -55,24 +58,22 @@ function Home() {
 
 
             <Background/>
-             <CreditButton />
-               <LogoTitle />
+            <CreditButton />
                 <section className="main-page">
  
-             
+               <LogoTitle />
 
                  <div className="selection-container">
-                    <div className="selection">                 
+                    <div className="phone-selection">                 
                     <SelectMode title='Solo' img={images.green} link='solocreation'/>
-                    <SetProfile image={images.damien} username={undefined} />
-                    <SelectMode title='Multijoueur' img={images.bibabo} link='multicreation'/> 
+                    <div className="or"> <span className='manjari'>OU</span></div>
+                    <SelectMode title='Multi' img={images.bibabo} link='multicreation'/> 
                     </div>
                  </div>
-                 <BottomRedirection content="How To Play" link="#rules"/>
                  </section>
 
-                
-                  <Title title='How to play ?'></Title>
+                <BottomRedirection content="How To Play" link="#rules"/>
+                <Title title='How to play ?'></Title>
                   <div className="rule-list" id="rules">
                       <RuleBlox content='1. Crées une partie Lance une partie en solo ou avec des amis.' /> 
                       <RuleBlox content='2. Découvre ta liste d’articles Tu reçois une liste d’articles Wikipédia à visiter.' />
@@ -86,7 +87,8 @@ function Home() {
                   </div>
 
                   <Title title='Artéfacts'></Title>
-                  <ArtifactsList imgs={artifactImages}/>
+                  <ArtifactsList imgs={artifactImages1}/>
+                  <ArtifactsList imgs={artifactImages2}/>
                   <PlayButton/>
                   
 
@@ -96,6 +98,7 @@ function Home() {
                 <img className='monsters' id='m7' src={images.neuille} alt="" />
               </div> */}
             </Footer>
+
   
 
           
