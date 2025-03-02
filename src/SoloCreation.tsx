@@ -5,51 +5,57 @@ import {CreditButton} from './component/Component'
 import { FaPlay } from "react-icons/fa";
 import { Background } from "./assets/back.tsx";
 import images from './assets/monster/images'
+import { LogoTitle } from './component/Component'
 
 
 
 function SoloCreation() {
 
 return(
-  <div className="page">
-     <CreditButton />
-    <Background></Background>
-    
-   
-    <div className="big">
-     <form action="">
-      <div className="container solo">
+  <div>
+    <div className="page">
+       <LogoTitle />
+      <Background></Background>
+       <CreditButton />
+       
+         <div className="big">
+    <form action="">
+      <div className="container container-phone solo">
 
-          <div id="monster_15">
-            <img className='monsters ' id='m15' src={images.degrado} alt="" />
+          <div id="monster_16">
+            <img className='monsters' id='m16' src={images.cornu} alt="" />
           </div>
 
-      <div className="left">
+          <div id="monster_17">
+            <img className='monsters' id='m17' src={images.titouan} alt="" />
+          </div>
+
+        <div className="left  ">
           <span className="title">Parametre</span>
        
-          <table className="container_ul">
+          <table className="container_ul left-phone">
             
             <tr>
-              <td> <span className="nbreArticle opt">Nombre d'articles</span></td>
-              <td> <List children="article" /></td>
+              <td> <span className="nbreArticle opt span-phone">Nombre d'articles</span></td>
+              <td className="td-phone"> <List children="article" /></td>
             </tr>
 
             <tr> 
-            <td> <span className="artefacts opt">Artefacts</span></td> 
-            <td> <Button choix="artefacts" value="OUI" /> <Button choix="artefacts" value="NON"/></td>
+            <td> <span className="artefacts opt span-phone">Artefacts</span></td> 
+            <td className="td-phone"> <Button choix="artefacts" value="OUI" /> <Button choix="artefacts" value="NON"/></td>
             </tr>
             <tr> 
-            <td>     <span className="temps opt ">Temps</span></td> 
-            <td>   <List children="time" /></td>
+            <td>     <span className="temps opt span-phone ">Temps</span></td> 
+            <td className="td-phone">    <List children="time"/></td>
             </tr>
             <tr> 
-            <td>   <span className="random opt">Mots aleatoires</span></td> 
-            <td>  <Button choix="random" value="OUI" /> <Button choix="random" value="NON"/>   </td>
+            <td>   <span className="random opt span-phone">Mots aleatoires</span></td> 
+            <td className="td-phone">  <Button choix="random" value="OUI " /> <Button choix="random" value="NON"/>   </td>
             </tr>
             <tr> 
-            <td>  <span className="word opt">Choisir ses mots</span></td> 
+            <td>  <span className="word opt span-phone">Choisir ses mots</span></td> 
             <td>  <form action="">
-                  <input className="words" type="text" placeholder="Choisir un mot" />
+                  <input className="words input-phone" type="text" placeholder="Choisir un mot" />
                   <input type="submit" />
                   </form></td>
             </tr>
@@ -63,14 +69,16 @@ return(
             <li>incrr</li>
           </ul></div>
         </div>
-
+       
       </div>
       <div className="container_button">
        
-        <button className="button">Demarrer <FaPlay/></button>
+        <button className="button">Demarrer<FaPlay/> </button>
       </div>
       </form>
     </div>
+    </div>
+    
     </div>
 )
 }
