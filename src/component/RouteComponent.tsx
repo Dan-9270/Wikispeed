@@ -1,8 +1,8 @@
 export const PlayButton = () => {
 
   return (
-    <button className="PlayButton">
-      <a href="#top">Play ! →</a>
-    </button>
+   
+      <a href="#top" className="PlayButton">Play ! →</a>
+  
   );
 };
