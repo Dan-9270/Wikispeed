@@ -73,6 +73,7 @@ function Home() {
                  </section>
 
                 <BottomRedirection content="How To Play" link="#rules"/>
+                <section className="phone-second">
                 <Title title='How to play ?'></Title>
                   <div className="rule-list" id="rules">
                       <RuleBlox content='1. Crées une partie Lance une partie en solo ou avec des amis.' /> 
@@ -90,7 +91,7 @@ function Home() {
                   <ArtifactsList imgs={artifactImages1}/>
                   <ArtifactsList imgs={artifactImages2}/>
                   <PlayButton/>
-                  
+                  </section>
 
 
             <Footer content1='Aide' content2='Confidentialités' content3='Mentions Légales'>
