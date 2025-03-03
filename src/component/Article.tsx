@@ -15,18 +15,19 @@ export const ArticleDisplayer = (props: { title: string; setTitle: (newTitle: st
     }, [props.title]);
 
     useEffect(() => {
-        // Attendre que le contenu soit mis à jour
+
         const container = document.querySelector('.article-content');
         if (!container) return;
 
-        // Écouter les clics sur les liens
         const handleClick = (event: Event) => {
             const target = event.target as HTMLAnchorElement;
             if (target.tagName === 'A') {
                 event.preventDefault(); // Empêche l'ouverture du lien dans une nouvelle page
                 
-                const newTitle = target.innerText; // Récupère le texte du lien comme nouveau titre
-                props.setTitle(newTitle); // Change l'article affiché
+                const newTitle = target.getAttribute("title"); // Récupère le texte du lien comme nouveau titre
+                if (newTitle) {
+                    props.setTitle(newTitle); // Change l'article affiché
+                }
             }
         };
 
