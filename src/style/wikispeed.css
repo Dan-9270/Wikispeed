@@ -501,7 +501,7 @@ text-transform: uppercase;
   font-family: 'Manjari', sans-serif;
   background-color : #FFB700;
   border-radius: 25px;
-  margin: 15% 50%;
+  margin: 12% 50%;
   border: none;
   width: 10%;
   padding: 10px 5px;
@@ -593,6 +593,11 @@ text-transform: uppercase;
 
 #inputBox:focus::placeholder {
   color: transparent;
+}
+
+
+#inputBox::placeholder {
+  color: rgb(215, 212, 212);
 }
 
 #inputBox:hover , .words:hover{
@@ -1462,7 +1467,7 @@ right: 29vw;
 }
 
 .second-part .artifacts-list{
-  margin-top: 3vh;
+  margin-top: 5vh;
 
 }
 .avatar-portal{
