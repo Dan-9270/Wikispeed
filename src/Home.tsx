@@ -62,7 +62,7 @@ function Home() {
                     <SelectMode title='Solo' img={images.green} link='solocreation'/>
                     </SoundPlayer>
 
-                    <SetProfile image={images.damien} username={undefined} />
+                    <SetProfile  username={undefined} />
                     <NextHome title="Jouer" link="homephone"></NextHome>
 
                     <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>                
