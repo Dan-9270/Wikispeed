@@ -66,6 +66,15 @@ export const ArticleDisplayer = (props: { title: string; setTitle: (newTitle: st
                 const wrapper = document.createElement('div');
                 wrapper.classList.add('infobox-wrapper');
 
+                const tables = infobox.querySelectorAll('table');
+
+                // Garder seulement les 2 premières tables (par exemple)
+                tables.forEach((table, index) => {
+                    if (index >= 4) {
+                        table.remove(); // Supprime toutes les tables après les 2 premières
+                    }
+                });
+
                 // Ajouter tous les frères de l'info box dans le wrapper, sauf l'info box elle-même
                 Array.from(parent.children).forEach(child => {
                     if (child !== infobox) {
@@ -80,8 +89,11 @@ export const ArticleDisplayer = (props: { title: string; setTitle: (newTitle: st
                 // Insérer l'info box de retour dans le parent (après les frères)
                 parent.appendChild(infobox);
                 parent.style.display = 'flex';
+                parent.style.justifyContent = 'center';
+                parent.style.alignItems = 'center';
                 parent.style.flexDirection = 'row'; // Aligner les éléments horizontalement
                 parent.style.gap = '20px';
+                parent.style.width="100%";
             }
         }
 
