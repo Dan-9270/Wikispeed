@@ -40,15 +40,27 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
               </div>
           </div>
 
-            <div className='game-bottom'>
-                <svg xmlns="http://www.w3.org/2000/svg" width="145" height="118" viewBox="0 0 145 118" fill="none">
-                    <path d="M12.5852 5.82508L144.459 0.37847L113.764 25.7168L105.137 52.8468L102.059 117.977L-2.41697e-05 105.03L12.5852 5.82508Z" fill="#4943C6"/>
-                </svg>
-                <Inventory artifact1={{name:'mine',description:'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',img:mine}} artifact2={{name:'map',description:'aaaaaaaaaaaaaaaaaaaazzzzzzzzzzzz',img:map}} />
-                <svg xmlns="http://www.w3.org/2000/svg" width="111" height="79" viewBox="0 0 111 79" fill="none">
-                    <path d="M131.878 5.82496L-0.000232127 0.384232L30.6971 25.7212L39.3253 52.8509L42.4052 117.981L144.467 105.029L131.878 5.82496Z" fill="#4943C6"/>
-                </svg>
-            </div>
+          <div className='game-bottom'>
+       
+
+
+       <div className="bottom_bar">  <svg width="114" height="100" viewBox="0 0 114 72" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bl'>
+<path d="M0 0H114C54.5 26 66 72 66 72H0V0Z" fill=" #4943C6" />
+</svg>
+
+
+   <svg width="114" height="100" viewBox="0 0 114 72" fill="blue" xmlns="http://www.w3.org/2000/svg" id='br'>
+<path d="M114 0H0C59.5 26 48 72 48 72H114V0Z" fill=" #4943C6"/>
+</svg>
+
+</div>
+<svg width="225" height="100" viewBox="0 0 225 73" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bb'>
+<path d="M111.675 -0.000378409C165.925 0.28796 237 19.4997 222 71.4994C206.999 123.499 165.925 114.16 111.674 113.872C57.4239 113.584 22.5001 123 2.99974 71.4993C-12 19 57.4247 -0.288717 111.675 -0.000378409Z" fill=" #4943C6"/>
+</svg>
+<Inventory artifact1={{name:'mine',description:'',img:mine}} artifact2={{name:'map',description:'',img:map}} />
+
+
+   </div>
         </div>
         </section>
         </>

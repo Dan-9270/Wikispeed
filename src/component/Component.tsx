@@ -6,10 +6,12 @@ import images from '../assets/monster/images'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareXmark} from "@fortawesome/free-solid-svg-icons";
 import { useRedirect } from "../script/Redirection";
-
-
 import type { Player } from '../types/Player.ts';
-import {Artifact,Artifacts} from "./Artifact.tsx";
+import {Artifact, Artifacts} from "./Artifact.tsx";
+
+
+
+
 export const LogoTitle = () =>{
   const redirectTo = useRedirect();
     return <figure className='logo'><img src={logo} alt=""  onClick={() => redirectTo("/")}/></figure>

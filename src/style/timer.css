@@ -17,6 +17,7 @@
     font-size:x-large;
     color: white;
     text-align: center ;
+    white-space: nowrap;
 }
 
 .timer p {
@@ -25,10 +26,18 @@
     line-height: 1.6;
 }
 
-@media (max-width: 480px) {
+@media (max-width: 550px) {
     .timer {
-        width: 60%;
+        width: 50%;
         margin: 20px auto;
-        padding: 15px;
+        padding: 15px 15px 5px 15px;
+        font-size: 1rem;
     }
+    .timer h3{
+        font-size: 1rem;
+    }
+    .timer p{
+        font-size: 1.2rem;
+    }
+
 }
