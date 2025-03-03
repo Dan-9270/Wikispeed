@@ -13,12 +13,13 @@ import './style/wikispeed.css'
 import SoloGame from "./SoloGame";
 import MultiSharePhone from "./MultiSharePhone";
 import SoloCreationPhone from "./SoloCreationPhone";
+import { AudioProvider } from './script/AudioContext'
 
 
 function App() {
   
   return (
-   
+    <AudioProvider>
     <Router>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -36,6 +37,8 @@ function App() {
 
       </Routes>
     </Router>
+    </AudioProvider>
+
   );
 }
 

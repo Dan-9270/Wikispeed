@@ -1,39 +1,26 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from 'react-icons/fa'
-import musicFile from '../assets/music/music1.mp3'
+import { useAudio } from '../script/AudioContext'
 
 export const MusicPlayer: React.FC = () => {
-  const audioRef = useRef<HTMLAudioElement>(new Audio(musicFile))
-  const [isPlaying, setIsPlaying] = useState<boolean>(true) 
-  const [volume, setVolume] = useState<number>(0.5) 
-  const [isMuted, setIsMuted] = useState(false)
+  const { isPlaying, volume, togglePlayPause, setVolume } = useAudio()
+  const [isMuted, setIsMuted] = useState(volume === 0)
   const [isHovered, setIsHovered] = useState(false)
-
-  useEffect(() => {
-    audioRef.current.volume = volume
-
-    if (isPlaying) {
-      audioRef.current.play()
-    } else {
-      audioRef.current.pause()
-    }
-
-    return () => {
-      audioRef.current.pause()
-    }
-  }, [isPlaying, volume])
-  const togglePlayPause = () => {
-    setIsPlaying(!isPlaying)
-  }
 
   const handleVolumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newVolume = parseFloat(event.target.value)
     setVolume(newVolume)
+    setIsMuted(newVolume === 0)
   }
 
   const toggleMute = () => {
-    setIsMuted(!isMuted)
-    setVolume(isMuted ? 0.5 : 0)
+    if (isMuted) {
+      setVolume(0.5)
+      setIsMuted(false)
+    } else {
+      setVolume(0)
+      setIsMuted(true)
+    }
   }
 
   return (
@@ -44,11 +31,7 @@ export const MusicPlayer: React.FC = () => {
         onMouseLeave={() => setIsHovered(false)}
       >
         <div className="volumeIcon" onClick={toggleMute}>
-          {isMuted ? (
-            <FaVolumeMute size={24} color="red" />
-          ) : (
-            <FaVolumeUp size={24} />
-          )}
+          {isMuted ? <FaVolumeMute size={24} color="red" /> : <FaVolumeUp size={24} />}
         </div>
 
         {isHovered && (
