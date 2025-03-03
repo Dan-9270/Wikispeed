@@ -60,6 +60,29 @@ export const ArticleDisplayer = (props: { title: string; setTitle: (newTitle: st
         let cleanedContent = '';
         if (infobox) {
             cleanedContent +=""; // Ajoute l'Infobox au début
+            const parent = infobox.parentElement
+            if(parent){
+
+                const wrapper = document.createElement('div');
+                wrapper.classList.add('infobox-wrapper');
+
+                // Ajouter tous les frères de l'info box dans le wrapper, sauf l'info box elle-même
+                Array.from(parent.children).forEach(child => {
+                    if (child !== infobox) {
+                        wrapper.appendChild(child);
+                    }
+                });
+
+                // Vider le parent et ajouter le wrapper contenant les frères de l'info box
+                parent.innerHTML = '';
+                parent.appendChild(wrapper);
+
+                // Insérer l'info box de retour dans le parent (après les frères)
+                parent.appendChild(infobox);
+                parent.style.display = 'flex';
+                parent.style.flexDirection = 'row'; // Aligner les éléments horizontalement
+                parent.style.gap = '20px';
+            }
         }
 
         // Ajouter le reste du contenu (corps de l'article)
