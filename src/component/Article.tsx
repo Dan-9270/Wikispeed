@@ -13,7 +13,12 @@ export const ArticleDisplayer = (props: { title: string; setTitle: (newTitle: st
         };
         fetchArticle();
     }, [props.title]);
-
+    useEffect(() => {
+        const articleTitle = document.getElementById("article_tit");
+        if (articleTitle) {
+            articleTitle.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+    }, [props.title]);
     useEffect(() => {
         const container = document.querySelector('.article-content');
         if (!container) return;
@@ -106,7 +111,7 @@ export const ArticleDisplayer = (props: { title: string; setTitle: (newTitle: st
 
     return (
         <div className="article-container">
-            <p className="article_title">{props.title}</p>
+            <p id='article_tit'className="article_title">{props.title}</p>
             <div className="article-content" dangerouslySetInnerHTML={{ __html: content }} />
         </div>
     );
