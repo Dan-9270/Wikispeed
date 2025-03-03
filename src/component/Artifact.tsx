@@ -21,7 +21,13 @@ export const Artifacts = (props:{artifact:Artifact}) =>{
              </div>
              ,document.body)}
                 <figure> <img src={props.artifact.img} alt={props.artifact.name} /></figure>
-                {description && createPortal(<div className="blur"></div>, document.body)}
+                       {description && createPortal(
+                <div onClick={(e) => { 
+                    e.stopPropagation(); 
+                    setDescription(false); 
+                }} className="blur"></div>,
+                document.body
+            )}
       </div>
 }
 

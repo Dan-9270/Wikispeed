@@ -25,7 +25,7 @@ import './style/wikispeed.css'
 import { Background } from './assets/back'
 
 function Home() {
-  const artifacts = [{name:'mine',description:'',img:mine},{name:'map',description:'',img:map},{name:'map',description:'',img:map},{name:'map',description:'',img:map},{name:'map',description:'',img:map}];
+  const artifacts = [{name:'Mine',description:'FTG Khephren si tu trouves ca moche c pas mon probleème',img:mine},{name:'Map',description:'Flop sale batard',img:map},{name:'Map',description:'Flop sale batard',img:map},{name:'Map',description:'Flop sale batard',img:map},{name:'Map',description:'Flop sale batard',img:map}];
 
   return (
 
