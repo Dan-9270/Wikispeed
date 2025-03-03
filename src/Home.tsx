@@ -30,7 +30,7 @@ function Home() {
   return (
 
         <>
-          <SoundPlayer hoverSound={monster} clickSound={click} volume={0.03}>                
+          <SoundPlayer hoverSound={monster} clickSound={click} volume={0.3}>                
             <div id='monster_1' >
               <img className='monsters mleft-rotate' id='m1' src={images.benjamin} alt="" />
             </div>
@@ -58,14 +58,14 @@ function Home() {
 
                  <div className="selection-container">
                     <div className="selection"> 
-                    <SoundPlayer hoverSound={hover} clickSound={click} volume={0.03}>                
+                    <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>                
                     <SelectMode title='Solo' img={images.green} link='solocreation'/>
                     </SoundPlayer>
 
                     <SetProfile image={images.damien} username={undefined} />
                     <NextHome title="Jouer" link="homephone"></NextHome>
 
-                    <SoundPlayer hoverSound={hover} clickSound={click} volume={0.03}>                
+                    <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>                
                     <SelectMode title='Multijoueur' img={images.bibabo} link='multicreation'/> 
                     </SoundPlayer>
                     </div>

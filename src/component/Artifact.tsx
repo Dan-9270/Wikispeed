@@ -32,4 +32,3 @@ export const Artifacts = (props:{artifact:Artifact}) =>{
 }
 
 
-

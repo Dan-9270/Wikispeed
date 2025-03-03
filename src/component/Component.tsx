@@ -7,7 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSquareXmark} from "@fortawesome/free-solid-svg-icons";
 import { useRedirect } from "../script/Redirection";
 import type { Player } from '../types/Player.ts';
-import {Artifact} from "./Artifact.tsx";
+import {Artifact, Artifacts} from "./Artifact.tsx";
 
 
 
@@ -23,11 +23,7 @@ export const CreditButton = () =>{
       <p className='manjari'>Credits</p>
       </div>
 }
-const Artifacts = (props:{artifact:Artifact}) =>{
-    return <div className='artifact-border'>
-        <figure> <img src={props.artifact.img} alt={props.artifact.name} /></figure>
-      </div>
-}
+
 
 export const ArtifactsList = (props:{artifacts : Artifact[]}) => {
 

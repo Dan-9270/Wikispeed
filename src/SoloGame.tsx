@@ -13,8 +13,8 @@ import {Background} from "./assets/back.tsx";
 import { useState } from 'react'
 
 function SoloGame() {
-const [articleTitle, setArticleTitle] = useState("Nazisme");
-const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
+      const [articleTitle, setArticleTitle] = useState("France");
+const articles=["Fleur","Togo","Espace","Guitare","Fer"];
   return (
         <>
         <section className='main-page game'>
