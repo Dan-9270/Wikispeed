@@ -17,7 +17,7 @@ import { useState } from "react";
 
 function MultiGame() {
   const [articleTitle, setArticleTitle] = useState("France");
-const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
+const articles=["Pays","Togo","Francois Hollande","Seine-Saint-Denis","Muet"];
   return (
         <>
         <Background></Background>

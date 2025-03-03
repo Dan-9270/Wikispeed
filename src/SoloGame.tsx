@@ -14,7 +14,7 @@ import { useState } from 'react'
 
 function SoloGame() {
       const [articleTitle, setArticleTitle] = useState("France");
-const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
+const articles=["Fleur","Togo","Espace","Guitare","Fer"];
   return (
         <>
         <section className='main-page game'>

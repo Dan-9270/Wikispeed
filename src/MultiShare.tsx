@@ -70,10 +70,10 @@ function MultiShare() {
 
           </table>
           <div className="morewords"><ul>
-            <li>caca</li>
-            <li>uyv</li>
-            <li>starfallah</li>
-            <li>incrr</li>
+          <li>Fleur</li>
+            <li>Bonjour</li>
+            <li>Chocolat</li>
+            <li>Chemise</li>
           </ul></div>
         </div>
         <div className="right">
