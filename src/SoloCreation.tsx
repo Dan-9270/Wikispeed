@@ -7,12 +7,16 @@ import { Background } from "./assets/back.tsx";
 import images from './assets/monster/images'
 import { LogoTitle } from './component/Component'
 import { PlayGame } from "./component/GameComponent.tsx";
-
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 
 function SoloCreation() {
 
+
 return(
+
+  
   <div>
     <div className="page">
        <LogoTitle />
