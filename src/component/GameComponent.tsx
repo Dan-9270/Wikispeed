@@ -1,15 +1,23 @@
 import { FaPlay } from "react-icons/fa";
-import { useRedirect } from "../script/Redirection";
+import { useRedirect } from "../script/Redirection"
+import { SoundPlayer } from './MusicComponent'
 
-export const CreateGame = (props: { children?: React.ReactNode })=>{
-  const redirectTo = useRedirect();
+import hover from '../assets/music/hover.mp3';
+import click from '../assets/music/click.mp3';
 
-  return <div className="CreateGame" onClick={() => redirectTo("/multishare")}>
-        <p> Creer une partie</p>
-        {props.children}
-    </div>
-  } 
-  
+export const CreateGame = (props: { children?: React.ReactNode }) => {
+    const redirectTo = useRedirect()
+
+    return (
+        <SoundPlayer hoverSound={hover} clickSound={click} volume={0.1}>
+            <div className="CreateGame" onClick={() => redirectTo("/multishare")}>
+                <p>Creer une partie</p>
+                {props.children}
+            </div>
+        </SoundPlayer>
+    )
+}
+
   export const JoinGame = (props: { children?: React.ReactNode }) => {
     return (
         <div className='JoinGame'>
@@ -19,11 +27,11 @@ export const CreateGame = (props: { children?: React.ReactNode })=>{
         </div>
     );
 }
+
 export const PlayGame =(props:{link : string}) =>{
   const redirectTo = useRedirect();
   return         <button onClick={()=> redirectTo(`/${props.link}`)}
   className="button">Demarrer<FaPlay></FaPlay> </button>
-  
 }
 
   export const Setting = () =>{
