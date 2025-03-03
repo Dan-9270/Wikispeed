@@ -8,25 +8,24 @@ export const ArticleDisplayer = (props: { title: string; setTitle: (newTitle: st
             const response = await fetch(`https://fr.wikipedia.org/api/rest_v1/page/html/${props.title}`);
             const data = await response.text();
 
-            const cleanedContent = removeInfobox(data);
+            const cleanedContent = cleanArticle(data);
             setContent(cleanedContent);
         };
         fetchArticle();
     }, [props.title]);
 
     useEffect(() => {
-
         const container = document.querySelector('.article-content');
         if (!container) return;
 
         const handleClick = (event: Event) => {
             const target = event.target as HTMLAnchorElement;
             if (target.tagName === 'A') {
-                event.preventDefault(); // Empêche l'ouverture du lien dans une nouvelle page
+                event.preventDefault(); 
                 
-                const newTitle = target.getAttribute("title"); // Récupère le texte du lien comme nouveau titre
+                const newTitle = target.getAttribute("title"); 
                 if (newTitle) {
-                    props.setTitle(newTitle); // Change l'article affiché
+                    props.setTitle(newTitle); 
                 }
             }
         };
@@ -38,16 +37,36 @@ export const ArticleDisplayer = (props: { title: string; setTitle: (newTitle: st
         };
     }, [content]);
 
-    const removeInfobox = (html: string) => {
+    const cleanArticle = (html: string) => {
         const parser = new DOMParser();
         const doc = parser.parseFromString(html, 'text/html');
 
-        // Supprime l'infobox
-        const infoboxElements = doc.querySelectorAll('.infobox');
-        infoboxElements.forEach((element) => element.remove());
+        const notes = doc.getElementById("Notes_et_références");
+        notes?.parentElement?.remove();
+        const annexe = doc.getElementById("Annexes");
+        annexe?.parentElement?.remove();
+        const other = doc.getElementById("Voir_aussi");
+        other?.parentElement?.remove();
+        const bibli = doc.getElementById("Bibliographie");
+        bibli?.parentElement?.remove();
+        
 
-        return doc.body.innerHTML;
+        const unwantedElements = doc.querySelectorAll('.reflist, .reference, .toc');
+        unwantedElements.forEach((element) => element.remove());
+
+        const infobox = doc.querySelector('.infobox');
+
+        let cleanedContent = '';
+        if (infobox) {
+            cleanedContent += infobox.outerHTML; // Ajoute l'Infobox au début
+        }
+
+        // Ajouter le reste du contenu (corps de l'article)
+        cleanedContent += doc.body.innerHTML;
+
+        return cleanedContent;
     };
+
 
     return (
         <div className="article-container">
