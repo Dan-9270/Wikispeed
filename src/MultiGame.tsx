@@ -13,8 +13,10 @@ import './style/timer.css'
 import './style/game.css'
 import { ArticleDisplayer } from './component/Article'
 import { Background } from "./assets/back.tsx";
+import { useState } from "react";
 
 function MultiGame() {
+  const [articleTitle, setArticleTitle] = useState("France");
 const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
   return (
         <>
@@ -31,8 +33,9 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
             <Timer />
           </div>
           <div className='game-main'>
-              <ArticleDisplayer title='France'/>
-              <div className='game-main-details'>
+
+                <ArticleDisplayer title={articleTitle} setTitle={setArticleTitle} />
+                              <div className='game-main-details'>
                   <ArticleList names={articles} />
                   <PlayerInfo players={[{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},{id:2,name:"Bibabo",time:200,avatar:Damien,score:20}]} articles={articles} />
               </div>
