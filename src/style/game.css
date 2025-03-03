@@ -96,51 +96,51 @@
 
 
 
-/* -------------------Game-info ------------------- */
-.article-list{
-    width: fit-content;
-    margin: 0 auto ;
-    padding: 15px;
-    border-radius: 10px;
-    background-color: #4C489E;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    max-width:900px;
-}
-.article-list ul {
-    list-style: none; 
-    padding: 0;
-    display: flex; 
-    justify-content: center; 
-    align-items: center; 
-    overflow-x: scroll;
-}
-.article-list li {
-    margin: 0 10px; 
-    white-space: nowrap; 
-    color: white;
-}
-.article-list li:last-child {
-    margin-right: 0; 
-}
-.article-name{
-    font-size: large;
-    color: white;
-}
+/* -------------------Game-main-Details ------------------- */
 
-
-@media (max-width: 480px) {
+@media (max-width: 900px) {
     .article-list {
         width: 95%; 
         margin: 20px auto;
         padding: 15px;
     }
 }
+.article-list{
+    margin:5% 5%;
+    height:48%;
+    width:90%;
+    border: 2px solid rgba(255, 255, 255, 0.276);
+    border-radius: 15px;
+    ul{
+        list-style: none;
+    }
+}
+.game-main-details{
+    height:100%;
+    flex:0.5;
+    margin: 0 auto ;
+    border-radius: 10px;
+    background-color: #4943C6;
+    display: flex;
+    flex-direction: column;
+    gap:2%;
+}
+.game-main-details .monster{
+    display: flex;
+    flex-direction: column;
+    width:90%;
+    margin:0 5% ;
+    height:50%;
+    align-items: baseline;
+    justify-content: flex-end;
+    img{
+        width: 100%;
+    }
+}
 /*-------------GAME_MAIN-----------*/
 
 .article-container{
+    flex:2;
     height:100%;
     padding: 15px;
     padding-top: 2%;
@@ -155,7 +155,6 @@
     flex-direction: column;
     gap: 20px;
     font-family: 'Manjari', sans-serif;
-    flex:2;
 }
 
 .article-container,.article-list {
@@ -171,23 +170,17 @@
 
 /*-----MULTIPLAYER------*/
 .player-info{
-    height: 100%;
-    padding: 15px;
-    border-radius: 10px;
+    width:90%;
+    margin:1% 5% ;
+    height: 48%;
+    border: 2px solid rgba(255, 255, 255, 0.276);
+    border-radius: 15px;
     background-color: #4943C6;
-    box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    flex:0.4;
-    flex-wrap: wrap;
-}
-@media (max-width: 900px) {
-    .player-info{
-        display: none;
-    }
 }
 
-.player-info h2,.player-info-modal h2{
+.article-list h2,.player-info h2,.player-info-modal h2{
     color:#fff;
     text-align: center;
     margin: 7% 0;

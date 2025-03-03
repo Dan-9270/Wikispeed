@@ -28,19 +28,32 @@ export function Timer() {
   )
 }
 
-export const ArticleList=(props:{names : string[] }) =>{
-    return <div className="article-list">
-        <ul className='manjariB'>
-          {props.names.map((name, index) => (
-            <>
-            <li className="article-name" key={index}>{name} </li>
-            <li>{index !== props.names.length - 1 ? '-' : ''} </li>
-            </>
-          ))}
-        </ul>
-      </div>
-    
-  }
+
+export const ArticleList = (props: { names: string[] }) => {
+    const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 900);
+
+    useEffect(() => {
+        const handleResize = () => {
+            setIsSmallScreen(window.innerWidth <= 900);
+        };
+
+        window.addEventListener("resize", handleResize);
+        return () => window.removeEventListener("resize", handleResize);
+    }, []);
+
+    return (
+        <div className="article-list">
+            <h2>Articles</h2>
+            <ul className="manjariB">
+                {props.names.map((name, index) => (
+                    <li key={index} className="article-name">
+                        {name} {isSmallScreen && index !== props.names.length - 1 && " - "}
+                    </li>
+                ))}
+            </ul>
+        </div>
+    );
+};
 
 export const PlayerInfo = (props: { players: Player[], articles: string[] }) => {
     const [visibility, setVisibility] = useState(false);

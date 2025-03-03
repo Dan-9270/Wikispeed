@@ -29,11 +29,13 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
         <div className='game-container'>
           <div className='game-info'>
             <Timer />
-            <ArticleList names={articles} />
           </div>
           <div className='game-main'>
               <ArticleDisplayer title='France'/>
-              <PlayerInfo players={[{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},{id:2,name:"Bibabo",time:200,avatar:Damien,score:20}]} articles={articles} />
+              <div className='game-main-details'>
+                  <ArticleList names={articles} />
+                  <PlayerInfo players={[{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},{id:2,name:"Bibabo",time:200,avatar:Damien,score:20}]} articles={articles} />
+              </div>
           </div>
 
             <div className='game-bottom'>
