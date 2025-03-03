@@ -1,16 +1,13 @@
 import { LogoTitle } from './component/Component'
 import {CreditButton} from './component/Component'
-import back from './assets/back.svg'
 import mine from './assets/artifact/mine.svg'
 import map from './assets/artifact/map.svg'
-import {NextHome, SelectMode} from './component/SelectMode'
-import {SetProfile} from './component/SetProfile'
+import {SelectMode} from './component/SelectMode'
 import {RuleBlox} from './component/Component'
 import {PlayButton} from './component/RouteComponent'
 import {ArtifactsList} from './component/Component'
 import {Footer} from './component/Component'
 import {Title} from './component/Component'
-import { Link } from "react-router-dom";
 import images from './assets/monster/images'
 
 
@@ -23,12 +20,8 @@ import './style/wikispeed.css'
 import { Background } from './assets/back'
 
 function Home() {
-  const artifactImages1 = [mine,map,map
-    
-  ]; 
-  const artifactImages2 = [map,map,map
-    
-  ]; 
+    const artifacts = [{name:'mine',description:'',img:mine},{name:'map',description:'',img:map},{name:'map',description:'',img:map},{name:'map',description:'',img:map},{name:'map',description:'',img:map}];
+
 
   return (
 
@@ -88,8 +81,7 @@ function Home() {
                   </div>
 
                   <Title title='Artéfacts'></Title>
-                  <ArtifactsList imgs={artifactImages1}/>
-                  <ArtifactsList imgs={artifactImages2}/>
+                    <ArtifactsList artifacts={artifacts}/>
                   <PlayButton/>
                   </section>
 

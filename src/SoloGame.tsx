@@ -1,7 +1,8 @@
 import mine from './assets/artifact/mine.svg'
 import map from './assets/artifact/map.svg'
-import { ArticleList, Inventory, Timer } from './component/EventComponent'
+import benjamin from './assets/monster/benjamin.png'
 
+import { ArticleList, Inventory, Timer } from './component/EventComponent'
 
 
 import './style/wikispeed.css'
@@ -23,10 +24,16 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
             <div className='game-container'>
                 <div className='game-info'>
                     <Timer />
-                    <ArticleList names={articles} />
+
                 </div>
                 <div className='game-main'>
                     <ArticleDisplayer title='Nazisme'/>
+                    <div className='game-main-details'>
+                        <ArticleList names={articles} />
+                        <figure className="monster">
+                            <img src={benjamin} alt="benjamin" />
+                        </figure>
+                    </div>
                 </div>
 
                 <div className='game-bottom'>
