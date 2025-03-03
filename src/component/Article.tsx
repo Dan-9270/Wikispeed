@@ -49,16 +49,17 @@ export const ArticleDisplayer = (props: { title: string; setTitle: (newTitle: st
         other?.parentElement?.remove();
         const bibli = doc.getElementById("Bibliographie");
         bibli?.parentElement?.remove();
-        
-
-        const unwantedElements = doc.querySelectorAll('.reflist, .reference, .toc');
-        unwantedElements.forEach((element) => element.remove());
-
+        const reference = doc.getElementById("Références");
+        reference?.parentElement?.remove();
+        const externalLink = doc.getElementById("Liens_externes");
+        externalLink?.parentElement?.remove();
+        const articleConnexe = doc.getElementById("Articles_connexes");
+        articleConnexe?.parentElement?.remove();
         const infobox = doc.querySelector('.infobox');
 
         let cleanedContent = '';
         if (infobox) {
-            cleanedContent += infobox.outerHTML; // Ajoute l'Infobox au début
+            cleanedContent +=""; // Ajoute l'Infobox au début
         }
 
         // Ajouter le reste du contenu (corps de l'article)
