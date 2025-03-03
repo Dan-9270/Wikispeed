@@ -42,7 +42,7 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
                 <svg xmlns="http://www.w3.org/2000/svg" width="145" height="118" viewBox="0 0 145 118" fill="none">
                     <path d="M12.5852 5.82508L144.459 0.37847L113.764 25.7168L105.137 52.8468L102.059 117.977L-2.41697e-05 105.03L12.5852 5.82508Z" fill="#4943C6"/>
                 </svg>
-                <Inventory artifact1={{name:'mine',description:'',img:mine}} artifact2={{name:'map',description:'',img:map}} />
+                <Inventory artifact1={{name:'mine',description:'aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa',img:mine}} artifact2={{name:'map',description:'aaaaaaaaaaaaaaaaaaaazzzzzzzzzzzz',img:map}} />
                 <svg xmlns="http://www.w3.org/2000/svg" width="111" height="79" viewBox="0 0 111 79" fill="none">
                     <path d="M131.878 5.82496L-0.000232127 0.384232L30.6971 25.7212L39.3253 52.8509L42.4052 117.981L144.467 105.029L131.878 5.82496Z" fill="#4943C6"/>
                 </svg>

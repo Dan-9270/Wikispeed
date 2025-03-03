@@ -8,6 +8,13 @@
   
 }
 
+.blur{
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.54);
+  position: fixed;
+  top:0;
+z-index: 101;}
 
 .logo{
   
@@ -650,6 +657,59 @@ text-transform: uppercase;
   height: 100%;
 }
 
+.artifact-description{
+  position: fixed;
+  display: flex;
+  height:35vh;
+  width: 35vh;
+  background-color: #4C489E;
+  border-radius: 20px;
+  left:50%;
+  bottom:50%;
+  transform: translate(-50%,50%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-evenly;
+  font-size: 1.4rem;
+  z-index: 103;
+
+}
+.artifact-description p {
+  width: 80%;
+  word-wrap: break-word; /* Ancienne version */
+  overflow-wrap: break-word;
+}
+.title-description{
+  font-size: 3rem;
+
+}
+
+.artifact-description .artifact-active{
+  border-radius: 133px;
+background: #FFD230;
+box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+color: rgba(0, 0, 0, 0.92);
+width: 65%;
+text-align: center;
+z-index: 110;
+height: 17%;
+cursor: pointer;
+transition: 0.3s;
+
+}
+.artifact-active:hover{
+  transform: scale(1.05);
+}
+.artifact-description .artifact-active span{
+  display: block;
+  transform: translateY(18px);
+  font-size: 2rem;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+
+
+}
 .setProfile{
   width: 20vw;
   height: 20vw;
