@@ -10,7 +10,7 @@ export const AvatarSelector = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     return (
-        <><div>
+        <><div className="profilePicture">
                 <img
                     src={avatar}
                     alt="Avatar"
