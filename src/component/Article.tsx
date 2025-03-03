@@ -70,7 +70,7 @@ export const ArticleDisplayer = (props: { title: string; setTitle: (newTitle: st
 
                 // Garder seulement les 2 premières tables (par exemple)
                 tables.forEach((table, index) => {
-                    if (index >= 4) {
+                    if (index >= 2) {
                         table.remove(); // Supprime toutes les tables après les 2 premières
                     }
                 });
