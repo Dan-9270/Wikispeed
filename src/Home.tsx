@@ -98,6 +98,8 @@ function Home() {
                 <img className='monsters' id='m7' src={images.neuille} alt="" />
               </div> */}
             </Footer>
+            <SelectMode title='Multi' img={images.bibabo} link='test'/> 
+
             </section>
 
   
