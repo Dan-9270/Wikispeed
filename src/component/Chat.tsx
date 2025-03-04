@@ -44,30 +44,34 @@ const Message=(props:{reader:Player,sender:Player,text:string})=>{
 }
 
 
-export const RoomCreator = ({
-  initialUserName,
-  initialRoomDescription,
-  onRoomCreated,
-}: {
-  initialUserName: string;
-  initialRoomDescription: string;
-  onRoomCreated: (userName: string, roomDescription: string, roomIdentifier: string) => void;
-}) => {
-  const [userName, setUserName] = useState(initialUserName);
-  const [roomDescription, setRoomDescription] = useState(initialRoomDescription);
+export const RoomCreator = (props : {
+  initialUserName : string,
+  initialRoomDescription : string,
+  onRoomCreated : (userName : string, roomDescription : string , roomIdentifier : string) => void }) =>{
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    try {
-      const roomId = await onRoomCreated(userName, roomDescription, 'random-room-id');
-      console.log('Room created with ID:', roomId);
-    } catch (err) {
-      console.error('Error creating room:', err);
-    }
-  };
+  const [userName, setUserName] = useState(props.initialUserName);
+  const [roomDescription, setRoomDescription] = useState(props.initialRoomDescription);
+
+  const newCreateRoom = () => {
+    const roomId = crypto.randomUUID();
+
+    setTimeout(() =>{
+      props.onRoomCreated(userName,roomDescription,roomId);
+    },300);
+  }
+
+  // const handleSubmit = async (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   try {
+  //     const roomId = await props.onRoomCreated(userName, roomDescription, 'random-room-id');
+  //     console.log('Room created with ID:', roomId);
+  //   } catch (err) {
+  //     console.error('Error creating room:', err);
+  //   }
+  // };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={(e) => {e.preventDefault(); newCreateRoom();}}>
       <input
         type="text"
         value={userName}
@@ -90,11 +94,9 @@ export const RoomJoiner = (props: {initialUserName: string, initialRoomId: strin
   const [roomId, setRoomId] = useState(props.initialRoomId);
 
   const handleJoinRoom = () => {
-      // Attente artificielle de quelques centaines de millisecondes
       setTimeout(() => {
-          // Appel de la fonction de callback avec les données
           props.onRoomJoined(userName, roomId);
-      }, 300); // Attente de 300ms
+      }, 300); 
   };
 
   return (
