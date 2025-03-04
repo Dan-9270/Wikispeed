@@ -10,9 +10,11 @@ import './style/timer.css'
 import './style/game.css'
 import { ArticleDisplayer } from './component/Article'
 import {Background} from "./assets/back.tsx";
+import { useState } from 'react'
 
 function SoloGame() {
-const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
+      const [articleTitle, setArticleTitle] = useState("France");
+const articles=["Fleur","Togo","Espace","Guitare","Fer"];
   return (
         <>
         <section className='main-page game'>
@@ -30,7 +32,7 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
                     
                 </div>
                 <div className='game-main'>
-                    <ArticleDisplayer title='Nazisme'/>
+                <ArticleDisplayer title={articleTitle} setTitle={setArticleTitle} />
                     <div className='game-main-details'>
                         <ArticleList names={articles} />
                         <figure className="monster">
@@ -41,6 +43,8 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
 
                 <div className='game-bottom'>
        
+
+           
 
 
                     <div className="bottom_bar">  <svg width="114" height="100" viewBox="0 0 114 72" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bl'>
