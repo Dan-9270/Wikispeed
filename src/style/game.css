@@ -5,7 +5,6 @@
 .logo-solo{
     position: absolute;
     top:2%;
-    left: 5%;
     width: 14%;
     height: 14%;
 }
@@ -254,7 +253,11 @@
     border-radius:10px;
 }
 @media screen and (max-width: 550px) {
+
+
     .player-info-modal{
+        background: #4C489E;
+        filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.65));
         width:90%;
     }
 
@@ -366,16 +369,50 @@ sup{
     display: none;
 }
 
-/* #mwO7Y{
-    display: none;
-}
 
-#mwIP4{
-    display: none;
-} */
+
+@media screen and (max-width: 550px){
+    .infobox{
+        display: none;
+    }
+}
 
 @media screen and (max-width: 400px){
     .player-info-button ,.chatbutton{
         right: 2%;
     }
+}
+.infobox-wrapper{
+    width: 100%;
+}
+.infobox {
+    background-color: #4C489E;
+    border: 2px solid rgba(255, 255, 255, 0.276);
+    border-radius: 15px;
+    width: 70% !important;
+    padding: 10px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.infobox .entete {
+    background-color: #ffffff27 !important;
+    padding: 1%;
+    border-radius: 5px;
+    text-align: center;
+    color: white!important;
+}
+.infobox table caption {
+    background-color: #000 !important;
+}
+.infobox th {
+    background-color: #ffffff2d !important;
+    color: white!important;
+}
+.infobox .hr {
+    background-color: #000 !important;
+}
+.infobox img {
+    max-width: 100%;
+    height: auto;
 }
