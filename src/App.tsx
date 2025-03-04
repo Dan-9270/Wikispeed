@@ -7,6 +7,7 @@ import MultiGame from './MultiGame'
 import SoloCreation from './SoloCreation'
 import EndGame from './EndGame'
 import EndGameSolo from './EndGameSolo'
+import Test from './test'
  
 import './style/App.css'
 import './style/wikispeed.css'
@@ -17,7 +18,7 @@ import { AudioProvider } from './script/AudioContext'
 
 
 function App() {
-  
+
   return (
     <AudioProvider>
     <Router>
@@ -34,10 +35,11 @@ function App() {
         <Route path="/solocreation" element={<SoloCreation />} />
         <Route path="/endgame" element={<EndGame/>} />
         <Route path="/endgamesolo" element={<EndGameSolo/>} />
-
-      </Routes>
+        <Route path="/test" element={<Test/>}/>
+        </Routes>
     </Router>
     </AudioProvider>
+    
 
   );
 }
