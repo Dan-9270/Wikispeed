@@ -2,7 +2,6 @@ import React, { useState, useEffect, createContext, useContext } from 'react';
 import { WebSocketChatManager } from './component/WebSocketChatManager';
 import { Chatter } from './component/Chat';
 
-// Créez une instance de WebSocketChatManager et passez-la à votre composant Chatter
 const chatManager = new WebSocketChatManager();
 
 const Test = () => {
