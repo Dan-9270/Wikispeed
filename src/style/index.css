@@ -438,3 +438,16 @@ g{
   width: 100vw;}
 
 
+#svg-chat{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 7vw;
+  height: auto;
+  transition: 0.3s;
+
+}
+
+#svg-chat:hover{
+  
+}
