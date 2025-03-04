@@ -44,6 +44,8 @@ const articles=["Fleur","Togo","Espace","Guitare","Fer"];
                 <div className='game-bottom'>
        
 
+           
+
 
                     <div className="bottom_bar">  <svg width="114" height="100" viewBox="0 0 114 72" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bl'>
 <path d="M0 0H114C54.5 26 66 72 66 72H0V0Z" fill=" #4943C6" />
