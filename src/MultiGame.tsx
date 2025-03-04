@@ -13,9 +13,11 @@ import './style/timer.css'
 import './style/game.css'
 import { ArticleDisplayer } from './component/Article'
 import { Background } from "./assets/back.tsx";
+import { useState } from "react";
 
 function MultiGame() {
-const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
+  const [articleTitle, setArticleTitle] = useState("France");
+const articles=["Pays","Togo","Francois Hollande","Seine-Saint-Denis","Muet"];
   return (
         <>
         <Background></Background>
@@ -31,8 +33,9 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
             <Timer />
           </div>
           <div className='game-main'>
-              <ArticleDisplayer title='France'/>
-              <div className='game-main-details'>
+
+                <ArticleDisplayer title={articleTitle} setTitle={setArticleTitle} />
+                              <div className='game-main-details'>
                   <ArticleList names={articles} />
                   <PlayerInfo players={[{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},{id:2,name:"Bibabo",time:200,avatar:Damien,score:20}]} articles={articles} />
               </div>
@@ -40,6 +43,9 @@ const articles=["Nazisme","Togo","Homosexualité","Dialga Gold","Barcola"];
 
           <div className='game-bottom'>
        
+          <svg width="104" height="93" viewBox="0 0 104 93" fill="none" xmlns="http://www.w3.org/2000/svg" id='svg-chat'>
+<ellipse cx="-48.6909" cy="171.86" rx="90.3383" ry="210" transform="rotate(40.0672 -48.6909 171.86)" fill="#4943C6"/>
+</svg>
 
 
        <div className="bottom_bar">  <svg width="114" height="100" viewBox="0 0 114 72" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bl'>

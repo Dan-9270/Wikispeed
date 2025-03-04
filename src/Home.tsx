@@ -11,10 +11,13 @@ import {Footer} from './component/Component'
 import {Title} from './component/Component'
 import { MusicPlayer } from './component/MusicComponent'
 import images from './assets/monster/images'
-
-
-
+import { SoundPlayer } from './component/MusicComponent'
 import {BottomRedirection} from './component/Component'
+
+import hover from './assets/music/hover.mp3';
+import click from './assets/music/click.mp3';
+import monster from './assets/music/monster.mp3';
+
 
 
 
@@ -22,12 +25,12 @@ import './style/wikispeed.css'
 import { Background } from './assets/back'
 
 function Home() {
-  const artifacts = [{name:'mine',description:'',img:mine},{name:'map',description:'',img:map},{name:'map',description:'',img:map},{name:'map',description:'',img:map},{name:'map',description:'',img:map}];
+  const artifacts = [{name:'Mine',description:'FTG Khephren si tu trouves ca moche c pas mon probleème',img:mine},{name:'Map',description:'Flop sale batard',img:map},{name:'Map',description:'Flop sale batard',img:map},{name:'Map',description:'Flop sale batard',img:map},{name:'Map',description:'Flop sale batard',img:map}];
 
   return (
 
         <>
-              
+          <SoundPlayer hoverSound={monster} clickSound={click} volume={0.3}>                
             <div id='monster_1' >
               <img className='monsters mleft-rotate' id='m1' src={images.benjamin} alt="" />
             </div>
@@ -43,12 +46,7 @@ function Home() {
             <div id="monster_4">
               <img className='monsters mleft' id='m4' src={images.titouan} alt="" />
             </div>
-
-            {/* <div id="monster_5">
-              <img className='monsters' id='m5' src={images.damien} alt="" />
-            </div> */}
-
-
+          </SoundPlayer>
 
 
             <Background/>
@@ -59,11 +57,17 @@ function Home() {
                <LogoTitle />
 
                  <div className="selection-container">
-                    <div className="selection">                 
+                    <div className="selection"> 
+                    <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>                
                     <SelectMode title='Solo' img={images.green} link='solocreation'/>
-                    <SetProfile image={images.damien} username={undefined} />
+                    </SoundPlayer>
+
+                    <SetProfile  username={undefined} />
                     <NextHome title="Jouer" link="homephone"></NextHome>
+
+                    <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>                
                     <SelectMode title='Multijoueur' img={images.bibabo} link='multicreation'/> 
+                    </SoundPlayer>
                     </div>
                  </div>
                  </section>
