@@ -5,9 +5,13 @@ const wss = new WebSocket.Server({ port: 2025 });
 wss.on('connection', (ws: WebSocket) => {
   console.log('New client connected');
 
+
   ws.on('message', (message: string) => {
     console.log("Received message %s", message);
     ws.send(`${message}`.toUpperCase());
+    wss.clients.forEach((client)=>{
+        client.send(`${message}`);
+      });
   });
 
   ws.on('close', () => {

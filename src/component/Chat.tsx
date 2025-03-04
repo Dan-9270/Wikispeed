@@ -54,7 +54,7 @@ export const RoomCreator = (props : {
 
   const newCreateRoom = () => {
     const roomId = crypto.randomUUID();
-
+    console.log(roomId);
     setTimeout(() =>{
       props.onRoomCreated(userName,roomDescription,roomId);
     },300);
@@ -93,16 +93,17 @@ export const RoomJoiner = (props: {initialUserName: string, initialRoomId: strin
   const [userName, setUserName] = useState(props.initialUserName);
   const [roomId, setRoomId] = useState(props.initialRoomId);
 
-  const handleJoinRoom = () => {
+  const joinRoom = () => {
       setTimeout(() => {
           props.onRoomJoined(userName, roomId);
+          console.log(roomId);
       }, 300); 
   };
 
   return (
       <div>
           <h3>Join a Room</h3>
-          <form onSubmit={(e) => { e.preventDefault(); handleJoinRoom(); }}>
+          <form onSubmit={(e) => { e.preventDefault(); joinRoom(); }}>
               <label>
                   User Name:
                   <input type="text" value={userName} onChange={(e) => setUserName(e.target.value)} />
@@ -120,11 +121,10 @@ export const RoomJoiner = (props: {initialUserName: string, initialRoomId: strin
 };
 
 export interface Messaged  {
-  kind: string; // Le type du message ("send_message", "received_message", ...)
-  sender: string | null; // Le nom de l'expéditeur pour un message reçu, ou null pour un message envoyé
+  kind: string; 
+  sender: string | null; 
   content: string;
-  date: Date; // La date à laquelle le message a été envoyé ou reçu
-}
+  date: Date;}
 
 export const ChatMessage = (props: {message: Messaged}) => {
   const { kind, sender, content, date } = props.message;
@@ -137,7 +137,6 @@ export const ChatMessage = (props: {message: Messaged}) => {
       });
   };
 
-  // Déterminer la classe CSS selon le type de message
   const messageClass = kind === "send_message" ? "sent-message" : "received-message";
 
   return (
@@ -150,13 +149,6 @@ export const ChatMessage = (props: {message: Messaged}) => {
   );
 };
 
-const exampleMessages = [
-  { kind: "send_message", sender: null, content: "Hello!", date: new Date() },
-  { kind: "received_message", sender: "Alice", content: "Hi there!", date: new Date() },
-  { kind: "send_message", sender: null, content: "How are you?", date: new Date() },
-  { kind: "received_message", sender: "Bob", content: "I'm good, thanks!", date: new Date() }
-];
-
 export const ChatDisplayer = (props: { messages: Messaged[] }) => {
   return (
       <div className="chat-container">
@@ -167,13 +159,15 @@ export const ChatDisplayer = (props: { messages: Messaged[] }) => {
   );
 };
 
+/***************Bon ***************/
+
 export const ChatSender = (props: { onMessageEntered: (message: string) => void }) => {
   const [message, setMessage] = useState('');
 
   const handleSendMessage = () => {
     if (message.trim() !== '') {
-      props.onMessageEntered(message); // Appeler la fonction pour prévenir le parent
-      setMessage(''); // Réinitialiser le champ de saisie
+      props.onMessageEntered(message); 
+      setMessage(''); 
     }
   };
 
@@ -186,16 +180,14 @@ export const ChatSender = (props: { onMessageEntered: (message: string) => void 
   return (
     <div>
       <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-        onKeyDown={handleKeyPress}
-        placeholder="Enter your message"
+        type="text" value={message} onChange={(e) => setMessage(e.target.value)}
+        onKeyDown={handleKeyPress} placeholder="Enter your message"
       />
       <button onClick={handleSendMessage}>Send</button>
     </div>
   );
 };
+
 export interface ChatManager {
   createRoom(userName: string, roomDescription: string): Promise<string>;
 
@@ -207,79 +199,6 @@ export interface ChatManager {
 
   close(): void;
 }
-
-class MockChatManager implements ChatManager {
-  private socket: WebSocket | null = null;
-  private messageListener: (message: Messaged) => void = () => {};
-
-  async createRoom(userName: string, roomDescription: string): Promise<string> {
-    // Exemple d'implémentation : se connecter à un serveur de chat
-    return new Promise((resolve, reject) => {
-      this.socket = new WebSocket('wss://example-chat-server.com');
-      
-      this.socket.onopen = () => {
-        // Envoyer une demande pour créer un salon
-        const roomId = "new-room-id"; // Remplacez par la logique réelle
-        resolve(roomId);
-      };
-      
-      this.socket.onerror = (err) => reject(err);
-    });
-  }
-
-  async joinRoom(userName: string, roomId: string): Promise<string[]> {
-    if (!this.socket) throw new Error('No connection established');
-    
-    // Exemple de demande pour rejoindre un salon
-    return new Promise((resolve, reject) => {
-      this.socket!.send(JSON.stringify({ type: 'join', userName, roomId }));
-
-      // Simuler la réception des utilisateurs dans le salon
-      setTimeout(() => {
-        resolve(['User1', 'User2']); // Liste simulée des utilisateurs
-      }, 1000);
-    });
-  }
-
-  setMessageListener(listener: (message: Messaged) => void): void {
-    this.messageListener = listener;
-    if (this.socket) {
-      this.socket.onmessage = (event) => {
-        const message: Messaged = JSON.parse(event.data);
-        this.messageListener(message);
-      };
-    }
-  }
-
-  sendMessage(content: string): void {
-    if (this.socket) {
-      const message: Messaged = {
-        kind: 'send_message',
-        sender: null,
-        content,
-        date: new Date(),
-      };
-      this.socket.send(JSON.stringify(message));
-    }
-  }
-
-  close(): void {
-    if (this.socket) {
-      this.socket.close();
-    }
-  }
-}
-
-export const ChatManagerContext = createContext<ChatManager | undefined>(undefined);
-
-// Hook pour accéder au ChatManager
-export const useChatManager = (): ChatManager => {
-  const context = useContext(ChatManagerContext);
-  if (!context) {
-    throw new Error('useChatManager must be used within a ChatManagerProvider');
-  }
-  return context;
-};
 
 export const Chatter = (props: {chatManager: ChatManager}) => {
   const [roomId, setRoomId] = useState<string | null>(null);
