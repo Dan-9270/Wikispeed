@@ -1,25 +1,17 @@
-import { useState } from "react";
-import socket from "./utils/websocket";
+import React, { useState, useEffect, createContext, useContext } from 'react';
+import { WebSocketChatManager } from './component/WebSocketChatManager';
+import { Chatter } from './component/Chat';
 
-function Test() {
-  const [message, setMessage] = useState("");
+// Créez une instance de WebSocketChatManager et passez-la à votre composant Chatter
+const chatManager = new WebSocketChatManager();
 
-  const sendMessage = () => {
-    socket.send(message);
-    setMessage("");
-  };
-
+const Test = () => {
   return (
     <div>
-      <h1>WebSocket Chat</h1>
-      <input
-        type="text"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      />
-      <button onClick={sendMessage}>Envoyer</button>
+      <h1>Welcome to the Chat App</h1>
+      <Chatter chatManager={chatManager} />
     </div>
   );
-}
+};
 
 export default Test;
