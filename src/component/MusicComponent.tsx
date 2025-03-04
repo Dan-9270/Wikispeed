@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { FaPlay, FaPause, FaVolumeUp, FaVolumeMute } from 'react-icons/fa'
 import { useAudio } from '../script/AudioContext'
 
@@ -52,4 +52,64 @@ export const MusicPlayer: React.FC = () => {
       </button>
     </div>
   )
+}
+
+const useSound = (filePath: string, volume: number = 1) => {
+  const soundRef = useRef<HTMLAudioElement | null>(null)
+
+  useEffect(() => {
+      soundRef.current = new Audio(filePath)
+      if (soundRef.current) {
+          soundRef.current.volume = volume // Ajuster le volume ici
+      }
+  }, [filePath, volume]) // Recharger l'audio si le volume change
+
+  const playSound = () => {
+      if (soundRef.current) {
+          soundRef.current.currentTime = 0
+          soundRef.current.play().catch((e) => console.error('Error playing sound', e))
+      }
+  }
+
+  return playSound
+}
+
+interface SoundPlayerProps {
+  hoverSound?: string
+  clickSound?: string
+  volume?: number  // Permet de définir le volume par défaut (1 = 100%)
+  children: React.ReactNode
+}
+
+export const SoundPlayer: React.FC<SoundPlayerProps> = ({ hoverSound, clickSound, volume = 1, children }) => {
+  const containerRef = useRef<HTMLDivElement>(null)
+
+  const playHoverSound = hoverSound ? useSound(hoverSound, volume) : undefined
+  const playClickSound = clickSound ? useSound(clickSound, volume) : undefined
+
+  useEffect(() => {
+      const element = containerRef.current
+
+      if (element) {
+          if (playHoverSound) {
+              element.addEventListener('mouseenter', playHoverSound)
+          }
+          if (playClickSound) {
+              element.addEventListener('click', playClickSound)
+          }
+      }
+
+      return () => {
+          if (element) {
+              if (playHoverSound) {
+                  element.removeEventListener('mouseenter', playHoverSound)
+              }
+              if (playClickSound) {
+                  element.removeEventListener('click', playClickSound)
+              }
+          }
+      }
+  }, [playHoverSound, playClickSound])
+
+  return <div ref={containerRef}>{children}</div>
 }
