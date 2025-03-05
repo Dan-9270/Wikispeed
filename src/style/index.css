@@ -59,7 +59,7 @@ body {
 
 .container {
  background-color:#4943c6e9  ;
- width: 60vw;
+ width: 60vw ;
  border-radius: 10px;
  display: flex;
  justify-content: center;
@@ -438,3 +438,16 @@ g{
   width: 100vw;}
 
 
+#svg-chat{
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 7vw;
+  height: auto;
+  transition: 0.3s;
+
+}
+
+#svg-chat:hover{
+  
+}

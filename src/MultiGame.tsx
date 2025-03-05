@@ -43,6 +43,9 @@ const articles=["Pays","Togo","Francois Hollande","Seine-Saint-Denis","Muet"];
 
           <div className='game-bottom'>
        
+          <svg width="104" height="93" viewBox="0 0 104 93" fill="none" xmlns="http://www.w3.org/2000/svg" id='svg-chat'>
+<ellipse cx="-48.6909" cy="171.86" rx="90.3383" ry="210" transform="rotate(40.0672 -48.6909 171.86)" fill="#4943C6"/>
+</svg>
 
 
        <div className="bottom_bar">  <svg width="114" height="100" viewBox="0 0 114 72" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bl'>
