@@ -128,31 +128,42 @@ export const Ranking=(props :{ranking:Array<Player>})=>{
 
 
 
-export function Button(props: { choix: string; value: string }) {
+
+export function Button(props: { choix: string; value: string; onClick: (value: string) => void }) {
   const id = `${props.choix}-${props.value}`;
+
   return (
-    <span className="span-radio"> 
-      <input type="radio" name={props.choix} id={id} className="input-radio" />
-      <label htmlFor={id} className="input-label" id={props.value == 'OUI' ? 'oui' : 'non'}>
+    <span className="span-radio">
+      <input 
+        type="radio" 
+        name={props.choix} 
+        id={id} 
+        className="input-radio"
+        onClick={() => props.onClick(props.value)} // Appel à la fonction de mise à jour de l'état
+      />
+      <label htmlFor={id} className={props.value === 'OUI' ? 'oui' : 'non'}>
         {props.value}
       </label>
     </span>
   );
 }
 
-export function List(props: { children: string }) {
-  return <select name="list" id="list" className="">
-      <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? '1 article' : '3 minutes'}</option>
-      <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? 2 : 5}</option>
-      <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? 3 : 10}</option>
-      <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? 4 : 15}</option>
-      <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? 5 : 20}</option>
-      <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? 6 : 25}</option>
-      <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? 7 : 30}</option>
-      <option value={props.children == 'article' ? 'art ' : 'time'}>{props.children == 'article' ? 8 : '--'}</option>
+export function List(props: { children: string; onChange: (value: string) => void }) {
+  return <select name="list" id="list" className="" onChange={(e) => props.onChange(e.target.value)}>
+      <option value="0">{props.children == 'article' ? 'Combien d\'articles ?' : 'Combien de temps ?'}</option>
+      <option value={props.children == 'article' ? '1' : '3 '}>{props.children == 'article' ? '1 article' : '3 minutes'}</option>
+      <option value={props.children == 'article' ? '2' : '5'}>{props.children == 'article' ? 2 : 5}</option>
+      <option value={props.children == 'article' ? '3'  : '10'}>{props.children == 'article' ? 3 : 10}</option>
+      <option value={props.children == 'article' ? '4' : '15'}>{props.children == 'article' ? 4 : 15}</option>
+      <option value={props.children == 'article' ? '5' : '20'}>{props.children == 'article' ? 5 : 20}</option>
+      <option value={props.children == 'article' ? '6' : '25'}>{props.children == 'article' ? 6 : 25}</option>
+      <option value={props.children == 'article' ? '7' : '30'}>{props.children == 'article' ? 7 : 30}</option>
+      <option value={props.children == 'article' ? '8 ' : 'Illimité'}>{props.children == 'article' ? 8 : '--'}</option>
       
   </select>;
 }
+
+
 
 export const SoloRanking=(props:{ranking:Array<Player>})=>{
   return (

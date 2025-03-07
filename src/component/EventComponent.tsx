@@ -6,12 +6,12 @@ import { createPortal } from "react-dom";
 
 
 
-export function Timer() {
-    const [seconds, setSeconds] = useState(0);
+export function Timer(props: { time: number }) {
+    const [seconds, setSeconds] = useState(props.time*60);
 
     useEffect(() => {
         const interval = setInterval(() => {
-        setSeconds((prevSeconds) => prevSeconds + 1);
+        setSeconds((prevSeconds) => prevSeconds - 1);
         }, 1000);
 
         return () => clearInterval(interval);
@@ -115,9 +115,11 @@ export const PlayerInfo = (props: { players: Player[], articles: string[] }) => 
     );
 };
 
-export const Inventory = (props:{artifact1 :Artifact, artifact2 : Artifact }) =>{
+export const Inventory = (props:{artifact1 :Artifact, artifact2 : Artifact ; isExist : string }) =>{
     const artifacts = [props.artifact1,props.artifact2]
-    return <div className='inventory'>
-            <ArtifactsList artifacts={artifacts} ></ArtifactsList>
-    </div>
+    return    props.isExist=="OUI"  && <div className='inventory'>
+                <ArtifactsList artifacts={artifacts} ></ArtifactsList>
+                </div>
+                
+   
 }
