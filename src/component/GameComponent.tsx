@@ -28,14 +28,26 @@ export const CreateGame = (props: { children?: React.ReactNode }) => {
     );
 }
 
-export const PlayGame =(props:{link : string}) =>{
-  const redirectTo = useRedirect();
-  return         <button onClick={()=> redirectTo(`/${props.link}`)}
-  className="button">Demarrer<FaPlay></FaPlay> </button>
-}
+// Composant PlayGame modifié
+
+export const PlayGame = (props: { link: string; onClick: (event: React.FormEvent) => void }) => {
+  return (
+    <div
+      onClick={props.onClick}  // Appelle la fonction avec l'événement
+      className="button"
+    >
+      Démarrer <FaPlay />
+    </div>
+  );
+};
+
+
+
 
   export const Setting = () =>{
     return <div className="setting">
             <p>Setting</p>
     </div>
   }
+
+  
