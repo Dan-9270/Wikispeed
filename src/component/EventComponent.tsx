@@ -29,7 +29,7 @@ export function Timer(props: { time: number }) {
 }
 
 
-export const ArticleList = (props: { names: string[] }) => {
+export const ArticleList = (props: { names: Map<string,boolean> }) => {
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 900);
 
     useEffect(() => {
@@ -45,9 +45,9 @@ export const ArticleList = (props: { names: string[] }) => {
         <div className="article-list">
             <h2>Articles</h2>
             <ul className="manjariB">
-                {props.names.map((name, index) => (
-                    <li key={index} className="article-name">
-                        {name} {isSmallScreen && index !== props.names.length - 1 && " - "}
+                {Array.from(props.names.entries()).map(([name, state], index) => (
+                    <li key={index} className={state ? "article-name green" : "article-name red" }>
+                        {name}{state==false?"FALSE":"TRUE"} {isSmallScreen && index !== props.names.size - 1 && " - "}
                     </li>
                 ))}
             </ul>

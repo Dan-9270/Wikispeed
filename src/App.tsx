@@ -8,8 +8,8 @@ import MultiGame from './MultiGame'
 import SoloCreation from './SoloCreation'
 import EndGame from './EndGame'
 import EndGameSolo from './EndGameSolo'
-import Pagea from './pagea'
-import Pageb from './pageb'
+//import Pagea from './pagea'
+//import Pageb from './pageb'
 import Test from './test'
  
 import './style/App.css'
@@ -31,8 +31,8 @@ function App() {
         <Route path="/multicreation" element={<MultiCreation />} />
         <Route path="/multishare" element={<MultiShare />} />
         <Route path="/multisharephone" element={<MultiSharePhone />} />
-        <Route path="/pagea" element={<Pagea />} />
-        <Route path="/pageb" element={<Pageb />} />
+        {/*<Route path="/pagea" element={<Pagea />} />
+        <Route path="/pageb" element={<Pageb />} />*/}
         <Route path="/multigame" element={<MultiGame />} />
         <Route path="/sologame" element={<SoloGame />} />
         
