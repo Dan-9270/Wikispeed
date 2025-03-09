@@ -12,14 +12,14 @@ import images from './assets/monster/images'
 import { DeletePLayer } from './component/Component'
 import { PlayButton } from "./component/RouteComponent.tsx";
 import { PlayGame } from "./component/GameComponent.tsx";
-
-
-
-
+import { ChatBox, FinChatter, RealChatter } from "./component/Chat.tsx";
+import Damien from "./assets/avatar/Avatar_damien.svg";
+import { sharedChatManager } from './chatManager';
 
 function MultiShare() {
   return (
    <div >
+      <FinChatter chatManager={sharedChatManager} />
     <div className="page">
        <LogoTitle />
       <Background></Background>

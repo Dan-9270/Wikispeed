@@ -1,14 +1,13 @@
 import React, { useState, useEffect, createContext, useContext } from 'react';
 import { WebSocketChatManager } from './component/WebSocketChatManager';
-import { Chatter } from './component/Chat';
-
-const chatManager = new WebSocketChatManager();
+import { Chatter, RealChatter } from './component/Chat';
+import { sharedChatManager } from './chatManager';
 
 const Test = () => {
   return (
     <div>
       <h1>Welcome to the Chat App</h1>
-      <Chatter chatManager={chatManager} />
+      <RealChatter chatManager={sharedChatManager} />
     </div>
   );
 };

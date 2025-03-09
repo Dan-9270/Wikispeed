@@ -1,6 +1,7 @@
-import { ChatManager,Messaged } from "./Chat";
+import { v4 as uuidv4 } from 'uuid';
+import { ChatManager,Messaged, RealChatManager } from "./Chat";
 
-export class WebSocketChatManager implements ChatManager {
+export class RealWebSocketChatManager implements RealChatManager {
   private socket: WebSocket | null = null;
   private messageListener: (message: Messaged) => void = () => {};
 
@@ -34,7 +35,7 @@ export class WebSocketChatManager implements ChatManager {
       console.error('WebSocket error:', error);
     };
   }
-  async createRoom(userName: string, roomDescription: string): Promise<string> {
+  async createRoom(userName: string): Promise<string> {
     this.connect();
   
     return new Promise((resolve, reject) => {
@@ -46,11 +47,10 @@ export class WebSocketChatManager implements ChatManager {
       this.socket.onopen = () => {
         console.log('WebSocket connection opened');
   
-        const roomId = crypto.randomUUID();
+        const roomId = uuidv4();
         const message = JSON.stringify({
           kind: "create_room",
           user_name: userName,
-          room_description: roomDescription,
           roomID : roomId
         });
   
