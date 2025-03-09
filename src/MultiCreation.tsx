@@ -4,6 +4,9 @@ import {CreateGame} from './component/GameComponent'
 import {JoinGame} from './component/GameComponent'
 import images from './assets/monster/images'
 import { MusicPlayer } from './component/MusicComponent'
+import { WebSocketChatManager } from './component/WebSocketChatManager';
+import { Chatter, RealChatter } from './component/Chat';
+import { sharedChatManager } from './chatManager';
 
 
 import './style/wikispeed.css'
@@ -24,12 +27,8 @@ function MultiCreation() {
             <div className='MultiCreation'>
 
               
-                <CreateGame/>
-                <JoinGame>
-                  <div id="monster_8">
-                    <img className='monsters' id='m8' src={images.daniel} alt="" />
-                  </div>
-                </JoinGame>
+                     <RealChatter chatManager={sharedChatManager} />
+               
                 
             </div>
             </div>

@@ -1,20 +1,247 @@
+// import WebSocket from 'ws';
+
+// interface Room {
+//   id: string;
+//   description: string;
+//   members: Map<string, WebSocket>; // usernames linked to their websocket
+// }
+
+// let rooms = new Map<string, Room>();
+
+// const wss = new WebSocket.Server({ port: 2025 });
+
+// wss.on('connection', (ws: WebSocket) => {
+//   console.log('New client connected');
+
+//   let currentRoom: Room | null = null;
+//   let currentUser: string | null = null;
+
+//   ws.on('message', (message: string) => {
+//     try {
+//       const data = JSON.parse(message);
+//       const roomId= data.roomID
+//       switch (data.kind) {
+//         case 'create_room':
+//           const room: Room = {
+//             id: roomId,
+//             description: data.room_description,
+//             members: new Map(),
+//           };
+//           rooms.set(roomId, room);
+//           currentRoom = room;
+//           currentUser = data.user_name;
+//           room.members.set(data.user_name, ws);
+//           ws.send(JSON.stringify({ kind: 'room_created', room_id: roomId }));
+//           break;
+
+//         case 'join_room':
+//           const roomToJoin = rooms.get(data.room_id);
+//           if (roomToJoin) {
+//             currentRoom = roomToJoin;
+//             currentUser = data.user_name;
+//             roomToJoin.members.set(data.user_name, ws);
+//             ws.send(JSON.stringify({
+//               kind: 'room_joined',
+//               room_description: roomToJoin.description,
+//               users: Array.from(roomToJoin.members.keys()),
+//             }));
+
+//             roomToJoin.members.forEach((memberWs, username) => {
+//               if (username !== data.user_name) {
+//                 memberWs.send(JSON.stringify({ kind: 'user_joined', user_name: data.user_name }));
+//               }
+//             });
+//           } else {
+//             ws.send(JSON.stringify({ kind: 'error', message: 'Room not found' }));
+//             ws.close();
+//           }
+//           break;
+
+//         case 'send_message':
+//           if (currentRoom && currentUser) {
+//             currentRoom.members.forEach((memberWs, username) => {
+//               if (username !== currentUser) {
+//                 memberWs.send(JSON.stringify({
+//                   kind: 'message_received',
+//                   content: data.content,
+//                   sender: currentUser,
+//                 }));
+//               }else{
+//                 memberWs.send(JSON.stringify({
+//                   kind: 'message_send',
+//                   content : data.content,
+//                   sender: currentUser,
+//                 }));
+//               }
+//             });
+//           }
+//           break;
+
+//         case 'disconnect':
+//           if (currentRoom && currentUser) {
+//             currentRoom.members.delete(currentUser);
+//             // Notify other users in the room
+//             currentRoom.members.forEach((memberWs, username) => {
+//               memberWs.send(JSON.stringify({ kind: 'user_left', user_name: currentUser }));
+//             });
+//             ws.close();
+//           }
+//           break;
+
+//         default:
+//           ws.send(JSON.stringify({ kind: 'error', message: 'Invalid message kind' }));
+//           ws.close();
+//       }
+//     } catch (error) {
+//       console.error('Error parsing message:', error);
+//       ws.send(JSON.stringify({ kind: 'error', message: 'Invalid JSON' }));
+//       ws.close();
+//     }
+//   });
+
+//   ws.on('close', () => {
+//     if (currentRoom && currentUser) {
+//       currentRoom.members.delete(currentUser);
+//       // Notify other users in the room
+//       currentRoom.members.forEach((memberWs, username) => {
+//         memberWs.send(JSON.stringify({ kind: 'user_left', user_name: currentUser }));
+//       });
+//     }
+//     console.log('Client disconnected');
+//   });
+
+//   ws.on('error', (error) => {
+//     console.error('WebSocket error:', error);
+//     if (currentRoom && currentUser) {
+//       currentRoom.members.delete(currentUser);
+//       // Notify other users in the room
+//       currentRoom.members.forEach((memberWs, username) => {
+//         memberWs.send(JSON.stringify({ kind: 'user_left', user_name: currentUser }));
+//       });
+//     }
+//     ws.close();
+//   });
+// });
 import WebSocket from 'ws';
+
+interface Room {
+  id: string;
+  members: Map<string, WebSocket>; // usernames linked to their websocket
+}
+
+let rooms = new Map<string, Room>();
 
 const wss = new WebSocket.Server({ port: 2025 });
 
 wss.on('connection', (ws: WebSocket) => {
   console.log('New client connected');
 
+  let currentRoom: Room | null = null;
+  let currentUser: string | null = null;
 
   ws.on('message', (message: string) => {
-    console.log("Received message %s", message);
-    ws.send(`${message}`.toUpperCase());
-    wss.clients.forEach((client)=>{
-        client.send(`${message}`);
-      });
+    try {
+      const data = JSON.parse(message);
+      const roomId= data.roomID
+      switch (data.kind) {
+        case 'create_room':
+          const room: Room = {
+            id: roomId,
+            members: new Map(),
+          };
+          rooms.set(roomId, room);
+          currentRoom = room;
+          currentUser = data.user_name;
+          room.members.set(data.user_name, ws);
+          ws.send(JSON.stringify({ kind: 'room_created', room_id: roomId }));
+          break;
+
+        case 'join_room':
+          const roomToJoin = rooms.get(data.room_id);
+          if (roomToJoin) {
+            currentRoom = roomToJoin;
+            currentUser = data.user_name;
+            roomToJoin.members.set(data.user_name, ws);
+            ws.send(JSON.stringify({
+              kind: 'room_joined',
+              users: Array.from(roomToJoin.members.keys()),
+
+            }));
+            console.log(message);
+
+            roomToJoin.members.forEach((memberWs, username) => {
+              if (username !== data.user_name) {
+                memberWs.send(JSON.stringify({ kind: 'user_joined', user_name: data.user_name }));
+              }
+            });
+          } else {
+            ws.send(JSON.stringify({ kind: 'error', message: 'Room not found' }));
+            ws.close();
+          }
+          break;
+
+        case 'send_message':
+          if (currentRoom && currentUser) {
+            currentRoom.members.forEach((memberWs, username) => {
+              if (username !== currentUser) {
+                memberWs.send(JSON.stringify({
+                  kind: 'message_received',
+                  content: data.content,
+                  sender: currentUser,
+                }));
+              }else{
+                memberWs.send(JSON.stringify({
+                  kind: 'message_send',
+                  content : data.content,
+                  sender: currentUser,
+                }));
+              }
+            });
+          }
+          break;
+
+        case 'disconnect':
+          if (currentRoom && currentUser) {
+            currentRoom.members.delete(currentUser);
+            // Notify other users in the room
+            currentRoom.members.forEach((memberWs, username) => {
+              memberWs.send(JSON.stringify({ kind: 'user_left', user_name: currentUser }));
+            });
+            ws.close();
+          }
+          break;
+
+        default:
+          ws.send(JSON.stringify({ kind: 'error', message: 'Invalid message kind' }));
+          ws.close();
+      }
+    } catch (error) {
+      console.error('Error parsing message:', error);
+      ws.send(JSON.stringify({ kind: 'error', message: 'Invalid JSON' }));
+      ws.close();
+    }
   });
 
   ws.on('close', () => {
+    if (currentRoom && currentUser) {
+      currentRoom.members.delete(currentUser);
+      // Notify other users in the room
+      currentRoom.members.forEach((memberWs, username) => {
+        memberWs.send(JSON.stringify({ kind: 'user_left', user_name: currentUser }));
+      });
+    }
     console.log('Client disconnected');
+  });
+
+  ws.on('error', (error) => {
+    console.error('WebSocket error:', error);
+    if (currentRoom && currentUser) {
+      currentRoom.members.delete(currentUser);
+      // Notify other users in the room
+      currentRoom.members.forEach((memberWs, username) => {
+        memberWs.send(JSON.stringify({ kind: 'user_left', user_name: currentUser }));
+      });
+    }
+    ws.close();
   });
 });
