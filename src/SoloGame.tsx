@@ -61,7 +61,7 @@ function SoloGame() {
           <svg width="30vw" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 400">
             <polygon points="40,10 130,1 70,160 100,160 5,390 35,200 0,200" stroke="#000000" stroke-width="7px" fill="#FDB813" />
           </svg>
-        </figure>
+        </figure>  
         <div className='game-container'>
           <div className='game-info'>
             <Timer time={temps} />
@@ -73,7 +73,7 @@ function SoloGame() {
               updateArticleStatus={updateArticleStatus}
             />
             <div className='game-main-details'>
-              <ArticleList names={articlesMap} />
+              <ArticleList names={updatedArticlesMap } />
               <figure className="monster">
                 <img src={benjamin} alt="benjamin" />
               </figure>
@@ -106,7 +106,6 @@ function SoloGame() {
         <p><strong>Mots aléatoires :</strong> {randomMots}</p>
         <p><strong>Choix de mots :</strong> {wordsList.join(', ')}</p> {/* Affichage de la liste des mots */}
       </div>
-
       <Background />
     </>
   );
