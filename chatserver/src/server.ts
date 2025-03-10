@@ -124,7 +124,7 @@
 // });
 import WebSocket from 'ws';
 
-interface Room {
+export interface Room {
   id: string;
   members: Map<string, WebSocket>; // usernames linked to their websocket
 }

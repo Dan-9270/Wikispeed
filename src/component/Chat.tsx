@@ -407,7 +407,7 @@ export interface RealChatManager {
 }
 
 
-export const RealChatter = (props: {chatManager: RealChatManager}) => {
+export const RealChatter = (props: {chatManager: RealChatManager }) => {
   const [isRoom,setIsRoom] = useState(false);
   const [roomId, setRoomId] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
@@ -463,7 +463,7 @@ export const RealChatter = (props: {chatManager: RealChatManager}) => {
       {!isRoom ? (
         <>
           <CreateGame initalUserName="User" onRoomCreated={handleRoomCreated} />
-          <JoinGame initialUserName="User222" initialRoomId="" onRoomJoined={handleRoomJoined} />
+          <JoinGame initialUserName="VS" initialRoomId="" onRoomJoined={handleRoomJoined} />
         </>
       ) : (
         <>
