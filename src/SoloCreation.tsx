@@ -8,11 +8,17 @@ import images from "./assets/monster/images";
 import { LogoTitle } from "./component/Component";
 import { PlayGame } from "./component/GameComponent.tsx";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 
 function SoloCreation() {
   const navigate = useNavigate();
+  const location = useLocation();
+  if (!location.state) {
+    console.log("Aucun état trouvé");}
+  const username = location.state.username;
+  console.log("Nom d'utilisateur:", username);
 
-  // États pour stocker les valeurs du formulaire
+
   const [nombreArticles, setNombreArticles] = useState<string>("");
   const [artefacts, setArtefacts] = useState<string>("");
   const [temps, setTemps] = useState<string>("");
@@ -172,7 +178,6 @@ function SoloCreation() {
                     </td>
                   </tr>
                 </table>
-
                 <div className="morewords">
                   <ul id="morewords">
                     {wordsList.map((word, index) => (
