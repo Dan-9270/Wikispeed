@@ -29,7 +29,7 @@ function SoloGame() {
     }
   }, [formData]);
 
-  const articlesMap = new Map(wordsList.map((article: string) => [article, false]));
+  const articlesMap: Map<string, boolean> = new Map(wordsList.map((article: string) => [article, false]));
   const randomTitle = wordsList.length > 0 ? wordsList[Math.floor(Math.random() * wordsList.length)] : "Aucun mot disponible";
   
   const [articleTitle, setArticleTitle] = useState(randomTitle);
