@@ -15,7 +15,6 @@ import Test from './test'
 import './style/App.css'
 import './style/wikispeed.css'
 import SoloGame from "./SoloGame";
-import MultiSharePhone from "./MultiSharePhone";
 
 import { AudioProvider } from './script/AudioContext';
 
@@ -30,7 +29,6 @@ function App() {
         <Route path="/homephone" element={<HomePhone />} />
         <Route path="/multicreation" element={<MultiCreation />} />
         <Route path="/multishare" element={<MultiShare />} />
-        <Route path="/multisharephone" element={<MultiSharePhone />} />
         {/*<Route path="/pagea" element={<Pagea />} />
         <Route path="/pageb" element={<Pageb />} />*/}
         <Route path="/multigame" element={<MultiGame />} />

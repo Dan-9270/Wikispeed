@@ -34,7 +34,7 @@ function MultiCreation() {
             <div className='MultiCreation'>
 
               
-                     <RealChatter chatManager={sharedChatManager} />
+                     <RealChatter name={username} chatManager={sharedChatManager} />
                
                 
             </div>

@@ -4,6 +4,7 @@ import { ChatManager,Messaged, RealChatManager } from "./Chat";
 export class RealWebSocketChatManager implements RealChatManager {
   private socket: WebSocket | null = null;
   private messageListener: (message: Messaged) => void = () => {};
+  private playersListener: (players: string[]) => void = () => {};
 
   private connect(): void {
     if (this.socket !== null) {
@@ -16,15 +17,20 @@ export class RealWebSocketChatManager implements RealChatManager {
       console.log('Connected to WebSocket server');
     };
 
-
     this.socket.onmessage = (event) => {
-      const message: Messaged = {
-        kind: 'received_message',
-        sender: null,  
-        content: event.data as string,
-        date: new Date(),
-      };
-      this.messageListener(message);
+      const data = JSON.parse(event.data);
+      
+      if (data.kind === 'room_joined' || data.kind === 'user_joined' || data.kind === 'user_left') {
+        this.playersListener(data.users || []);
+      } else {
+        const message: Messaged = {
+          kind: 'received_message',
+          sender: data.sender || null,  
+          content: data.content || event.data,
+          date: new Date(),
+        };
+        this.messageListener(message);
+      }
     };
 
     this.socket.onclose = () => {
@@ -35,6 +41,7 @@ export class RealWebSocketChatManager implements RealChatManager {
       console.error('WebSocket error:', error);
     };
   }
+
   async createRoom(userName: string): Promise<string> {
     this.connect();
   
@@ -47,7 +54,7 @@ export class RealWebSocketChatManager implements RealChatManager {
       this.socket.onopen = () => {
         console.log('WebSocket connection opened');
   
-        const roomId = uuidv4();
+        const roomId = crypto.randomUUID();
         const message = JSON.stringify({
           kind: "create_room",
           user_name: userName,
@@ -84,14 +91,16 @@ export class RealWebSocketChatManager implements RealChatManager {
         });
         this.socket?.send(message);
         resolve(["",""])
-      };})
-
-
-    
+      };
+    });
   }
 
   setMessageListener(listener: (message: Messaged) => void): void {
     this.messageListener = listener;
+  }
+
+  setPlayersListener(listener: (players: string[]) => void): void {
+    this.playersListener = listener;
   }
 
   sendMessage(content: string): void {
@@ -105,6 +114,7 @@ export class RealWebSocketChatManager implements RealChatManager {
       console.error("WebSocket is not open");
     }
   }
+
   close(): void {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       const message = JSON.stringify({

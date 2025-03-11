@@ -8,25 +8,33 @@ import { Background } from "./assets/back.tsx";
 import images from './assets/monster/images'
 import { DeletePLayer } from './component/Component'
 import { PlayGame } from "./component/GameComponent.tsx";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
 import { ChatBox, FinChatter, RealChatter } from "./component/Chat.tsx";
 import Damien from "./assets/avatar/Avatar_damien.svg";
 import { sharedChatManager } from './chatManager';
 
 function MultiShare() {
-
   const navigate = useNavigate();
+  const location = useLocation();
+  const username = location.state?.username || "User";
+  const [players, setPlayers] = useState<string[]>([]);
 
-    // États pour stocker les valeurs du formulaire
-    const [nombreArticles, setNombreArticles] = useState<string>("");
-    const [artefacts, setArtefacts] = useState<string>("");
-    const [temps, setTemps] = useState<string>("");
-    const [randomMots, setRandomMots2] = useState<string>("");
-    const [choixMots, setChoixMots] = useState<string>("");
-    const [wordsList, setWordsList] = useState<string[]>([]); // Liste des mots ajoutés
+  // États pour stocker les valeurs du formulaire
+  const [nombreArticles, setNombreArticles] = useState<string>("");
+  const [artefacts, setArtefacts] = useState<string>("");
+  const [temps, setTemps] = useState<string>("");
+  const [randomMots, setRandomMots2] = useState<string>("");
+  const [choixMots, setChoixMots] = useState<string>("");
+  const [wordsList, setWordsList] = useState<string[]>([]); // Liste des mots ajoutés
 
-      // Gestionnaire pour naviguer vers PageB avec les données
+  useEffect(() => {
+    sharedChatManager.setPlayersListener((players) => {
+      setPlayers(players);
+    });
+  }, []);
+
+  // Gestionnaire pour naviguer vers PageB avec les données
   const handlePlayGame = (event: React.FormEvent) => {
     event.preventDefault();  // Empêcher la soumission du formulaire
 
@@ -78,7 +86,7 @@ function MultiShare() {
 
   return (
    <div >
-      <FinChatter chatManager={sharedChatManager} />
+      <FinChatter chatManager={sharedChatManager} initialUserName={username} />
 
     <div className="page">
         <LogoTitle />
@@ -194,12 +202,11 @@ function MultiShare() {
           <div className="title">Joueurs</div>
           <div className="container_ul">
             <ul>
-                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
-                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
-                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
-                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
-                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
-                <li>Kabuto  <DeletePLayer player="Kabuto"/></li>
+              {players.map((player, index) => (
+                <li key={index}>
+                  {player} <DeletePLayer player={player}/>
+                </li>
+              ))}
             </ul>
           </div>
         </div>

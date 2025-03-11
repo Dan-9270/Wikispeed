@@ -278,7 +278,6 @@ export const CreateGame = (props: { initalUserName : string ,children?: React.Re
     },300);
   }
 
-
   return (
     <SoundPlayer hoverSound={hover} clickSound={click} volume={0.1}>
      <div className="CreateGame" onClick={() => newCreateRoom() } >
@@ -287,9 +286,6 @@ export const CreateGame = (props: { initalUserName : string ,children?: React.Re
         </div>
     </SoundPlayer>
   );
-
-
-
 }
 
 export const JoinGame = (props: {initialUserName:string, initialRoomId:string,children?: React.ReactNode,onRoomJoined:(userName:string,roomId:string) =>void }) => {
@@ -401,13 +397,15 @@ export interface RealChatManager {
 
   setMessageListener(listener: (message: Messaged) => void): void;
 
+  setPlayersListener(listener: (players: string[]) => void): void;
+
   sendMessage(content: string): void;
 
   close(): void;
 }
 
 
-export const RealChatter = (props: {chatManager: RealChatManager }) => {
+export const RealChatter = (props: {name:string,chatManager: RealChatManager }) => {
   const [isRoom,setIsRoom] = useState(false);
   const [roomId, setRoomId] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
@@ -462,8 +460,8 @@ export const RealChatter = (props: {chatManager: RealChatManager }) => {
       
       {!isRoom ? (
         <>
-          <CreateGame initalUserName="User" onRoomCreated={handleRoomCreated} />
-          <JoinGame initialUserName="VS" initialRoomId="" onRoomJoined={handleRoomJoined} />
+          <CreateGame initalUserName={props.name} onRoomCreated={handleRoomCreated} />
+          <JoinGame initialUserName={props.name} initialRoomId="" onRoomJoined={handleRoomJoined} />
         </>
       ) : (
         <>
@@ -475,10 +473,10 @@ export const RealChatter = (props: {chatManager: RealChatManager }) => {
 };
 
 
-export const FinChatter = (props: {chatManager: RealChatManager}) => {
+export const FinChatter = (props: {chatManager: RealChatManager, initialUserName?: string}) => {
   const [isRoom,setIsRoom] = useState(false);
   const [roomId, setRoomId] = useState<string | null>(null);
-  const [userName, setUserName] = useState<string | null>(null);
+  const [userName, setUserName] = useState<string | null>(props.initialUserName || null);
   const [messages, setMessages] = useState<Messaged[]>([]);
 
   const handleRoomCreated = async (userName: string, roomId: string) => {
