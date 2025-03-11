@@ -209,6 +209,7 @@ function MultiShare() {
                   {player} <DeletePLayer player={player}/>
                 </li>
               ))}
+              
             </ul>
           </div>
         </div>

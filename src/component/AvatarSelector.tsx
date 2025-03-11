@@ -10,6 +10,7 @@ import cornu from "../assets/avatar/Avatar_Cornu.svg";
 
 const avatars=[damien,benjamin,pommier,titouan,daniel,neuille,cornu];
 
+
 export const AvatarSelector = () => {
     const [avatar, setAvatar] = useState(damien);
     const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +22,7 @@ export const AvatarSelector = () => {
                     alt="Avatar"
                     onClick={() => setIsOpen(!isOpen)}
                     style={{ cursor: "pointer" }}
+                    
                 />
             </div>
             {isOpen &&

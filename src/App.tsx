@@ -29,6 +29,7 @@ function App() {
         <Route path="/homephone" element={<HomePhone />} />
         <Route path="/multicreation" element={<MultiCreation />} />
         <Route path="/multishare" element={<MultiShare />} />
+      
         {/*<Route path="/pagea" element={<Pagea />} />
         <Route path="/pageb" element={<Pageb />} />*/}
         <Route path="/multigame" element={<MultiGame />} />

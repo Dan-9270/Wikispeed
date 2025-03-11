@@ -15,46 +15,60 @@ import './style/wikispeed.css';
 import { PlayButton } from './component/RouteComponent';
 
 function Home() {
-
-
   const [inputValue, setInputValue] = useState<string>('');
   const navigateToSolo = useNavigate(); 
-  const navigateToPage = (link: string) => {
-    if (inputValue.trim() === '') {
+  
+  // Validation de l'input
+  const isInputValid = inputValue.trim() !== '';
+  
+  // Fonction de navigation
+  const navigateToPage = (link: string  ) => {
+    if (!isInputValid) {
       alert('Veuillez remplir le champ utilisateur.');
-      return;  // Ne pas continuer si inputValue est vide
+     
+
+      return;
+
+      
     }
-    navigateToSolo(link, { state: { username: inputValue } });
-  };
+
+    else {
+      try {
+      navigateToSolo(link, { state: { username: inputValue } });
+    } catch (error) {
+      console.error('Erreur de navigation :', error);
+    }
+  };}
 
   const artifacts = [
     { name: 'Mine', description: 'FTG Khephren si tu trouves ça moche, c\'est pas mon problème', img: mine },
     { name: 'Map', description: 'Flop sale bâtard', img: map },
-    { name: 'Map', description: 'Flop sale bâtard', img: map },
-    { name: 'Map', description: 'Flop sale bâtard', img: map },
-    { name: 'Map', description: 'Flop sale bâtard', img: map }
+    { name: 'Compas', description: 'Un guide de la navigation', img: map }, // Exemple d'artefact varié
+    { name: 'Carte', description: 'Une carte secrète', img: map },
+    { name: 'Boussole', description: 'Une boussole pour t\'orienter', img: map }
   ];
 
   return (
     <>
-    <button
-  disabled={inputValue.trim() === ''}  // Désactive le bouton si inputValue est vide
-  onClick={() => navigateToPage('./solocreation')}
->
-  Jouer
-</button>
+      <button
+        disabled={!isInputValid} // Désactive le bouton si inputValue est vide
+        onClick={() => navigateToPage('./solocreation' )}
+      >
+        Jouer
+      </button>
+      
       <SoundPlayer hoverSound={monster} clickSound={click} volume={0.3}>                
         <div id="monster_1">
-          <img className="monsters mleft-rotate" id="m1" src={images.benjamin} alt="" />
+          <img className="monsters mleft-rotate" id="m1" src={images.benjamin} alt="Monstre Benjamin" />
         </div>
         <div id="monster_2">
-          <img className="monsters mright" id="m2" src={images.pommier} alt="" />
+          <img className="monsters mright" id="m2" src={images.pommier} alt="Monstre Pommier" />
         </div>
         <div id="monster_3">
-          <img className="monsters mright" id="m3" src={images.daniel} alt="" />
+          <img className="monsters mright" id="m3" src={images.daniel} alt="Monstre Daniel" />
         </div>
         <div id="monster_4">
-          <img className="monsters mleft" id="m4" src={images.titouan} alt="" />
+          <img className="monsters mleft" id="m4" src={images.titouan} alt="Monstre Titouan" />
         </div>
       </SoundPlayer>
 
@@ -72,6 +86,7 @@ function Home() {
                 title="Solo" 
                 img={images.green} 
                 link="solocreation" 
+                isInputValid={isInputValid} // Contrôle la validation
                 onClick={() => navigateToPage('./solocreation')} 
               />
             </SoundPlayer>
@@ -84,6 +99,7 @@ function Home() {
                 title="Multijoueur" 
                 img={images.bibabo} 
                 link="multicreation" 
+                isInputValid={isInputValid} // Contrôle la validation
                 onClick={() => navigateToPage('./multicreation')} 
               />
             </SoundPlayer>
@@ -100,14 +116,14 @@ function Home() {
           <RuleBlox content="3. Navigue d’article en article. Clique sur les liens internes de Wikipédia pour avancer d’un article à l’autre." />
           <RuleBlox content="4. Sois le plus rapide ! Le premier à avoir visité tous ses articles remporte la partie.">
             <div id="monster_6">
-              <img className="monsters" id="m6" src={images.cornu} alt="" />
+              <img className="monsters" id="m6" src={images.cornu} alt="Monstre Cornu" />
             </div>
           </RuleBlox>
         </div>
 
         <Title title="Artéfacts" />
         <ArtifactsList artifacts={artifacts} />
-       <PlayButton></PlayButton>
+        <PlayButton />
 
         <Footer content1="Aide" content2="Confidentialités" content3="Mentions Légales" />
       </section>
