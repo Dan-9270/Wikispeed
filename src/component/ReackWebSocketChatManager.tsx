@@ -5,94 +5,90 @@ export class RealWebSocketChatManager implements RealChatManager {
   private socket: WebSocket | null = null;
   private messageListener: (message: Messaged) => void = () => {};
   private playersListener: (players: string[]) => void = () => {};
+  private roomCreatedListener: (roomId: string) => void = () => {};
+  private currentRoomId: string | null = null;
 
-  private connect(): void {
-    if (this.socket !== null) {
-      this.socket.close();
-    }
-
-    this.socket = new WebSocket('ws://localhost:2025/');
-
-    this.socket.onopen = () => {
-      console.log('Connected to WebSocket server');
-    };
-
-    this.socket.onmessage = (event) => {
-      const data = JSON.parse(event.data);
-      
-      if (data.kind === 'room_joined' || data.kind === 'user_joined' || data.kind === 'user_left') {
-        this.playersListener(data.users || []);
-      } else {
-        const message: Messaged = {
-          kind: 'received_message',
-          sender: data.sender || null,  
-          content: data.content || event.data,
-          date: new Date(),
-        };
-        this.messageListener(message);
+  private connect(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      if (this.socket?.readyState === WebSocket.OPEN) {
+        resolve();
+        return;
       }
-    };
 
-    this.socket.onclose = () => {
-      console.log('WebSocket connection closed');
-    };
+      this.socket = new WebSocket('ws://localhost:2025/');
 
-    this.socket.onerror = (error) => {
-      console.error('WebSocket error:', error);
-    };
+      this.socket.onopen = () => {
+        console.log('Connected to WebSocket server');
+        resolve();
+      };
+
+      this.socket.onmessage = (event) => {
+        const data = JSON.parse(event.data);
+        console.log("Message reçu:", data);
+        
+        if (data.kind === 'players_list') {
+          console.log("🔄 Mise à jour de la liste des joueurs reçue:", data.users);
+          this.playersListener(data.users || []);
+        } else if (data.kind === 'message_received' || data.kind === 'message_send') {
+          const message: Messaged = {
+            kind: data.kind,
+            sender: data.sender || null,  
+            content: data.content,
+            date: new Date(),
+          };
+          this.messageListener(message);
+        } else if (data.kind === 'room_created') {
+          this.currentRoomId = data.room_id;
+          this.roomCreatedListener(data.room_id);
+        }
+      };
+
+      this.socket.onclose = () => {
+        console.log('WebSocket connection closed');
+      };
+
+      this.socket.onerror = (error) => {
+        console.error('WebSocket error:', error);
+        reject(error);
+      };
+    });
   }
 
   async createRoom(userName: string): Promise<string> {
-    this.connect();
+    await this.connect();
   
-    return new Promise((resolve, reject) => {
-      if (!this.socket) {
-        reject(new Error("WebSocket is not initialized"));
-        return;
-      }
-  
-      this.socket.onopen = () => {
-        console.log('WebSocket connection opened');
-  
-        const roomId = crypto.randomUUID();
-        const message = JSON.stringify({
-          kind: "create_room",
-          user_name: userName,
-          roomID : roomId
-        });
-  
-        this.socket?.send(message);
-        this.playersListener([userName]); // Ajoute le créateur à la liste
-        resolve(roomId);
-      };
-  
-      this.socket.onerror = (error) => {
-        reject(new Error("WebSocket error: " + error));
-      };
+    if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
+      throw new Error("WebSocket is not initialized");
+    }
+
+    const roomId = crypto.randomUUID();
+    const message = JSON.stringify({
+      kind: "create_room",
+      user_name: userName,
+      roomID: roomId
     });
+
+    this.socket.send(message);
+    console.log("Room creation message sent:", message);
+    return roomId;
   }
 
   async joinRoom(userName: string, roomId: string): Promise<string[]> {
-    this.connect();
+    await this.connect();
   
-    return new Promise((resolve, reject) => {
-      if (!this.socket) {
-        reject(new Error("WebSocket is not initialized"));
-        return;
-      }
-  
-      this.socket.onopen = () => {
-        console.log('WebSocket connection opened');
-  
-        const message = JSON.stringify({
-          kind: "join_room",
-          user_name: userName,
-          room_id: roomId,
-        });
-        this.socket?.send(message);
-        resolve(["",""])
-      };
+    if (!this.socket || this.socket.readyState !== WebSocket.OPEN) {
+      throw new Error("WebSocket is not initialized");
+    }
+
+    const message = JSON.stringify({
+      kind: "join_room",
+      user_name: userName,
+      room_id: roomId,
     });
+    
+    this.socket.send(message);
+    console.log("Join room message sent:", message);
+    return [];
   }
 
   setMessageListener(listener: (message: Messaged) => void): void {
@@ -101,6 +97,10 @@ export class RealWebSocketChatManager implements RealChatManager {
 
   setPlayersListener(listener: (players: string[]) => void): void {
     this.playersListener = listener;
+  }
+
+  setRoomCreatedListener(listener: (roomId: string) => void): void {
+    this.roomCreatedListener = listener;
   }
 
   sendMessage(content: string): void {
@@ -121,7 +121,6 @@ export class RealWebSocketChatManager implements RealChatManager {
         kind: "disconnect",
       });
       this.socket.send(message);
-  
       this.socket.close();
     }
   }

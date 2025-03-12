@@ -174,8 +174,8 @@ export const SoloRanking=(props:{ranking:Array<Player>})=>{
         <p>{props.ranking[1].name}</p>
         <p className='rank_title'>Récap de la partie :</p>
         <p>Temps : 2:30</p>
-        <p>Nombre d’articles trouvées : 5/5</p>
-        <p>Nombre d’articles parcourus : 16</p>
+        <p>Nombre d'articles trouvées : 5/5</p>
+        <p>Nombre d'articles parcourus : 16</p>
     </div>
   );
 }
@@ -190,8 +190,13 @@ export const PlayShare=() =>{
 }
 
 
-export const DeletePLayer=(props:{player: string})=>{
+export const DeletePLayer=(props:{player: string, onClick?: () => void})=>{
   return (
-    <FontAwesomeIcon icon={faSquareXmark} id={props.player} className='delete-player'/>
+    <FontAwesomeIcon 
+      icon={faSquareXmark} 
+      id={props.player} 
+      className='delete-player'
+      onClick={props.onClick}
+    />
   );
 }

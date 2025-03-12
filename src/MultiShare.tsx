@@ -19,6 +19,7 @@ function MultiShare() {
   const location = useLocation();
   const username = location.state?.username || "User";
   const [players, setPlayers] = useState<string[]>([]);
+  const [roomId, setRoomId] = useState<string | null>(null);
 
   // États pour stocker les valeurs du formulaire
   const [nombreArticles, setNombreArticles] = useState<string>("");
@@ -29,13 +30,31 @@ function MultiShare() {
   const [wordsList, setWordsList] = useState<string[]>([]); // Liste des mots ajoutés
 
   useEffect(() => {
+    // Configuration du listener pour la liste des joueurs
     sharedChatManager.setPlayersListener((newPlayers) => {
       console.log("🔄 Nouvelle liste des joueurs reçue :", newPlayers);
-      setPlayers(newPlayers); // Mise à jour directe sans doublons
+      setPlayers(newPlayers);
     });
+
+    // Écouter les événements de création de room
+    const handleRoomCreated = (newRoomId: string) => {
+      console.log("Room ID reçu:", newRoomId);
+      setRoomId(newRoomId);
+    };
+
+    sharedChatManager.setRoomCreatedListener(handleRoomCreated);
+
+    // Ne pas fermer le WebSocket lors du démontage du composant
+    return () => {
+      // Ne rien faire ici
+    };
   }, []);
-  
-  
+
+  const handlePlayerRemove = (playerToRemove: string) => {
+    // Pour l'instant, on ne fait que logger car la suppression devrait être gérée par le serveur
+    console.log("Tentative de suppression du joueur:", playerToRemove);
+  };
+
   // Gestionnaire pour naviguer vers PageB avec les données
   const handlePlayGame = (event: React.FormEvent) => {
     event.preventDefault();  // Empêcher la soumission du formulaire
@@ -86,6 +105,20 @@ function MultiShare() {
     }
   };  
 
+  const handleShare = async () => {
+    if (roomId) {
+      try {
+        await navigator.clipboard.writeText(roomId);
+        alert("Code de la partie copié dans le presse-papier !");
+      } catch (err) {
+        console.error("Erreur lors de la copie :", err);
+        alert("Erreur lors de la copie du code");
+      }
+    } else {
+      alert("Aucun code de partie disponible");
+    }
+  };
+
   return (
    <div >
       <FinChatter chatManager={sharedChatManager} initialUserName={username} />
@@ -96,7 +129,7 @@ function MultiShare() {
         <CreditButton />
 
       <div className="big">
-          <form onSubmit={handlePlayGame}> {/* Utiliser onSubmit pour gérer la soumission */}
+          <form > {/* Utiliser onSubmit pour gérer la soumission */}
             <div className="container container-phone">
               <div id="monster_16">
                 <img className="monsters" id="m16" src={images.cornu} alt="" />
@@ -201,12 +234,12 @@ function MultiShare() {
 
 
         <div className="right">
-          <div className="title">Joueurs</div>
+          <div className="title">Joueurs ({players.length})</div>
           <div className="container_ul">
             <ul>
               {players.map((player, index) => (
                 <li key={index}>
-                  {player} <DeletePLayer player={player}/>
+                  {player} <DeletePLayer player={player} onClick={() => handlePlayerRemove(player)}/>
                 </li>
               ))}
               
@@ -218,7 +251,7 @@ function MultiShare() {
 
 
         <div className="container_button">
-          <button className="button">Partager<FaShare/></button>
+          <div className="button" onClick={handleShare}>Partager<FaShare/></div>
           <PlayGame link="multigame" onClick={handlePlayGame} />
             </div>
           </form>
@@ -228,7 +261,7 @@ function MultiShare() {
     <div className="page2">
     <div className="container container-phone">
     <div className="right">
-          <div className="title">Joueurs</div>
+          <div className="title">Joueurs ({players.length})</div>
           <div className="container_ul">
             <ul>
                 <li>Kabuto  <DeletePLayer player="Kabuto"/></li>

@@ -388,17 +388,12 @@ export const RealChatBox = (props: {messages: Array<Messaged>, handleMessageEnte
 
 
 
-export interface RealChatManager {
+export interface RealChatManager extends ChatManager {
   createRoom(userName: string): Promise<string>;
-
   joinRoom(userName: string, roomId: string): Promise<string[]>;
-
   setMessageListener(listener: (message: Messaged) => void): void;
-
   setPlayersListener(listener: (players: string[]) => void): void;
-
-  sendMessage(content: string): void;
-
+  setRoomCreatedListener(listener: (roomId: string) => void): void;
   close(): void;
 }
 
