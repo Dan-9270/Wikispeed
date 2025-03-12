@@ -14,13 +14,24 @@ import { Background } from './assets/back'
 
 function MultiCreation() {
 
-  const navigate = useNavigate();
+  const navigateToSolo = useNavigate(); 
   const location = useLocation();
   if (!location.state) {
     console.log("Aucun état trouvé");}
   const username = location.state.username;
   console.log("Nom d'utilisateur:", username);
 
+  const navigateToPage = (link: string  ) => {
+    if (!username) {
+      return;  
+    }
+    else {
+      try {
+      navigateToSolo(link, { state: { username } });
+    } catch (error) {
+      console.error('Erreur de navigation :', error);
+    }
+  };}
   return (
         <>
               <div className="page">

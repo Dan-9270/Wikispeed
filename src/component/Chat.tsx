@@ -10,6 +10,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import hover from '../assets/music/hover.mp3';
 import click from '../assets/music/click.mp3';
+import { useNavigate } from 'react-router-dom';
 
 export const ChatBox = (props: { player: Player, messages: Array<Message> }) => {
 
@@ -266,20 +267,36 @@ export const Chatter = (props: {chatManager: ChatManager}) => {
 
 export const CreateGame = (props: { initalUserName : string ,children?: React.ReactNode,onRoomCreated : (userName : string , roomIdentifier : string) => void }) => {
   const [userName, setUserName] = useState(props.initalUserName);
-  const redirectTo = useRedirect();
+ 
+  const navigate = useNavigate(); 
   const newCreateRoom = () => {
     const roomId = uuidv4();
     console.log(roomId);
     setTimeout(() =>{
       props.onRoomCreated(userName,roomId);
-     redirectTo("/multishare");
+      navigate('../multishare', { state: { userName }});
+     
+     
     },300);
   }
 
+ 
+  
+
+
+
   return (
     <SoundPlayer hoverSound={hover} clickSound={click} volume={0.1}>
-     <div className="CreateGame" onClick={() => newCreateRoom() } >
-        <p>Creer une partie</p>
+     <div className="CreateGame"   onClick={() => {
+                  newCreateRoom();
+                
+                 
+                }}     >
+       
+       
+       
+       
+       <p>Creer une partie</p>
         {props.children}
         </div>
     </SoundPlayer>

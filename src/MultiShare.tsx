@@ -17,7 +17,7 @@ import { sharedChatManager } from './chatManager';
 function MultiShare() {
   const navigate = useNavigate();
   const location = useLocation();
-  const username = location.state?.username || "User";
+  const username = location.state?.userName || "User";
   const [players, setPlayers] = useState<string[]>([]);
   const [roomId, setRoomId] = useState<string | null>(null);
 
@@ -28,6 +28,11 @@ function MultiShare() {
   const [randomMots, setRandomMots2] = useState<string>("");
   const [choixMots, setChoixMots] = useState<string>("");
   const [wordsList, setWordsList] = useState<string[]>([]); // Liste des mots ajoutés
+
+  let owner = players[0];
+  console.log("Owner:", owner);
+  console.log("Username:", username);
+
 
   useEffect(() => {
     // Configuration du listener pour la liste des joueurs
@@ -252,7 +257,9 @@ function MultiShare() {
 
         <div className="container_button">
           <div className="button" onClick={handleShare}>Partager<FaShare/></div>
-          <PlayGame link="multigame" onClick={handlePlayGame} />
+      
+          <PlayGame link="multigame" onClick={handlePlayGame} username={username} owner={owner}/>
+      
             </div>
           </form>
         </div>

@@ -30,8 +30,9 @@ export const CreateGame = (props: { children?: React.ReactNode }) => {
 
 // Composant PlayGame modifié
 
-export const PlayGame = (props: { link: string; onClick: (event: React.FormEvent) => void }) => {
+export const PlayGame = (props: { link: string; onClick: (event: React.FormEvent) => void , username :string , owner :string}) => {
   return (
+    (props.owner == props.username) &&
     <div
       onClick={props.onClick}  // Appelle la fonction avec l'événement
       className="button"

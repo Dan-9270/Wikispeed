@@ -25,13 +25,8 @@ function Home() {
   const navigateToPage = (link: string  ) => {
     if (!isInputValid) {
       alert('Veuillez remplir le champ utilisateur.');
-     
-
       return;
-
-      
     }
-
     else {
       try {
       navigateToSolo(link, { state: { username: inputValue } });
@@ -39,6 +34,8 @@ function Home() {
       console.error('Erreur de navigation :', error);
     }
   };}
+ 
+  
 
   const artifacts = [
     { name: 'Mine', description: 'FTG Khephren si tu trouves ça moche, c\'est pas mon problème', img: mine },
@@ -100,7 +97,10 @@ function Home() {
                 img={images.bibabo} 
                 link="multicreation" 
                 isInputValid={isInputValid} // Contrôle la validation
-                onClick={() => navigateToPage('./multicreation')} 
+                onClick={() => {
+                  navigateToPage('./multicreation');
+                 
+                }}
               />
             </SoundPlayer>
           </div>
