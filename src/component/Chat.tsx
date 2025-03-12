@@ -10,7 +10,6 @@ import { v4 as uuidv4 } from 'uuid';
 
 import hover from '../assets/music/hover.mp3';
 import click from '../assets/music/click.mp3';
-import { useNavigate } from 'react-router-dom';
 
 export const ChatBox = (props: { player: Player, messages: Array<Message> }) => {
 
@@ -96,6 +95,7 @@ export const RoomJoiner = (props: {initialUserName: string, initialRoomId: strin
   const joinRoom = () => {
       setTimeout(() => {
           props.onRoomJoined(userName, roomId);
+          console.log(roomId);
       }, 300); 
   };
 
@@ -211,6 +211,7 @@ export const Chatter = (props: {chatManager: ChatManager}) => {
       setRoomId(roomId);
       setUserName(userName);
       setIsRoom(true)
+      console.log(isRoom);
     } catch (error) {
       alert('Error creating room: ' + error);
     }
@@ -267,36 +268,20 @@ export const Chatter = (props: {chatManager: ChatManager}) => {
 
 export const CreateGame = (props: { initalUserName : string ,children?: React.ReactNode,onRoomCreated : (userName : string , roomIdentifier : string) => void }) => {
   const [userName, setUserName] = useState(props.initalUserName);
- 
-  const navigate = useNavigate(); 
+  const redirectTo = useRedirect();
   const newCreateRoom = () => {
     const roomId = uuidv4();
     console.log(roomId);
     setTimeout(() =>{
       props.onRoomCreated(userName,roomId);
-      navigate('../multishare', { state: { userName }});
-     
-     
+     redirectTo("/multishare");
     },300);
   }
 
- 
-  
-
-
-
   return (
     <SoundPlayer hoverSound={hover} clickSound={click} volume={0.1}>
-     <div className="CreateGame"   onClick={() => {
-                  newCreateRoom();
-                
-                 
-                }}     >
-       
-       
-       
-       
-       <p>Creer une partie</p>
+     <div className="CreateGame" onClick={() => newCreateRoom() } >
+        <p>Creer une partie</p>
         {props.children}
         </div>
     </SoundPlayer>
@@ -405,12 +390,17 @@ export const RealChatBox = (props: {messages: Array<Messaged>, handleMessageEnte
 
 
 
-export interface RealChatManager extends ChatManager {
+export interface RealChatManager {
   createRoom(userName: string): Promise<string>;
+
   joinRoom(userName: string, roomId: string): Promise<string[]>;
+
   setMessageListener(listener: (message: Messaged) => void): void;
+
   setPlayersListener(listener: (players: string[]) => void): void;
-  setRoomCreatedListener(listener: (roomId: string) => void): void;
+
+  sendMessage(content: string): void;
+
   close(): void;
 }
 
@@ -423,7 +413,9 @@ export const RealChatter = (props: {name:string,chatManager: RealChatManager }) 
 
   const handleRoomCreated = async (userName: string, roomId: string) => {
     try {
+      console.log("ddd")
       await props.chatManager.createRoom(userName);
+      console.log("eeeeeeeeeeee")
       setRoomId(roomId);
       setUserName(userName);
       setIsRoom(true)
@@ -489,10 +481,14 @@ export const FinChatter = (props: {chatManager: RealChatManager, initialUserName
 
   const handleRoomCreated = async (userName: string, roomId: string) => {
     try {
+      console.log("ddd")
       await props.chatManager.createRoom(userName);
+      console.log("eeeeeeeeeeee")
       setRoomId(roomId);
       setUserName(userName);
       setIsRoom(true)
+      console.log(isRoom);
+      console
     } catch (error) {
       alert('Error creating room: ' + error);
     }

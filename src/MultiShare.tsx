@@ -28,32 +28,21 @@ function MultiShare() {
   const [randomMots, setRandomMots2] = useState<string>("");
   const [choixMots, setChoixMots] = useState<string>("");
   const [wordsList, setWordsList] = useState<string[]>([]); // Liste des mots ajoutés
-
+  const [copied, setCopied] = useState(false);
+  
   let owner = players[0];
   console.log("Owner:", owner);
   console.log("Username:", username);
 
 
   useEffect(() => {
-    // Configuration du listener pour la liste des joueurs
-    sharedChatManager.setPlayersListener((newPlayers) => {
-      console.log("🔄 Nouvelle liste des joueurs reçue :", newPlayers);
-      setPlayers(newPlayers);
+    sharedChatManager.setPlayersListener((players) => {
+      setPlayers(players);
     });
-
-    // Écouter les événements de création de room
-    const handleRoomCreated = (newRoomId: string) => {
-      console.log("Room ID reçu:", newRoomId);
-      setRoomId(newRoomId);
-    };
-
-    sharedChatManager.setRoomCreatedListener(handleRoomCreated);
-
-    // Ne pas fermer le WebSocket lors du démontage du composant
-    return () => {
-      // Ne rien faire ici
-    };
   }, []);
+
+
+   
 
   const handlePlayerRemove = (playerToRemove: string) => {
     // Pour l'instant, on ne fait que logger car la suppression devrait être gérée par le serveur
@@ -110,23 +99,21 @@ function MultiShare() {
     }
   };  
 
-  const handleShare = async () => {
-    if (roomId) {
-      try {
-        await navigator.clipboard.writeText(roomId);
-        alert("Code de la partie copié dans le presse-papier !");
-      } catch (err) {
-        console.error("Erreur lors de la copie :", err);
-        alert("Erreur lors de la copie du code");
-      }
-    } else {
-      alert("Aucun code de partie disponible");
-    }
+
+
+  const handleCopy = () => {
+    const roomId = sharedChatManager.getRoomId()
+    navigator.clipboard.writeText(roomId)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset après 2 secondes
+      })
+      .catch(err => console.error("Erreur de copie:", err));
   };
 
   return (
    <div >
-      <FinChatter chatManager={sharedChatManager} initialUserName={username} />
+    <FinChatter chatManager={sharedChatManager} initialUserName={username} />
 
     <div className="page">
         <LogoTitle />
@@ -238,16 +225,15 @@ function MultiShare() {
               </div>
 
 
-        <div className="right">
-          <div className="title">Joueurs ({players.length})</div>
+              <div className="right">
+          <div className="title">Joueurs</div>
           <div className="container_ul">
             <ul>
               {players.map((player, index) => (
                 <li key={index}>
-                  {player} <DeletePLayer player={player} onClick={() => handlePlayerRemove(player)}/>
+                  {player} <DeletePLayer player={player}/>
                 </li>
               ))}
-              
             </ul>
           </div>
         </div>
@@ -256,10 +242,8 @@ function MultiShare() {
 
 
         <div className="container_button">
-          <div className="button" onClick={handleShare}>Partager<FaShare/></div>
-      
+          <div onClick={handleCopy} className="button">Partager<FaShare/></div>
           <PlayGame link="multigame" onClick={handlePlayGame} username={username} owner={owner}/>
-      
             </div>
           </form>
         </div>
