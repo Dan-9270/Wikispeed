@@ -5,6 +5,8 @@ export class RealWebSocketChatManager implements RealChatManager {
   private socket: WebSocket | null = null;
   private messageListener: (message: Messaged) => void = () => {};
   private playersListener: (players: string[]) => void = () => {};
+  private roomID :string = '';
+
 
   private connect(): void {
     if (this.socket !== null) {
@@ -20,11 +22,12 @@ export class RealWebSocketChatManager implements RealChatManager {
     this.socket.onmessage = (event) => {
       const data = JSON.parse(event.data);
       
-      if (data.kind === 'room_joined' || data.kind === 'user_joined' || data.kind === 'user_left') {
+      if (data.kind === 'room_joined' || data.kind === 'user_joined' || data.kind === 'user_left' || data.kind === 'room_created' ) {
         this.playersListener(data.users || []);
       } else {
+        const message_kind = data.kind;
         const message: Messaged = {
-          kind: 'received_message',
+          kind: message_kind,
           sender: data.sender || null,  
           content: data.content || event.data,
           date: new Date(),
@@ -41,7 +44,6 @@ export class RealWebSocketChatManager implements RealChatManager {
       console.error('WebSocket error:', error);
     };
   }
-
   async createRoom(userName: string): Promise<string> {
     this.connect();
   
@@ -55,6 +57,7 @@ export class RealWebSocketChatManager implements RealChatManager {
         console.log('WebSocket connection opened');
   
         const roomId = crypto.randomUUID();
+        this.roomID = roomId;
         const message = JSON.stringify({
           kind: "create_room",
           user_name: userName,
@@ -71,7 +74,9 @@ export class RealWebSocketChatManager implements RealChatManager {
       };
     });
   }
-
+  public getRoomId() : string{
+    return this.roomID;
+  }
   async joinRoom(userName: string, roomId: string): Promise<string[]> {
     this.connect();
   
@@ -89,12 +94,13 @@ export class RealWebSocketChatManager implements RealChatManager {
           user_name: userName,
           room_id: roomId,
         });
+        this.roomID = roomId
         this.socket?.send(message);
         resolve(["",""])
       };
     });
   }
-
+  
   setMessageListener(listener: (message: Messaged) => void): void {
     this.messageListener = listener;
   }

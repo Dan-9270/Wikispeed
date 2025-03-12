@@ -27,6 +27,17 @@ function MultiShare() {
   const [randomMots, setRandomMots2] = useState<string>("");
   const [choixMots, setChoixMots] = useState<string>("");
   const [wordsList, setWordsList] = useState<string[]>([]); // Liste des mots ajoutés
+  const [copied, setCopied] = useState(false);
+
+  const handleCopy = () => {
+    const roomId = sharedChatManager.getRoomId()
+    navigator.clipboard.writeText(roomId)
+      .then(() => {
+        setCopied(true);
+        setTimeout(() => setCopied(false), 2000); // Reset après 2 secondes
+      })
+      .catch(err => console.error("Erreur de copie:", err));
+  };
 
   useEffect(() => {
     sharedChatManager.setPlayersListener((players) => {
@@ -34,7 +45,6 @@ function MultiShare() {
     });
   }, []);
 
-  // Gestionnaire pour naviguer vers PageB avec les données
   const handlePlayGame = (event: React.FormEvent) => {
     event.preventDefault();  // Empêcher la soumission du formulaire
 
@@ -94,7 +104,7 @@ function MultiShare() {
         <CreditButton />
 
       <div className="big">
-          <form onSubmit={handlePlayGame}> {/* Utiliser onSubmit pour gérer la soumission */}
+          <form > {/* Utiliser onSubmit pour gérer la soumission */}
             <div className="container container-phone">
               <div id="monster_16">
                 <img className="monsters" id="m16" src={images.cornu} alt="" />
@@ -215,7 +225,7 @@ function MultiShare() {
 
 
         <div className="container_button">
-          <button className="button">Partager<FaShare/></button>
+          <div onClick={handleCopy} className="button">Partager<FaShare/></div>
           <PlayGame link="multigame" onClick={handlePlayGame} />
             </div>
           </form>
