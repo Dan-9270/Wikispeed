@@ -201,8 +201,9 @@ export const DeletePLayer=(props:{player: string, onClick?: () => void})=>{
   );
 }
 
+
 export const Impossible = (props :{username : string, owner : string}) => {
- 
+
   return (
 
     (props.username !== props.owner) ? <div className="nohost">

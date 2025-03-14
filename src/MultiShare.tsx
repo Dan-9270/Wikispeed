@@ -37,6 +37,8 @@ function MultiShare() {
   console.log("Avatar:", avatar);
 
 
+
+
   useEffect(() => {
     sharedChatManager.setPlayersListener((players) => {
       setPlayers(players);
@@ -44,6 +46,8 @@ function MultiShare() {
   }, []);
 
 
+  const putBlackSettings = () => {
+    document.getElementById("impossibleUse")!.style.display = "none";}
    
 
   const handlePlayerRemove = (playerToRemove: string) => {
@@ -134,12 +138,12 @@ function MultiShare() {
               </div>
 
 
-              <div className="left">
+              <div className="left" >
                 <Impossible username={username} owner={owner}/>
-                <span className="title">Parametre</span>
+                <span className="title">Parametre</span >
 
                 <table className="container_ul left-phone">
-                  <tr>
+                  <tr id={username !== owner ? "gris" : "" }>
                     <td>
                       <span className="nbreArticle opt span-phone">Nombre d'articles</span>
                     </td>
@@ -151,7 +155,7 @@ function MultiShare() {
                     </td>
                   </tr>
 
-                  <tr>
+                  <tr id={username !== owner ? "gris" : "" }>
                     <td>
                       <span className="artefacts opt span-phone">Artefacts</span>
                     </td>
