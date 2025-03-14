@@ -67,16 +67,19 @@ wss.on('connection', (ws: WebSocket) => {
                   kind: 'received-message',
                   content: data.content,
                   sender: currentUser,
+                  photo: data.photo,
                 }));
               }else{
                 memberWs.send(JSON.stringify({
                   kind: 'send_message',
                   content : data.content,
                   sender: currentUser,
+                  photo: data.photo,
                 }));
               }
             });
           }
+          console.log(data);
           break;
 
         case 'disconnect':

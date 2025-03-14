@@ -28,6 +28,7 @@ export class RealWebSocketChatManager implements RealChatManager {
         const message_kind = data.kind;
         const message: Messaged = {
           kind: message_kind,
+          photo: data.photo || null,
           sender: data.sender || null,  
           content: data.content || event.data,
           date: new Date(),
@@ -109,11 +110,12 @@ export class RealWebSocketChatManager implements RealChatManager {
     this.playersListener = listener;
   }
 
-  sendMessage(content: string): void {
+  sendMessage(content: string, photo: string): void {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       const message = JSON.stringify({
         kind: "send_message",
         content: content,
+        photo: photo,
       });
       this.socket.send(message);
     } else {

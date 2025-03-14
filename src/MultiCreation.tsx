@@ -29,7 +29,7 @@ function MultiCreation() {
     }
     else {
       try {
-      navigateToSolo(link, { state: { username } });
+      navigateToSolo(link, { state: { username , avatar } });
     } catch (error) {
       console.error('Erreur de navigation :', error);
     }
@@ -47,7 +47,7 @@ function MultiCreation() {
             <div className='MultiCreation'>
 
               
-                     <RealChatter name={username} chatManager={sharedChatManager} />
+                     <RealChatter name={username} photo={avatar} chatManager={sharedChatManager} />
                
                 
             </div>

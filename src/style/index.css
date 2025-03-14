@@ -80,6 +80,7 @@ align-items : stretch;
   border-radius: 15px;
   display: flex;
   align-items: center;
+  position: relative;
   flex-direction: column;
 }
 
@@ -450,4 +451,29 @@ g{
 
 #svg-chat:hover{
   
+}
+
+.nohost{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  right: 0;
+  bottom: 0;
+  background-color: #4943C6;
+  border-radius: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+
+  h2{
+    font-size: 1.8rem;
+  }
+
+ p{
+  padding: 20%;
+  text-align: center;
+ }
 }

@@ -1,5 +1,5 @@
 import "./style/App.css";
-import { Button } from "./component/Component.tsx";
+import { Button, Impossible } from "./component/Component.tsx";
 import { List } from "./component/Component.tsx";
 import { LogoTitle } from './component/Component'
 import {CreditButton} from './component/Component'
@@ -18,6 +18,7 @@ function MultiShare() {
   const navigate = useNavigate();
   const location = useLocation();
   const username = location.state?.userName || "User";
+  const avatar = location.state?.avatar;
   const [players, setPlayers] = useState<string[]>([]);
   const [roomId, setRoomId] = useState<string | null>(null);
 
@@ -33,6 +34,7 @@ function MultiShare() {
   let owner = players[0];
   console.log("Owner:", owner);
   console.log("Username:", username);
+  console.log("Avatar:", avatar);
 
 
   useEffect(() => {
@@ -113,7 +115,7 @@ function MultiShare() {
 
   return (
    <div >
-    <FinChatter chatManager={sharedChatManager} initialUserName={username} />
+    <FinChatter chatManager={sharedChatManager} initialUserName={username} avatar={avatar} />
 
     <div className="page">
         <LogoTitle />
@@ -133,6 +135,7 @@ function MultiShare() {
 
 
               <div className="left">
+                <Impossible username={username} owner={owner}/>
                 <span className="title">Parametre</span>
 
                 <table className="container_ul left-phone">

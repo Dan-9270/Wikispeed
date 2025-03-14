@@ -200,3 +200,21 @@ export const DeletePLayer=(props:{player: string, onClick?: () => void})=>{
     />
   );
 }
+
+export const Impossible = (props :{username : string, owner : string}) => {
+ 
+  return (
+
+    (props.username !== props.owner) ? <div className="nohost">
+        <h2>Parametre</h2>
+        <p>Vous ne pouvez pas modifier les paramètres de la
+          partie car vous n'êtes pas l'hôte de la partie.</p>
+    </div> : 
+    <></>
+
+
+
+
+
+  )
+}

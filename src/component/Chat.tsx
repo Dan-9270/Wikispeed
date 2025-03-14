@@ -121,6 +121,7 @@ export const RoomJoiner = (props: {initialUserName: string, initialRoomId: strin
 
 export interface Messaged  {
   kind: string; 
+  photo : string 
   sender: string | null; 
   content: string;
   date: Date;}
@@ -265,16 +266,17 @@ export const Chatter = (props: {chatManager: ChatManager}) => {
 };
 
 
-export const CreateGame = (props: { initalUserName : string ,children?: React.ReactNode,onRoomCreated : (userName : string , roomIdentifier : string) => void }) => {
+export const CreateGame = (props: { initalUserName : string ,photo:string,children?: React.ReactNode,onRoomCreated : (userName : string , roomIdentifier : string,photo:string) => void }) => {
   const [userName, setUserName] = useState(props.initalUserName);
+  const [avatar, setAvatar] = useState(props.photo);
  
   const navigate = useNavigate(); 
   const newCreateRoom = () => {
     const roomId = uuidv4();
     console.log(roomId);
     setTimeout(() =>{
-      props.onRoomCreated(userName,roomId);
-      navigate('../multishare', { state: { userName }});
+      props.onRoomCreated(userName,roomId,props.photo);
+      navigate('../multishare', { state: { userName,avatar }});
 
 
     },300);
@@ -303,16 +305,20 @@ export const CreateGame = (props: { initalUserName : string ,children?: React.Re
   );
 }
 
-export const JoinGame = (props: {initialUserName:string, initialRoomId:string,children?: React.ReactNode,onRoomJoined:(userName:string,roomId:string) =>void }) => {
+export const JoinGame = (props: {initialUserName:string, photo:string,initialRoomId:string,children?: React.ReactNode,onRoomJoined:(userName:string,roomId:string,photo:string) =>void }) => {
   const [userName, setUserName] = useState(props.initialUserName);
   const [roomId, setRoomId] = useState(props.initialRoomId);
+  const [avatar, setAvatar] = useState(props.photo);
+
   const redirectTo = useRedirect();
+  const navigate = useNavigate(); 
+
 
   const joinRoom = () => {
     setTimeout(() => {
-        props.onRoomJoined(userName, roomId);
+        props.onRoomJoined(userName, roomId,props.photo);
         console.log(roomId);
-       redirectTo("/multishare");
+        navigate('../multishare', { state: { userName,avatar }});
     }, 300); 
 };
 
@@ -327,15 +333,14 @@ export const JoinGame = (props: {initialUserName:string, initialRoomId:string,ch
 }
 
 
-const RealMessage=(props:{message:Messaged})=>{
+const RealMessage=(props:{message:Messaged, avatar?: string})=>{
   const { kind, sender, content, date } = props.message;
 
   const messageClass = kind === "send_message" ? "sendMessage" : "message";
-
-
+  console.log(props.avatar);
   return <div className={messageClass}>
           <div className="messagebox_chat">
-            <div className="avatar"><img src={Damien} alt="img"/>
+            <div className="avatar"><img src={props.avatar} alt="img"/>
             </div><div className="content"><div className="name">{sender}</div>
             <div className="text">{content}</div></div></div></div>
 }
@@ -366,7 +371,7 @@ export const RealChatSender = (props: { onMessageEntered: (message: string) => v
     </div>
   );
 };
-export const RealChatBox = (props: {messages: Array<Messaged>, handleMessageEntered:(Message:string)=>void }) => {
+export const RealChatBox = (props: {messages: Array<Messaged>, handleMessageEntered:(Message:string)=>void, avatar?: string}) => {
 
   const [visibility, showchat] = useState(false);
   console.log("visibility:" + visibility);
@@ -381,7 +386,7 @@ export const RealChatBox = (props: {messages: Array<Messaged>, handleMessageEnte
                   <button className="closebutton manjari" onClick={() => showchat(false)}>x</button>
                   <div className="messageArea">
                       {props.messages.map((message, i) => {
-                          return <RealMessage key={i} message={message} />
+                          return <RealMessage key={i} message={message} avatar={message.photo} />
                       })}
                   </div>
                   <RealChatSender onMessageEntered={props.handleMessageEntered}></RealChatSender>
@@ -414,13 +419,13 @@ export interface RealChatManager {
 
   setPlayersListener(listener: (players: string[]) => void): void;
 
-  sendMessage(content: string): void;
+  sendMessage(content: string, photo: string): void;
 
   close(): void;
 }
 
 
-export const RealChatter = (props: {name:string,chatManager: RealChatManager }) => {
+export const RealChatter = (props: {name:string,photo:string,chatManager: RealChatManager }) => {
   const [isRoom,setIsRoom] = useState(false);
   const [roomId, setRoomId] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(null);
@@ -455,7 +460,7 @@ export const RealChatter = (props: {name:string,chatManager: RealChatManager }) 
   };
 
   const handleMessageEntered = (message: string) => {
-    props.chatManager.sendMessage(message);
+    props.chatManager.sendMessage(message,props.photo);
   };
 
   const handleMessageReceived = (message: Messaged) => {
@@ -475,12 +480,12 @@ export const RealChatter = (props: {name:string,chatManager: RealChatManager }) 
       
       {!isRoom ? (
         <>
-          <CreateGame initalUserName={props.name} onRoomCreated={handleRoomCreated} />
-          <JoinGame initialUserName={props.name} initialRoomId="" onRoomJoined={handleRoomJoined} />
+          <CreateGame initalUserName={props.name} photo={props.photo} onRoomCreated={handleRoomCreated} />
+          <JoinGame initialUserName={props.name} photo={props.photo} initialRoomId="" onRoomJoined={handleRoomJoined} />
         </>
       ) : (
         <>
-          <RealChatBox messages={messages} handleMessageEntered={handleMessageEntered} />
+          <RealChatBox messages={messages} handleMessageEntered={handleMessageEntered} avatar={props.photo} />
         </>
       )}
     </div>
@@ -488,7 +493,7 @@ export const RealChatter = (props: {name:string,chatManager: RealChatManager }) 
 };
 
 
-export const FinChatter = (props: {chatManager: RealChatManager, initialUserName?: string}) => {
+export const FinChatter = (props: {chatManager: RealChatManager, initialUserName?: string, avatar: string}) => {
   const [isRoom,setIsRoom] = useState(false);
   const [roomId, setRoomId] = useState<string | null>(null);
   const [userName, setUserName] = useState<string | null>(props.initialUserName || null);
@@ -523,7 +528,8 @@ export const FinChatter = (props: {chatManager: RealChatManager, initialUserName
   };
 
   const handleMessageEntered = (message: string) => {
-    props.chatManager.sendMessage(message);
+    console.log("Je suis la photo" + props.avatar);
+    props.chatManager.sendMessage(message,props.avatar);
   };
 
   const handleMessageReceived = (message: Messaged) => {
@@ -542,7 +548,7 @@ export const FinChatter = (props: {chatManager: RealChatManager, initialUserName
     <div>
 
         <>
-          <RealChatBox messages={messages} handleMessageEntered={handleMessageEntered} />
+          <RealChatBox messages={messages} handleMessageEntered={handleMessageEntered} avatar={props.avatar} />
         </>
     </div>
   );
