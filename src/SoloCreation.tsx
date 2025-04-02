@@ -20,8 +20,8 @@ function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChan
   const avatar = location.state.avatar;
   console.log("Nom d'utilisateur:", username);
   console.log("Avatar:", avatar);
-  const player = {id: 1, name: username, avatar: avatar, history: [], time: 0, score: 0};
-
+  
+  const player = {id: 1, name: username, avatar: avatar, history: [], time: 0, score: 0, articles:new Map() };
 
 
   const [nombreArticles, setNombreArticles] = useState<number>(0);

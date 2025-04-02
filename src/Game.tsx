@@ -21,8 +21,8 @@ export interface Game {
     end: boolean;
 }
 
-function useLocalStorage(key:any, initialValue:any) {
-    const [storedValue, setStoredValue] = useState(() => {
+export function useLocalStorage(key:any, initialValue:any) {
+  const [storedValue, setStoredValue] = useState(() => {
       try {
         const item = window.localStorage.getItem(key);
         return item ? JSON.parse(item) : initialValue;
@@ -76,6 +76,12 @@ export const Game = () => {
         )
     }
     else if(gameState === "game"){
+      if(game.players[0].articles.size === 0){
+        game.players[0] = {
+          ...game.players[0],
+          articles: new Map(game.settings.wordsList.map((article: string) => [article, false])),
+        }
+      }
         return(
             <SoloGame game={game} onChange={setGame} onChangeGameState={setGameState}/>
         )

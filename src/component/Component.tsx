@@ -164,7 +164,6 @@ export function List(props: { children: string; onChange: (value: number) => voi
 }
 
 
-
 export const SoloRanking=(props:{ranking:Player[]})=>{
   console.log("test", props.ranking[0]);
   return (
@@ -175,10 +174,7 @@ export const SoloRanking=(props:{ranking:Player[]})=>{
         <p>{props.ranking[0].name}</p>
         <p className='rank_title'>Récap de la partie :</p>
         <p>Temps : 2:30</p>
-        <p>Nombre d'articles trouvées : 5/5</p>
-        {props.ranking[0].history.map((article, index) => (
-          <p key={index} className="article">{article}</p>
-        ))}
+        <p>  Nombre d'articles trouvés : {Object.values(props.ranking[0].articles.values).filter(v => v === true).length} / {props.ranking[0].articles.size}</p>
         <p>Nombre d'articles parcourus : {props.ranking[0].history.length}</p>
     </div>
   );

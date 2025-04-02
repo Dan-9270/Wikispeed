@@ -11,13 +11,14 @@ import { useState, useEffect, useCallback, useMemo, use } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import type {Player} from './types/Player.ts';
-import { Game } from './Game.tsx';
+import { Game, useLocalStorage } from './Game.tsx';
+export { useLocalStorage } from './Game.tsx';
 
 
 function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGameState:(state:string)=> void}){
 
   const { nombreArticles, artefacts, temps, randomMots, choixMots, wordsList } = props.game.settings;
-  const [soloPlayer, setplayer] = useState(props.game.players[0]);
+  const soloPlayer = props.game.players[0]
   const [isOver, setIsOver] = useState(false);
 
   const updateHistory = (articleTitle:string)=>{
@@ -25,7 +26,10 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
       ...soloPlayer,
       history: soloPlayer.history ? [...soloPlayer.history, articleTitle] : [articleTitle]
     };
-    setplayer(newPlayer);
+    props.onChange({
+      ...props.game,
+      players: [newPlayer], 
+    });
 
   }
   const [hasSnailArtifact, setHasSnailArtifact] = useState(false);
@@ -43,7 +47,7 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
     return wordsList.length > 0 ? wordsList[Math.floor(Math.random() * wordsList.length)] : "Aucun mot disponible";
   }, [wordsList]);
 
-  const [articleTitle, setArticleTitle] = useState(randomTitle);
+  const [articleTitle, setArticleTitle] = useLocalStorage("articleTitle", randomTitle);
   const [updatedArticlesMap, setArticlesMap] = useState<Map<string, boolean>>(articlesMap);
 
   const navigate = useNavigate();
@@ -77,14 +81,31 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
     }
   }, [findTitleInHistory]);
 
+
   const updateArticleStatus = useCallback((title: string) => {
+  
     setArticlesMap((prevMap) => {
       const updatedMap = new Map(prevMap);
       if (updatedMap.has(title)) {
         updatedMap.set(title, true);
       }
+
+      // const updatePlayer: Player = {
+      //   ...soloPlayer,
+      //   articles: updatedMap
+      // }
+  
+  
+      // props.onChange({
+      //   ...props.game,
+      //   players: [updatePlayer], 
+      // });
+      
       return updatedMap;
     });
+
+    
+
   }, []);
 
   const handleArticleChange = useCallback((newTitle: string) => {

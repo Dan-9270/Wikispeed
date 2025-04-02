@@ -5,4 +5,5 @@ export interface Player {
     avatar: string;
     score: number | null;
     history: string[];
+    articles: Map<string, boolean>;
 }
