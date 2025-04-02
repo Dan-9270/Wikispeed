@@ -6,7 +6,7 @@ import { CreditButton } from "./component/Component";
 import { Background } from "./assets/back.tsx";
 import images from "./assets/monster/images";
 import { LogoTitle } from "./component/Component";
-import { PlayGame } from "./component/GameComponent.tsx";
+import { AutoCompleteInput, PlayGame } from "./component/GameComponent.tsx";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
 import { Game } from "./Game.tsx";
@@ -180,15 +180,7 @@ function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChan
                       <span className="word opt span-phone" id="impossibleUse">Choisir des mots</span>
                     </td>
                     <td>
-                      <input
-                        className="words input-phone"
-                        type="text"
-                        placeholder="Choisir un mot"
-                        value={choixMots}
-                        onChange={(e) => setChoixMots(e.target.value)}
-                        onKeyDown={handleKeyDown} 
-                        id="word"
-                      />
+                      <AutoCompleteInput value={choixMots} onChange={setChoixMots} onKeyDown={handleKeyDown}></AutoCompleteInput>
                     </td>
                   </tr>
                 </table>
