@@ -7,7 +7,7 @@ import './style/timer.css';
 import './style/game.css';
 import { ArticleDisplayer } from './component/Article';
 import { Background } from "./assets/back.tsx";
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, use } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import type {Player} from './types/Player.ts';
@@ -18,6 +18,7 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
 
   const { nombreArticles, artefacts, temps, randomMots, choixMots, wordsList } = props.game.settings;
   const [soloPlayer, setplayer] = useState(props.game.players[0]);
+  const [isOver, setIsOver] = useState(false);
 
   const updateHistory = (articleTitle:string)=>{
     const newPlayer: Player = {
@@ -97,11 +98,10 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
   }, [artefacts, activateSnailArtifactRandomly]);
 
 
-
   useEffect(() => {
     const allArticlesFound = Array.from(updatedArticlesMap.values()).every(status => status === true);
     console.log("c'est moi ddf",props.game);
-    if (allArticlesFound) {
+    if (allArticlesFound || isOver) {
       props.onChangeGameState("end");
     }
   }, [updatedArticlesMap, navigate]);
@@ -114,6 +114,13 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
       updateHistory(articleTitle);
     }
   }, [articleTitle]);
+  useEffect(() => {
+    console.log("isOver", isOver);
+
+    if (isOver) {
+      props.onChangeGameState("end");
+    }
+  })
   return (
     <>
       <section className='main-page game'>
@@ -124,7 +131,7 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
         </figure>
         <div className='game-container'>
           <div className='game-info'>
-            <Timer time={temps} />
+            <Timer time={temps} onTimeUp={setIsOver} />
           </div>
           <div className='game-main'>
             <ArticleDisplayer

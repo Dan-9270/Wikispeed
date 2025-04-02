@@ -6,13 +6,27 @@ import { createPortal } from "react-dom";
 
 
 
-export function Timer(props: { time: number }) {
+export function Timer(props: { time: number, onTimeUp: (isOver :boolean) => void }) {
     const [seconds, setSeconds] = useState(props.time*60);
 
+
+    useEffect(() => {
+        if (seconds <= 0) {
+            props.onTimeUp(true);
+            console.log("Time is up!");
+            return;
+        }
+    }
+
+    )
     useEffect(() => {
         const interval = setInterval(() => {
         setSeconds((prevSeconds) => prevSeconds - 1);
         }, 1000);
+        if (seconds <= 0) {
+            clearInterval(interval);
+            props.onTimeUp(true);
+        }
 
         return () => clearInterval(interval);
     }, []);

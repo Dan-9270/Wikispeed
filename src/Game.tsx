@@ -72,7 +72,7 @@ export const Game = () => {
     }
     else if(gameState === "loading"){
         return(
-            <Loading  onChangeGameState={setGameState}/>
+            <Loading  game={game} onChange={setGame} onChangeGameState={setGameState}/>
         )
     }
     else if(gameState === "game"){
