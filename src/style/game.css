@@ -504,3 +504,14 @@ sup{
     transform: translateY(0);
   }
 }
+
+
+.input-radio:checked + .oui{
+    background: rgb(18, 208, 18);
+    color: white;
+  }
+  
+  .input-radio:checked + .non{
+    background: rgb(239, 16, 16);
+    color: white;
+  }

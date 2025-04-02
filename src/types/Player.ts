@@ -4,5 +4,5 @@ export interface Player {
     time: number | null;
     avatar: string;
     score: number | null;
-    history: string[] | null;
+    history: string[];
 }

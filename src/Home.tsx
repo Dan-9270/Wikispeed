@@ -15,6 +15,7 @@ import './style/wikispeed.css';
 import { PlayButton } from './component/RouteComponent';
 
 function Home() {
+  localStorage.clear();
   const [inputValue, setInputValue] = useState<string>('');
   const [avatar, setAvatar] = useState<string>('/src/assets/avatar/Avatar_damien.svg'); 
 
@@ -85,7 +86,7 @@ function Home() {
                 img={images.green} 
                 link="solocreation" 
                 isInputValid={isInputValid} // Contrôle la validation
-                onClick={() => navigateToPage('./solocreation')} 
+                onClick={() => navigateToPage('./game')} 
               />
             </SoundPlayer>
 

@@ -11,19 +11,13 @@ import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import type {Player} from './types/Player.ts';
+import { Game } from './Game.tsx';
 
 
-function SoloGame() {
-  const location = useLocation();
-  const formData = location.state;
+function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGameState:(state:string)=> void}){
 
-  // Si les données sont absentes ou invalides, redirige l'utilisateur ou montre un message d'erreur
-  if (!formData) {
-    return <div>Erreur: Aucune donnée trouvée.</div>;
-  }
-
-  const { nombreArticles, artefacts, temps, randomMots, choixMots, wordsList, player } = formData;
-  const [soloPlayer, setplayer] = useState(player);
+  const { nombreArticles, artefacts, temps, randomMots, choixMots, wordsList } = props.game.settings;
+  const [soloPlayer, setplayer] = useState(props.game.players[0]);
 
   const updateHistory = (articleTitle:string)=>{
     const newPlayer: Player = {
@@ -54,11 +48,10 @@ function SoloGame() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("Données reçues:", formData);
     if (choixMots) {
       setArticleTitle(choixMots);
     }
-  }, [formData, choixMots]);
+  }, [choixMots]);
 
   const findTitleInHistory = useCallback(() => {
     for (let i = soloPlayer.history.length - 1; i >= 0; i--) {
@@ -94,7 +87,7 @@ function SoloGame() {
   }, []);
 
   const handleArticleChange = useCallback((newTitle: string) => {
-    if (artefacts === "OUI" && activateSnailArtifactRandomly()) {
+    if (artefacts === true && activateSnailArtifactRandomly()) {
       setHasSnailArtifact(true);
     } else {
       setHasSnailArtifact(false);
@@ -107,8 +100,9 @@ function SoloGame() {
 
   useEffect(() => {
     const allArticlesFound = Array.from(updatedArticlesMap.values()).every(status => status === true);
+    console.log("c'est moi ddf",props.game);
     if (allArticlesFound) {
-      navigate('/endgamesolo');
+      props.onChangeGameState("end");
     }
   }, [updatedArticlesMap, navigate]);
   useEffect(() => {

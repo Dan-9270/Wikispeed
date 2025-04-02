@@ -115,9 +115,9 @@ export const PlayerInfo = (props: { players: Player[], articles: string[] }) => 
     );
 };
 
-export const Inventory = (props:{artifact1 :Artifact, artifact2 : Artifact ; isExist : string }) =>{
+export const Inventory = (props:{artifact1 :Artifact, artifact2 : Artifact ; isExist : boolean }) =>{
     const artifacts = [props.artifact1,props.artifact2]
-    return    props.isExist=="OUI"  && <div className='inventory'>
+    return    props.isExist== true  && <div className='inventory'>
                 <ArtifactsList artifacts={artifacts} ></ArtifactsList>
                 </div>
                 

@@ -4,6 +4,7 @@ import { SoundPlayer } from './MusicComponent'
 
 import hover from '../assets/music/hover.mp3';
 import click from '../assets/music/click.mp3';
+import { useEffect } from "react";
 
 export const CreateGame = (props: { children?: React.ReactNode }) => {
     const redirectTo = useRedirect()
@@ -43,6 +44,21 @@ export const PlayGame = (props: { link: string; onClick: (event: React.FormEvent
 };
 
 
+export const Loading = (props: { onChangeGameState: (state: string) => void }) => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      props.onChangeGameState("game");
+    }, 5000);
+    
+    return () => clearTimeout(timer);
+  }, [props.onChangeGameState]);
+
+  return (
+    <div>
+      LOADING ...
+    </div>
+  );
+};
 
 
   export const Setting = () =>{

@@ -9,9 +9,9 @@ import { LogoTitle } from "./component/Component";
 import { PlayGame } from "./component/GameComponent.tsx";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from 'react-router-dom';
-import { PlayerInfo } from "./component/EventComponent.tsx";
+import { Game } from "./Game.tsx";
 
-function SoloCreation() {
+function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChangeGameState:(state:string)=> void }) {
   const navigate = useNavigate();
   const location = useLocation();
   if (!location.state) {
@@ -20,31 +20,40 @@ function SoloCreation() {
   const avatar = location.state.avatar;
   console.log("Nom d'utilisateur:", username);
   console.log("Avatar:", avatar);
-  const player ={id:1,name: username,avatar:avatar, history:[]};
+  const player = {id: 1, name: username, avatar: avatar, history: [], time: 0, score: 0};
 
 
-  const [nombreArticles, setNombreArticles] = useState<string>("");
-  const [artefacts, setArtefacts] = useState<string>("");
-  const [temps, setTemps] = useState<string>("");
-  const [randomMots, setRandomMots2] = useState<string>("");
+
+  const [nombreArticles, setNombreArticles] = useState<number>(0);
+  const [artefacts, setArtefacts] = useState<boolean>(false);
+  const [temps, setTemps] = useState<number>(0);
+  const [randomMots, setRandomMots2] = useState<boolean>(false);
   const [choixMots, setChoixMots] = useState<string>("");
   const [wordsList, setWordsList] = useState<string[]>([]); // Liste des mots ajoutés
 
   // Gestionnaire pour naviguer vers PageB avec les données
   const handlePlayGame = (event: React.FormEvent) => {
     event.preventDefault();  // Empêcher la soumission du formulaire
-
-    const formData = {
-      nombreArticles,
-      artefacts,
-      temps,
-      randomMots,
-      choixMots,
-      wordsList,
-      player
-    };
-    navigate("/sologame", { state: formData });
+    const settings ={
+        nombreArticles: nombreArticles,
+        artefacts: artefacts,
+        temps: temps,
+        randomMots: randomMots,
+        choixMots: choixMots,
+        wordsList: wordsList,
+    }
+    
+    const newGame = {
+      players:[player],
+      currentPlayer: 0,
+      settings: settings,
+      end: false,
+    }
+    console.log("Nouvelle partie :", newGame);
+    props.onChange(newGame)
+    props.onChangeGameState("loading")
   };
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && choixMots.trim() !== "") {
       if (wordsList.length >= Number(nombreArticles)) {
@@ -69,9 +78,9 @@ function SoloCreation() {
 
 
 
-  const setRandomMots = (value: string) => {
+  const setRandomMots = (value: boolean) => {
     setRandomMots2(value);
-    if (value === "OUI") {
+    if (value === true) {
       document.getElementById("impossibleUse")!.style.display = "none";
       document.getElementById("morewords")!.style.display = "none";  
       document.getElementById("word")!.style.display = "none";
@@ -124,13 +133,13 @@ function SoloCreation() {
                     <td className="td-phone">
                       <Button
                         choix="artefacts"
-                        value="OUI"
-                        onClick={() => setArtefacts("OUI")}
+                        value= "OUI"
+                        onClick={() => setArtefacts(true)}
                       />
                       <Button
                         choix="artefacts"
                         value="NON"
-                        onClick={() => setArtefacts("NON")}
+                        onClick={() => setArtefacts(false)}
                       />
                     </td>
                   </tr>
@@ -155,13 +164,13 @@ function SoloCreation() {
                       <Button
                         choix="random"
                         value="OUI"
-                        onClick={() => setRandomMots("OUI")}
+                        onClick={() => setRandomMots(true)}
                         
                       />
                       <Button
                         choix="random"
                         value="NON"
-                        onClick={() => setRandomMots("NON")}
+                        onClick={() => setRandomMots(false)}
                       />
                     </td>
                   </tr>
@@ -196,7 +205,7 @@ function SoloCreation() {
 
 
             <div className="container_button">
-              <PlayGame link="sologame" onClick={handlePlayGame} />
+              <PlayGame link="sologame" owner={username} username={username} onClick={handlePlayGame} />
             </div>
           </form>
         </div>

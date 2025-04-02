@@ -14,7 +14,7 @@ import Test from './test'
  
 import './style/App.css'
 import './style/wikispeed.css'
-import SoloGame from "./SoloGame";
+import { Game } from "./Game";
 
 import { AudioProvider } from './script/AudioContext';
 
@@ -33,13 +33,10 @@ function App() {
         {/*<Route path="/pagea" element={<Pagea />} />
         <Route path="/pageb" element={<Pageb />} />*/}
         <Route path="/multigame" element={<MultiGame />} />
-        <Route path="/sologame" element={<SoloGame />} />
-        
-        <Route path="/solocreation" element={<SoloCreation />} />
+        <Route path="/game" element={<Game />} />
+      
         <Route path="/endgame" element={<EndGame/>} />
-        
-        <Route path="/endgamesolo" element={<EndGameSolo/>} />
-        <Route path="/test" element={<Test/>}/>
+                <Route path="/test" element={<Test/>}/>
         </Routes>
     </Router>
    

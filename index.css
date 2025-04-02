@@ -278,12 +278,19 @@ display: none;
  width: 5vw;
 
 }
-.input-radio:checked + #oui {
+.oui{
+  background: rgb(18, 208, 18)!important
+}
+.non{
+  background: rgb(239, 16, 16);
+}
+.input-radio:checked  {
   background: rgb(18, 208, 18);
+  display: block;
   color: white;
 }
 
-.input-radio:checked + #non{
+.input-radio:checked + .non{
   background: rgb(239, 16, 16);
   color: white;
 }

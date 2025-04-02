@@ -129,7 +129,7 @@ export const Ranking=(props :{ranking:Array<Player>})=>{
 
 
 
-export function Button(props: { choix: string; value: string; onClick: (value: string) => void }) {
+export function Button(props: { choix: string; value: string; onClick: (value: boolean) => void }) {
   const id = `${props.choix}-${props.value}`;
 
   return (
@@ -139,17 +139,17 @@ export function Button(props: { choix: string; value: string; onClick: (value: s
         name={props.choix} 
         id={id} 
         className="input-radio"
-        onClick={() => props.onClick(props.value)} // Appel à la fonction de mise à jour de l'état
+        onClick={() => props.onClick(props.value === "OUI" ? true : false)} // Appel à la fonction de mise à jour de l'état
       />
-      <label htmlFor={id} className={props.value === 'OUI' ? 'oui' : 'non'}>
+      <label htmlFor={id} className={props.value === "OUI" ? 'oui' : 'non'}>
         {props.value}
       </label>
     </span>
   );
 }
 
-export function List(props: { children: string; onChange: (value: string) => void }) {
-  return <select name="list" id="list" className="" onChange={(e) => props.onChange(e.target.value)}>
+export function List(props: { children: string; onChange: (value: number) => void }) {
+  return <select name="list" id="list" className="" onChange={(e) => props.onChange(parseInt(e.target.value))}>
       <option value="0">{props.children == 'article' ? 'Combien d\'articles ?' : 'Combien de temps ?'}</option>
       <option value={props.children == 'article' ? '1' : '3 '}>{props.children == 'article' ? '1 article' : '3 minutes'}</option>
       <option value={props.children == 'article' ? '2' : '5'}>{props.children == 'article' ? 2 : 5}</option>
@@ -165,26 +165,30 @@ export function List(props: { children: string; onChange: (value: string) => voi
 
 
 
-export const SoloRanking=(props:{ranking:Array<Player>})=>{
+export const SoloRanking=(props:{ranking:Player[]})=>{
+  console.log("test", props.ranking[0]);
   return (
 
     <div className='SoloRanking'>
         <p className='rank_title'>Partie terminée !</p>
-        <img className='rank_avatar' src={props.ranking[1].avatar} alt={props.ranking[1].name} />
-        <p>{props.ranking[1].name}</p>
+        <img className='rank_avatar' src={props.ranking[0].avatar} alt={props.ranking[0].name} />
+        <p>{props.ranking[0].name}</p>
         <p className='rank_title'>Récap de la partie :</p>
         <p>Temps : 2:30</p>
         <p>Nombre d'articles trouvées : 5/5</p>
-        <p>Nombre d'articles parcourus : 16</p>
+        {props.ranking[0].history.map((article, index) => (
+          <p key={index} className="article">{article}</p>
+        ))}
+        <p>Nombre d'articles parcourus : {props.ranking[0].history.length}</p>
     </div>
   );
 }
 
-export const PlayShare=() =>{
+export const PlayShare=(props: { onChangeGameState: (state: string) => void }) =>{
   return(
     <div className="container_button">
       <button className="button">Partager<FaShare/></button>
-      <button className="button">Demarrer<FaPlay/> </button>
+      <button className="button" onClick={() => props.onChangeGameState("build")}>Demarrer<FaPlay/> </button>
     </div>
   );
 }

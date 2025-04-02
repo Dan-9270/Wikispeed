@@ -9,9 +9,9 @@ import images from './assets/monster/images'
 
 import './style/wikispeed.css'
 import { Background } from './assets/back'
+import { Game } from './Game'
 
-function EndGameSolo(){
-    const ranking=[{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},{id:2,name:"Damien",time:200,avatar:Damien,score:20},{id:3,name:"Damien",time:200,avatar:Damien,score:20},{id:4,name:"Damien",time:200,avatar:Damien,score:20},{id:5,name:"Damien",time:200,avatar:Damien,score:20},{id:6,name:"Damien",time:200,avatar:Damien,score:20}];
+function EndGameSolo(props:{game:Game; onChangeGameState:(state:string)=> void}){
     return <>
         <Background></Background>
         <main>
@@ -28,8 +28,8 @@ function EndGameSolo(){
     <CreditButton/>
     <LogoTitle/>
 
-        <SoloRanking ranking={ranking}></SoloRanking>
-        <PlayShare></PlayShare>
+        <SoloRanking ranking={props.game.players}></SoloRanking>
+        <PlayShare onChangeGameState={props.onChangeGameState}></PlayShare>
             </section>
         </main>
     </>
