@@ -144,11 +144,11 @@ export const AutoCompleteInput = (props: {
           {/* Champ de saisie */}
           <input
               onKeyDown={handleKeyDown}
-              className="words input-phone"
+              className="words td-phone input-phone"
               type="text"
               value={props.value}  // Valeur de l'input
               onChange={(e) => props.onChange(capitalizeFirstLetter(e.target.value))}  // Met à jour la valeur avec une majuscule
-              placeholder="Rechercher sur Wikipédia..."  // Texte indicatif
+              placeholder="Entrez vos articles"  // Texte indicatif
               list="autocomplete-list"
           />
           

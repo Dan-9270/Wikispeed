@@ -7,7 +7,7 @@ import { FaShare } from "react-icons/fa";
 import { Background } from "./assets/back.tsx";
 import images from './assets/monster/images'
 import { DeletePLayer } from './component/Component'
-import { PlayGame } from "./component/GameComponent.tsx";
+import { AutoCompleteInput, PlayGame } from "./component/GameComponent.tsx";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect, use } from "react";
 import { ChatBox, FinChatter, RealChatter } from "./component/Chat.tsx";
@@ -23,10 +23,10 @@ function MultiShare() {
   const [roomId, setRoomId] = useState<string | null>(null);
 
   // États pour stocker les valeurs du formulaire
-  const [nombreArticles, setNombreArticles] = useState<string>("");
-  const [artefacts, setArtefacts] = useState<string>("");
-  const [temps, setTemps] = useState<string>("");
-  const [randomMots, setRandomMots2] = useState<string>("");
+  const [nombreArticles, setNombreArticles] = useState<number>(0);
+  const [artefacts, setArtefacts] = useState<boolean>(false);
+  const [temps, setTemps] = useState<number>(0);
+  const [randomMots, setRandomMots2] = useState<boolean>(false);
   const [choixMots, setChoixMots] = useState<string>("");
   const [wordsList, setWordsList] = useState<string[]>([]); // Liste des mots ajoutés
   const [copied, setCopied] = useState(false);
@@ -128,9 +128,9 @@ function MultiShare() {
     setWordsList((prevWords) => prevWords.filter((word) => word !== wordToRemove));
   };
 
-  const setRandomMots = (value: string) => {
+  const setRandomMots = (value: boolean) => {
     setRandomMots2(value);
-    if (value === "OUI") {
+    if (value === true) {
       document.getElementById("impossibleUse")!.style.display = "none";
       document.getElementById("morewords")!.style.display = "none";  
       document.getElementById("word")!.style.display = "none";
@@ -200,12 +200,12 @@ function MultiShare() {
                       <Button
                         choix="artefacts"
                         value="OUI"
-                        onClick={() => setArtefacts("OUI")}
+                        onClick={() => setArtefacts(true)}
                       />
                       <Button
                         choix="artefacts"
                         value="NON"
-                        onClick={() => setArtefacts("NON")}
+                        onClick={() => setArtefacts(false)}
                       />
                     </td>
                   </tr>
@@ -230,13 +230,13 @@ function MultiShare() {
                       <Button
                         choix="random"
                         value="OUI"
-                        onClick={() => setRandomMots("OUI")}
+                        onClick={() => setRandomMots(true)}
                         
                       />
                       <Button
                         choix="random"
                         value="NON"
-                        onClick={() => setRandomMots("NON")}
+                        onClick={() => setRandomMots(false)}
                       />
                     </td>
                   </tr>
@@ -246,15 +246,7 @@ function MultiShare() {
                       <span className="word opt span-phone" id="impossibleUse">Choisir des mots</span>
                     </td>
                     <td>
-                      <input
-                        className="words input-phone"
-                        type="text" 
-                        placeholder="Choisir un mot"
-                        value={choixMots}
-                        onChange={(e) => setChoixMots(e.target.value)}
-                        onKeyDown={handleKeyDown} 
-                        id="word"
-                      />
+                       <AutoCompleteInput value={choixMots} onChange={setChoixMots} onKeyDown={handleKeyDown}></AutoCompleteInput>
                     </td>
                   </tr>
                 </table>

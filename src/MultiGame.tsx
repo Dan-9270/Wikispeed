@@ -40,7 +40,8 @@ function MultiGame() {
     
     const [articleTitle, setArticleTitle] = useState(randomTitle);
     const [updatedArticlesMap, setArticlesMap] = useState<Map<string, boolean>>(articlesMap);
-  
+    const [isOver, setIsOver] = useState(false);
+
     const navigate = useNavigate();
   
     const updateArticleStatus = (title: string) => {
@@ -60,6 +61,7 @@ function MultiGame() {
       }
     }, [updatedArticlesMap, navigate]);
  
+    
 
     return (
         <>
@@ -74,7 +76,7 @@ function MultiGame() {
 
         <div className='game-container'>
           <div className='game-info'>
-              <Timer time={temps} />
+              <Timer time={temps} onTimeUp={setIsOver} />
             </div>
           <div className='game-main'>
             <ArticleDisplayer
