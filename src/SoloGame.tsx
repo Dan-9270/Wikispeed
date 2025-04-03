@@ -17,21 +17,39 @@ export { useLocalStorage } from './Game.tsx';
 
 function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGameState:(state:string)=> void}){
 
-  const { nombreArticles, artefacts, temps, randomMots, choixMots, wordsList } = props.game.settings;
+  const { nombreArticles, artefacts, temps, randomMots, wordsList } = props.game.settings;
   const soloPlayer = props.game.players[0]
   const [isOver, setIsOver] = useState(false);
 
-  const updateHistory = (articleTitle:string)=>{
+  
+  const updateHistory = (articleTitle: string) => {
+    const newHistory = [...props.game.players[0].history, articleTitle];
+    
     const newPlayer: Player = {
+      ...props.game.players[0],
+      history: newHistory, 
+    };
+  
+    const newGame = {
+      ...props.game,
+      players: [newPlayer], 
+    };
+  
+    props.onChange(newGame); 
+  };
+
+  const updateArticles = (articles: Map<string, boolean>) => {
+    const updatedPlayer: Player = {
       ...soloPlayer,
-      history: soloPlayer.history ? [...soloPlayer.history, articleTitle] : [articleTitle]
+      articles: articles
     };
     props.onChange({
       ...props.game,
-      players: [newPlayer], 
+      players: [updatedPlayer], 
     });
-
   }
+
+
   const [hasSnailArtifact, setHasSnailArtifact] = useState(false);
 
   const activateSnailArtifactRandomly = useCallback(() => {
@@ -47,17 +65,25 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
     return wordsList.length > 0 ? wordsList[Math.floor(Math.random() * wordsList.length)] : "Aucun mot disponible";
   }, [wordsList]);
 
-  const [articleTitle, setArticleTitle] = useLocalStorage("articleTitle", randomTitle);
-  const [updatedArticlesMap, setArticlesMap] = useState<Map<string, boolean>>(articlesMap);
+  // if(props.game.players[0].history.length == 0){
+  //   console.log("Aucun mot trouvé dans l'historique, ajout d'un mot aléatoire."); 
+  //   updateHistory(randomTitle);
+  // }
+
+  const updatedArticlesMap = props.game.players[0].articles;
+  const articleTitle = props.game.players[0].history[props.game.players[0].history.length - 1];
+
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (choixMots) {
-      setArticleTitle(choixMots);
+    if (props.game.players[0].history.length === 0 && wordsList.length > 0) {
+      const initialTitle = randomMots ? randomTitle : wordsList[0];
+      updateHistory(initialTitle);
     }
-  }, [choixMots]);
+  }, [wordsList, randomMots, randomTitle]);
 
+  
   const findTitleInHistory = useCallback(() => {
     for (let i = soloPlayer.history.length - 1; i >= 0; i--) {
       const historyTitle = soloPlayer.history[i];
@@ -71,24 +97,23 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
   const useEraser = useCallback(() => {
     const title = findTitleInHistory();
     if (title != null) {
-      setArticlesMap((prevMap) => {
-        const updatedMap = new Map(prevMap);
-        if (updatedMap.has(title)) {
-          updatedMap.set(title, false);
-        }
-        return updatedMap;
-      });
+      const updatedMap = new Map(props.game.players[0].articles);
+      if (updatedMap.has(title)) {
+        updatedMap.set(title, false);
+      }
+      updateArticles(updatedMap); // Appelle directement avec la nouvelle Map
     }
   }, [findTitleInHistory]);
 
 
   const updateArticleStatus = useCallback((title: string) => {
   
-    setArticlesMap((prevMap) => {
-      const updatedMap = new Map(prevMap);
-      if (updatedMap.has(title)) {
-        updatedMap.set(title, true);
-      }
+    const updatedMap = new Map(props.game.players[0].articles);
+    if (updatedMap.has(title)) {
+      updatedMap.set(title, true);
+    }
+    updateArticles(updatedMap);
+
 
       // const updatePlayer: Player = {
       //   ...soloPlayer,
@@ -100,12 +125,6 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
       //   ...props.game,
       //   players: [updatePlayer], 
       // });
-      
-      return updatedMap;
-    });
-
-    
-
   }, []);
 
   const handleArticleChange = useCallback((newTitle: string) => {
@@ -114,10 +133,10 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
     } else {
       setHasSnailArtifact(false);
     }
-
-    setArticleTitle(newTitle);
-  }, [artefacts, activateSnailArtifactRandomly]);
-
+    if (newTitle && newTitle !== articleTitle) {
+      updateHistory(newTitle);
+    }
+  }, [artefacts, activateSnailArtifactRandomly, articleTitle]);
 
   useEffect(() => {
     const allArticlesFound = Array.from(updatedArticlesMap.values()).every(status => status === true);
@@ -127,16 +146,10 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
     }
   }, [updatedArticlesMap, navigate]);
   useEffect(() => {
-    console.log(soloPlayer);
   }, [soloPlayer]);
 
+  
   useEffect(() => {
-    if (articleTitle) {
-      updateHistory(articleTitle);
-    }
-  }, [articleTitle]);
-  useEffect(() => {
-    console.log("isOver", isOver);
 
     if (isOver) {
       props.onChangeGameState("end");
@@ -189,6 +202,7 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
           </div>
         </div>
       </section>
+      <button onClick={()=> updateHistory('paris')}>test</button>
       <Background />
     </>
   );

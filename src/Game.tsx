@@ -33,13 +33,16 @@ export function useLocalStorage(key:any, initialValue:any) {
     });
   
     useEffect(() => {
+      console.log(`Mise à jour du localStorage pour ${key}: `, storedValue);
       try {
         window.localStorage.setItem(key, JSON.stringify(storedValue));
       } catch (error) {
         console.error("Error setting localStorage key ", key, error);
       }
     }, [key, storedValue]);
+    
   
+    // console.log("storedValue", storedValue);
     return [storedValue, setStoredValue];
   }
   
@@ -65,6 +68,9 @@ export const Game = () => {
         end: false,
     });
 
+  console.log("Game initialisé : ", game);
+
+  
     if(gameState === "build"){
         return(
             <SoloCreation game={game} onChange={setGame} onChangeGameState={setGameState}/>
@@ -75,16 +81,21 @@ export const Game = () => {
             <Loading  game={game} onChange={setGame} onChangeGameState={setGameState}/>
         )
     }
-    else if(gameState === "game"){
-      if(game.players[0].articles.size === 0){
-        game.players[0] = {
-          ...game.players[0],
-          articles: new Map(game.settings.wordsList.map((article: string) => [article, false])),
-        }
+    else if (gameState === "game") {
+      if (game.players.length > 0 && game.players[0].articles.size === 0) {
+        const updatedGame = {
+          ...game,
+          players: [
+            {
+              ...game.players[0],
+              articles: new Map(game.settings.wordsList.map((article: string) => [article, false])),
+            },
+          ],
+        };
+        setGame(updatedGame);
       }
-        return(
-            <SoloGame game={game} onChange={setGame} onChangeGameState={setGameState}/>
-        )
+    
+      return <SoloGame game={game} onChange={setGame} onChangeGameState={setGameState} />;
     }
     else {
         return(
