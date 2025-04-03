@@ -42,10 +42,10 @@ export const SelectMode = (props: { title: string, img: string, link: string, on
 
 
 
-export const NextHome = (props :{title : string , link : string}) =>{   
-    const redirectTo = useRedirect();
+export const NextHome = (props :{title : string, onClick:()=>void}) =>{   
+   
 
-    return <div className='button' onClick={() => redirectTo(`/${props.link}`)}>
+    return <div className='button' onClick={() => props.onClick()}>
                     <h2 className="manjari">{props.title}</h2>
                     <FaPlay/>   
             </div>

@@ -13,11 +13,14 @@ import monster from './assets/music/monster.mp3';
 import { Background } from './assets/back';
 import './style/wikispeed.css';
 import { PlayButton } from './component/RouteComponent';
+import { Link } from "react-router-dom";
+
 
 function Home() {
   localStorage.clear();
   const [inputValue, setInputValue] = useState<string>('');
   const [avatar, setAvatar] = useState<string>('/src/assets/avatar/Avatar_damien.svg'); 
+  const [isNameChoosen, setIsNameChosen] = useState(false); // État pour savoir si le nom est choisi
 
   const navigateToSolo = useNavigate(); 
 
@@ -54,6 +57,7 @@ function Home() {
     { name: 'Boussole', description: 'Une boussole pour t\'orienter', img: map }
   ];
 
+  console.log('Nom d\'utilisateur :', isNameChoosen);
   return (
     <>
       <SoundPlayer hoverSound={monster} clickSound={click} volume={0.3}>                
@@ -81,32 +85,63 @@ function Home() {
         <div className="selection-container">
           <div className="selection">
             <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>                
-              <SelectMode 
+            <SelectMode 
                 title="Solo" 
                 img={images.green} 
                 link="solocreation" 
                 isInputValid={isInputValid} // Contrôle la validation
                 onClick={() => navigateToPage('./game')} 
               />
+
             </SoundPlayer>
 
-            <SetProfile username={inputValue} onChange={(event) => setInputValue(event.target.value)} onAvatarChange={handleAvatarChange}/>
-            <NextHome title="Jouer" link="homephone" />
+            <div className='profil-pc'>
+              <SetProfile username={inputValue} onChange={(event) => setInputValue(event.target.value)} onAvatarChange={handleAvatarChange}/> 
+            </div>
+            {!isNameChoosen && <>
+            <div className='profil-phone'>
+              <SetProfile username={inputValue} onChange={(event) => setInputValue(event.target.value)} onAvatarChange={handleAvatarChange}/> 
+            </div>
+            <NextHome title="Jouer" onClick={()=> {isInputValid ? setIsNameChosen(true) : ()=>{}}} /> 
+            </>}
 
-            <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>                
-              <SelectMode 
+            <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}> 
+
+            <SelectMode 
                 title="Multijoueur" 
                 img={images.bibabo} 
                 link="multicreation" 
                 isInputValid={isInputValid} // Contrôle la validation
                 onClick={() => {
                   navigateToPage('./multicreation');
-                 
                 }}
               />
             </SoundPlayer>
           </div>
+
+          {isNameChoosen && 
+              <div className="phone-selection">                 
+                <SelectMode 
+                title="Solo" 
+                img={images.green} 
+                link="solocreation" 
+                isInputValid={isInputValid} // Contrôle la validation
+                onClick={() => navigateToPage('./game')} 
+                />
+              <div className="or"> <span className='manjari'>OU</span></div>
+                <SelectMode 
+                  title="Multi" 
+                  img={images.bibabo} 
+                  link="multicreation" 
+                  isInputValid={isInputValid} // Contrôle la validation
+                  onClick={() => {
+                    navigateToPage('./multicreation');
+                  }}
+                />              
+              </div>
+            }
         </div>
+
       </section>
 
       <section className="second-part" id="rules">
@@ -126,8 +161,9 @@ function Home() {
         <Title title="Artéfacts" />
         <ArtifactsList artifacts={artifacts} />
         <PlayButton />
-
         <Footer content1="Aide" content2="Confidentialités" content3="Mentions Légales" />
+        <Link to="/homephone">Aller à la page About</Link>
+
       </section>
     </>
   );

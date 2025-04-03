@@ -1327,7 +1327,8 @@ cursor: pointer;
   }
 .selection{
   flex-direction: column;
-   height:45vh
+   height:45vh;
+   width: fit-content;
 }
   .selection .select-mode{
   display: none;
@@ -1358,6 +1359,12 @@ cursor: pointer;
 .profilePicture{
   width: 24vw;
   height: 24vw;
+}
+.profil-phone{
+  display: unset;
+}
+.profil-pc{
+  display: none;
 }
 #inputBox{
   padding: 22px 10px
@@ -1555,5 +1562,14 @@ right: 29vw;
   padding: 20%;
   text-align: center;
  }
+}
+
+@media screen and (min-width: 551px){
+  .phone-selection{
+    display: none;
+  }
+  .profil-phone{
+    display: none;
+  }
 }
 
