@@ -1,7 +1,7 @@
 import SoloCreation from "./SoloCreation";
 import SoloGame from "./SoloGame";
 import EndGameSolo from "./EndGameSolo";
-import { useState, useEffect, use } from "react";
+import {useState, useEffect, useMemo} from "react";
 import { Player } from "./types/Player";
 import { Loading } from "./component/GameComponent";
 
@@ -21,33 +21,30 @@ export interface Game {
     end: boolean;
 }
 
-export function useLocalStorage(key:any, initialValue:any) {
-  const [storedValue, setStoredValue] = useState(() => {
-      try {
-        const item = window.localStorage.getItem(key);
-        return item ? JSON.parse(item) : initialValue;
-      } catch (error) {
-        console.error("Error reading localStorage key ", key, error);
-        return initialValue;
-      }
+export function useLocalStorage(key: string, initialValue: any) {
+    const [storedValue, setStoredValue] = useState(() => {
+        try {
+            const item = window.localStorage.getItem(key);
+            return item ? JSON.parse(item) : initialValue;
+        } catch (error) {
+            console.error("Error reading localStorage key", key, error);
+            return initialValue;
+        }
     });
-  
+
     useEffect(() => {
-      console.log(`Mise à jour du localStorage pour ${key}: `, storedValue);
-      try {
-        window.localStorage.setItem(key, JSON.stringify(storedValue));
-      } catch (error) {
-        console.error("Error setting localStorage key ", key, error);
-      }
+        try {
+            window.localStorage.setItem(key, JSON.stringify(storedValue));
+        } catch (error) {
+            console.error("Error saving to localStorage key", key, error);
+        }
     }, [key, storedValue]);
-    
-  
-    // console.log("storedValue", storedValue);
+
     return [storedValue, setStoredValue];
-  }
-  
-  
-  
+}
+
+
+
 export const Game = () => {
 
 
@@ -67,10 +64,16 @@ export const Game = () => {
         settings: setting,
         end: false,
     });
+    const updateHistory = (articleTitle: string) => {
+        setGame((prevGame: Game) => ({
+            ...prevGame,
+            players: prevGame.players.map((player, index) =>
+                index === 0 ? { ...player, history: [...player.history, articleTitle] } : player
+            ),
+        }));
+    };
 
-  console.log("Game initialisé : ", game);
 
-  
     if(gameState === "build"){
         return(
             <SoloCreation game={game} onChange={setGame} onChangeGameState={setGameState}/>
@@ -94,8 +97,29 @@ export const Game = () => {
         };
         setGame(updatedGame);
       }
+
+        if (game.players[0].history.length === 0) {
+            const randomTitle = game.settings.wordsList[Math.floor(Math.random() * game.settings.wordsList.length)];
+
+            const updatedPlayer = {
+                ...game.players[0],
+                history: [randomTitle],
+            };
+
+            const updatedGame = {
+                ...game,
+                players: [updatedPlayer],
+            };
+
+            setGame(updatedGame);
+        }
+
+
     
-      return <SoloGame game={game} onChange={setGame} onChangeGameState={setGameState} />;
+      return <><SoloGame game={game} onChange={setGame} onChangeGameState={setGameState} updateHistory={updateHistory}/>
+          <button onClick={()=>updateHistory('paris')}>test</button>
+
+      </>
     }
     else {
         return(

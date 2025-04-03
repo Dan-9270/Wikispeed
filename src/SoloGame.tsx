@@ -32,6 +32,19 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
     });
 
   }
+  const updateArticleMap = (articleTitle: string, state: boolean) => {
+    const newArticles = new Map(soloPlayer.articles);
+    newArticles.set(articleTitle, state);
+
+    const newPlayer: Player = {
+      ...soloPlayer,
+      articles: newArticles,
+    };
+    props.onChange({
+      ...props.game,
+      players: [newPlayer],
+    });
+  };
   const [hasSnailArtifact, setHasSnailArtifact] = useState(false);
 
   const activateSnailArtifactRandomly = useCallback(() => {
@@ -107,9 +120,8 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
     
 
   }, []);
-
   const handleArticleChange = useCallback((newTitle: string) => {
-    if (artefacts === true && activateSnailArtifactRandomly()) {
+    if (artefacts && activateSnailArtifactRandomly()) {
       setHasSnailArtifact(true);
     } else {
       setHasSnailArtifact(false);
@@ -120,7 +132,7 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
 
 
   useEffect(() => {
-    const allArticlesFound = Array.from(updatedArticlesMap.values()).every(status => status === true);
+    const allArticlesFound = Array.from(updatedArticlesMap.values()).every(status => status);
     console.log("c'est moi ddf",props.game);
     if (allArticlesFound || isOver) {
       props.onChangeGameState("end");
@@ -135,6 +147,13 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
       updateHistory(articleTitle);
     }
   }, [articleTitle]);
+
+  useEffect(() => {
+    if (articleTitle) {
+      const result = updatedArticlesMap.get(articleTitle) ?? false;
+      updateArticleMap(articleTitle, result);
+    }
+  }, [updatedArticlesMap, articleTitle]);
   useEffect(() => {
     console.log("isOver", isOver);
 
@@ -142,6 +161,7 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
       props.onChangeGameState("end");
     }
   })
+
   return (
     <>
       <section className='main-page game'>
