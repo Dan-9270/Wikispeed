@@ -164,18 +164,31 @@ wss.on('connection', (ws: WebSocket) => {
             });
           }
 
-        case 'player_at_the_end':
-          if (currentRoom && currentUser) {
-            currentRoom.members.forEach((memberWs, username) => {
+          case 'player_at_the_end':
+            if (currentRoom && currentUser) {
+             
+              // Ajout du joueur à la liste des joueurs
+              const player: Player = {
+                id: data.players.id,
+                name: data.players.name,
+                time: data.players.time,
+                avatar: data.players.avatar,
+                score: data.players.score,
+                history: data.players.history,
+                articles: data.articles,
+              };
+              currentRoom.players.push(player);
+              currentRoom.members.forEach((memberWs, username) => {
+                console.log("player_at_the_end", data.players);
+                // Envoi des joueurs à tous les membres
                 memberWs.send(JSON.stringify({
                   kind: 'player-finished',
-                  player: data.player,
+                  players: currentRoom?.players, // Envoie toute la liste des joueurs
                   sender: currentUser,
-               }));
-              }
-              
-            );
-          }
+                }));
+              });
+            }
+            break;
         case 'disconnect':
           if (currentRoom && currentUser) {
             currentRoom.members.delete(currentUser);

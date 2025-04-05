@@ -8,6 +8,7 @@ export class RealWebSocketChatManager implements RealChatManager {
   private playersListener: (players: string[]) => void = () => {};
   private isGameListener: (isGame: boolean) => void = () => {};
 
+  private playersInformation: (players: Player[]) => void = () => {};
   private endListener: (isGame: boolean) => void = () => {};
   private parametersListener: (parameters:  Object) => void = () => {};
   private roomID :string = '';
@@ -30,13 +31,18 @@ export class RealWebSocketChatManager implements RealChatManager {
       if (data.kind === 'room_joined' || data.kind === 'user_joined' || data.kind === 'user_left' || data.kind === 'room_created' ) {
         this.playersListener(data.users || []);
       }else if (data.kind === 'start-game') {
-        console.log("start-game", data.isPlay);
+       // console.log("start-game", data.isPlay);
         this.isGameListener(data.isPlay);
-      }else if(data.kind === 'finish-game'){
-        console.log("finish-game", data.end);
+      }else if(data.kind === "player-finished"){
+       // console.log("player-finished", data.players);
+        this.playersInformation(data.players);
+      }
+        
+        else if(data.kind === 'finish-game'){
+       // console.log("finish-game", data.end);
         this.endListener(data.end);}
       else if (data.kind === 'parameters-for-game') {
-        console.log("parameters-for-game", data.parameters);
+       // console.log("parameters-for-game", data.parameters);
         this.parametersListener(data.parameters);
       }
       else {
@@ -137,6 +143,10 @@ export class RealWebSocketChatManager implements RealChatManager {
     this.parametersListener = listener;
   }
 
+  setPlayersInfoListener(listener: (players: Player[]) => void): void {
+    this.playersInformation = listener;
+  }
+
   sendMessage(content: string, photo: string): void {
     if (this.socket && this.socket.readyState === WebSocket.OPEN) {
       const message = JSON.stringify({
@@ -160,7 +170,7 @@ export class RealWebSocketChatManager implements RealChatManager {
 
 sendFinishGame(): void {
   if (this.socket && this.socket.readyState === WebSocket.OPEN) {
-    console.log("sendFinishGame");
+   // console.log("sendFinishGame");
     const message = JSON.stringify({
       kind: "finish_game",
     });
@@ -179,9 +189,12 @@ async sendParameters(parameters: any): Promise<void> {
 
 async sendPlayer(player: Player): Promise<void> {
   if (this.socket && this.socket.readyState === WebSocket.OPEN) {
+//    console.log("sendPlayer", player);
+
     const message = JSON.stringify({
       kind: "player_at_the_end",
-      player: player,
+      players: player,
+      articles: Array.from(player.articles.entries()), // <-- ici
     });
     this.socket.send(message);
   }

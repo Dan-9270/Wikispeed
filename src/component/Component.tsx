@@ -119,15 +119,17 @@ export const Podium=(props:{ranking:Array<Player>})=>{
 }
 const Rank = (props :{player:Player,position:number}) => {
     const [showHistory, setShowHistory] = useState(false);
-
+    if (Array.isArray(props.player.articles)) {
+props.player.articles = new Map<string, boolean>(props.player.articles);
+    }
     return (
         <>
             <li className="playerRank">
                 <p>{props.position}</p>
                 <img src={props.player.avatar} alt={props.player.name}/>
                 <p>{props.player.name}</p>
-                <p>{props.player.time}</p>
-                <p>{props.player.score}</p>
+                <p>{Array.from(props.player.articles.values()).filter(value => value).length} / {props.player.articles.size}</p>
+                <p>{props.player.history.length}</p>
                 <img 
                     src={historyIcon} 
                     alt="Historique" 

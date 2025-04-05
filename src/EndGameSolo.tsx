@@ -25,6 +25,7 @@ function EndGameSolo(props:{game:Game; onChangeGameState:(state:string)=> void})
     <LogoTitle/>
 
         <SoloRanking ranking={props.game.players}></SoloRanking>
+        
         <PlayShare onChangeGameState={props.onChangeGameState}></PlayShare>
             </section>
         </main>
