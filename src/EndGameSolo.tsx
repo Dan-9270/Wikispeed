@@ -24,7 +24,14 @@ function EndGameSolo(props:{game:Game; onChangeGameState:(state:string)=> void})
     <CreditButton/>
     <LogoTitle/>
 
-        <SoloRanking ranking={props.game.players}></SoloRanking>
+        <SoloRanking
+          ranking={props.game.players}
+          gameduration={
+            props.game.endTime !== undefined && props.game.startTime !== undefined
+              ? Math.floor((props.game.endTime - props.game.startTime) / 1000)
+              : 0
+          }
+        />
         
         <PlayShare onChangeGameState={props.onChangeGameState}></PlayShare>
             </section>

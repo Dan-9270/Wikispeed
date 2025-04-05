@@ -191,41 +191,46 @@ export function List(props: { children: string; onChange: (value: number) => voi
   return <select name="list" id="list" className="" onChange={(e) => props.onChange(parseInt(e.target.value))}>
       <option value="0">{props.children == 'article' ? 'Combien d\'articles ?' : 'Combien de temps ?'}</option>
       <option value={props.children == 'article' ? '1' : '3 '}>{props.children == 'article' ? '1 article' : '3 minutes'}</option>
-      <option value={props.children == 'article' ? '2' : '5'}>{props.children == 'article' ? 2 : 5}</option>
-      <option value={props.children == 'article' ? '3'  : '10'}>{props.children == 'article' ? 3 : 10}</option>
-      <option value={props.children == 'article' ? '4' : '15'}>{props.children == 'article' ? 4 : 15}</option>
-      <option value={props.children == 'article' ? '5' : '20'}>{props.children == 'article' ? 5 : 20}</option>
-      <option value={props.children == 'article' ? '6' : '25'}>{props.children == 'article' ? 6 : 25}</option>
-      <option value={props.children == 'article' ? '7' : '30'}>{props.children == 'article' ? 7 : 30}</option>
-      <option value={props.children == 'article' ? '8 ' : 'Illimité'}>{props.children == 'article' ? 8 : '--'}</option>
+      <option value={props.children == 'article' ? '2' : '5'}>{props.children == 'article' ? '2 articles' : '5 minutes'}</option>
+      <option value={props.children == 'article' ? '3' : '10'}>{props.children == 'article' ? '3 articles' : '10 minutes'}</option>
+      <option value={props.children == 'article' ? '4' : '15'}>{props.children == 'article' ? '4 articles' : '15 minutes'}</option>
+      <option value={props.children == 'article' ? '5' : '20'}>{props.children == 'article' ? '5 articles' : '20 minutes'}</option>
+      <option value={props.children == 'article' ? '6' : '25'}>{props.children == 'article' ? '6 articles' : '25 minutes'}</option>
+      <option value={props.children == 'article' ? '7' : '30'}>{props.children == 'article' ? '7 articles' : '30 minutes'}</option>
+      <option value={props.children == 'article' ? '8 ': "-1"}>{props.children == 'article' ? '8 articles' : 'Illimité'}</option>
       
   </select>;
 }
 
 
-export const SoloRanking=(props:{ranking:Player[]})=>{
-  console.log("test", props.ranking[0]);
-  return (
-    <div className='SoloRanking'>
-        <p className='rank_title'>Partie terminée !</p>
-        <img className='rank_avatar' src={props.ranking[0].avatar} alt={props.ranking[0].name} />
-        <p>{props.ranking[0].name}</p>
-        <p className='rank_title'>Récap de la partie :</p>
-        <p>Temps : 2:30</p>
-        <p>  Nombre d'articles trouvés : {Array.from(props.ranking[0].articles.values()).filter(value => value).length} / {props.ranking[0].articles.size}</p>
-        <p>Nombre d'articles parcourus : {props.ranking[0].history.length}</p>
-        <div className="card">
-          <h2>Historique</h2>
-          <div className="list-container">
-            <ul>
-              {props.ranking[0].history.map((item, index) => (
-                <li key={index}>{index + 1}– {item}</li>
-              ))}
-            </ul>
-          </div>
+export const SoloRanking = (props: { ranking: Player[], gameduration: number }) => {
+    const hours = Math.floor(props.gameduration / 3600);
+    const minutes = Math.floor((props.gameduration % 3600) / 60);
+    const seconds = props.gameduration % 60;
+
+    const formattedTime = `${hours > 0 ? `${hours}:` : ''}${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    return (
+        <div className='SoloRanking'>
+            <p className='rank_title'>Partie terminée !</p>
+            <img className='rank_avatar' src={props.ranking[0].avatar} alt={props.ranking[0].name} />
+            <p>{props.ranking[0].name}</p>
+            <p className='rank_title'>Récap de la partie :</p>
+            <p>Temps : {formattedTime}</p>
+            <p>Nombre d'articles trouvés : {Array.from(props.ranking[0].articles.values()).filter(value => value).length} / {props.ranking[0].articles.size}</p>
+            <p>Nombre d'articles parcourus : {props.ranking[0].history.length}</p>
+            <div className="card">
+                <h2>Historique</h2>
+                <div className="list-container">
+                    <ul>
+                        {props.ranking[0].history.map((item, index) => (
+                            <li key={index}>{index + 1}– {item}</li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
         </div>
-    </div>
-  );
+    );
 }
 
 export const PlayShare=(props: { onChangeGameState: (state: string) => void }) =>{

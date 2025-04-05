@@ -6,5 +6,6 @@ export interface Player {
     score: number | null;
     history: string[];
     articles: Map<string, boolean>;
+    snail: number|null;
 
 }

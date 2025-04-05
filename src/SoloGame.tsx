@@ -15,8 +15,8 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
   const { nombreArticles, artefacts, temps, randomMots, choixMots, wordsList } = props.game.settings;
   const soloPlayer = props.game.players[0]
   console.log("game",soloPlayer.articles);
+  console.log("snail",soloPlayer.snail)
 
-  const [isOver, setIsOver] = useState(false);
   const updateHistoryAndMap = (articleTitle: string) => {
     const newHistory = soloPlayer.history ? [...soloPlayer.history, articleTitle] : [articleTitle];
     const newArticles = new Map(soloPlayer.articles);
@@ -34,12 +34,30 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
       players: [newPlayer],
     });
   };
+  const startSnail=()=>{
+    const newPlayer: Player = {
+      ...soloPlayer,
+      snail :Date.now()
+    };
+    props.onChange({
+      ...props.game,
+      players: [newPlayer],
+    });
+  }
+  const resetSnail=()=>{
+    const newPlayer: Player = {
+      ...soloPlayer,
+      snail :null
+    };
+    props.onChange({
+      ...props.game,
+      players: [newPlayer],
+    });
+  }
 
   if (soloPlayer.articles && Array.from(soloPlayer.articles.values()).every(value => value === true)) {
     props.onChangeGameState("endgame");
   }
-  const [hasSnailArtifact, setHasSnailArtifact] = useState(false);
-
   const activateSnailArtifactRandomly = useCallback(() => {
     const randomValue = Math.random();
     return randomValue < 0.1;
@@ -54,13 +72,20 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
         </figure>
         <div className='game-container'>
           <div className='game-info'>
-
-            <Timer time={temps} onTimeUp={setIsOver} />
-
+            <Timer
+                deadlineMillis={temps !== undefined ? (props.game.startTime !== undefined ? props.game.startTime + temps * 60000 : undefined) : undefined}
+                onTimeUp={() => {
+                props.onChangeGameState("endgame");
+                props.onChange({
+                  ...props.game,
+                  end: true,
+                });
+              }}
+            />
           </div>
           <div className='game-main'>
 
-            <ArticleDisplayer title={props.game.players[props.game.currentPlayer].history.slice(-1)[0]} updateHistoryAndMap={updateHistoryAndMap} hasSnailArtifact={hasSnailArtifact} />
+            <ArticleDisplayer title={props.game.players[props.game.currentPlayer].history.slice(-1)[0]} updateHistoryAndMap={updateHistoryAndMap} snail={soloPlayer.snail} resetSnail={resetSnail} />
 
             <div className='game-main-details'>
 
@@ -76,7 +101,7 @@ function SoloGame(props:{game:Game;  onChange:(newGame:Game)=> void; onChangeGam
             </div>
             <svg width="225" height="100" viewBox="0 0 225 73" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bb'><path d="M111.675 -0.000378409C165.925 0.28796 237 19.4997 222 71.4994C206.999 123.499 165.925 114.16 111.674 113.872C57.4239 113.584 22.5001 123 2.99974 71.4993C-12 19 57.4247 -0.288717 111.675 -0.000378409Z" fill=" #4943C6" /></svg>
 
-            <Inventory artifact1={{ name: 'Eraser', description: '', img: mine}} artifact2={{ name: 'map', description: '', img: map }} isExist={artefacts}/>
+            <Inventory artifact1={{ name: 'Eraser', description: '', img: mine,onActivate:startSnail}} artifact2={{ name: 'map', description: '', img: map }} isExist={artefacts}/>
 
           </div>
         </div>

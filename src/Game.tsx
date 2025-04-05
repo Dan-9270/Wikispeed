@@ -8,7 +8,7 @@ import { Loading } from "./component/GameComponent";
 interface Setting {
     nombreArticles: number;
     artefacts: boolean;
-    temps: number;
+    temps: number|undefined;
     randomMots: boolean;
     choixMots: string;
     wordsList: string[];
@@ -19,6 +19,8 @@ export interface Game {
     currentPlayer: number;
     settings: Setting;
     end: boolean;
+    startTime : number | undefined;
+    endTime : number | undefined;
 }
 
 export function useLocalStorage(key: string, initialValue: any) {
@@ -111,6 +113,7 @@ export const Game = () => {
         randomMots: false,
         choixMots: "",
         wordsList: [],
+
     }
 
     const [game, setGame] = useLocalStorage("game", {
@@ -118,6 +121,9 @@ export const Game = () => {
         currentPlayer: 0,
         settings: setting,
         end: false,
+        startTime:undefined,
+        endTime:undefined
+
     });
 
     if(gameState === "build"){
@@ -163,11 +169,29 @@ export const Game = () => {
             };
             setGame(updatedGame);
         }
+        //INITIALISE LE TIMER
+        if(game.startTime===undefined){
+            const startTime = Date.now();
+            const updatedGame = {
+                ...game,
+                startTime:startTime,
+            };
+            setGame(updatedGame);
+        }
         // AFFICHE LA PARTIE
       return <><SoloGame game={game} onChange={setGame} onChangeGameState={setGameState}/>
       </>
     }
     else {
+        //INITIALISE LE TIMER
+        if(game.endTime===undefined){
+            const endTime = Date.now();
+            const updatedGame = {
+                ...game,
+                endTime:endTime,
+            };
+            setGame(updatedGame);
+        }
         return(
             <EndGameSolo game={game}  onChangeGameState={setGameState}/>
         )

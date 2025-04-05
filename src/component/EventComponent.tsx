@@ -5,41 +5,41 @@ import type { Player } from '../types/Player.ts';
 import { createPortal } from "react-dom";
 
 
-
-export function Timer(props: { time: number, onTimeUp: (isOver :boolean) => void }) {
-    const [seconds, setSeconds] = useState(props.time*60);
-
-
-    useEffect(() => {
-        if (seconds <= 0) {
-            props.onTimeUp(true);
-//            console.log("Time is up!");
-            return;
-        }
-    }
-
-    )
+export function useNow(): number {
+    const [now, setNow] = useState(Date.now());
     useEffect(() => {
         const interval = setInterval(() => {
-        setSeconds((prevSeconds) => prevSeconds - 1);
+            setNow(Date.now());
         }, 1000);
-        if (seconds <= 0) {
-            clearInterval(interval);
-            props.onTimeUp(true);
-        }
 
         return () => clearInterval(interval);
     }, []);
+    return now;
+}
 
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
+export function Timer(props: { deadlineMillis: number | undefined, onTimeUp: () => void }) {
+    const now = useNow();
+
+    const isInfinite = props.deadlineMillis === undefined;
+    const timeRemaining = isInfinite ? Infinity : Math.floor(((props.deadlineMillis as number) - now) / 1000);
+    const minutes = Math.floor((Math.abs(timeRemaining) % 3600) / 60);
+    const seconds = Math.abs(timeRemaining) % 60;
+
+
+    useEffect(() => {
+        if (!isInfinite && timeRemaining <= 0) {
+            props.onTimeUp();
+        }
+    }, [isInfinite, timeRemaining,props]);
 
     return (
         <div className="timer">
-            <h3 className='manjari'>Temps Écoulé</h3>
-            <p className='manjari'>{minutes}:{remainingSeconds}</p>
+            <h3 className="manjari">Temps Restant</h3>
+            <p className="manjari">
+                {isInfinite ? '∞' : `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`}
+            </p>
         </div>
-  )
+    );
 }
 
 
