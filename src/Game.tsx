@@ -19,6 +19,7 @@ export interface Game {
     currentPlayer: number;
     settings: Setting;
     end: boolean;
+    startTime: number | undefined;
 }
 
 export function useLocalStorage(key: string, initialValue: any) {

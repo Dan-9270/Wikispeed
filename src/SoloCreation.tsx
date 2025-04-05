@@ -9,6 +9,7 @@ import { LogoTitle } from "./component/Component";
 import { AutoCompleteInput, PlayGame } from "./component/GameComponent.tsx";
 import { useLocation } from 'react-router-dom';
 import { Game } from "./Game.tsx";
+import { start } from "repl";
 
 function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChangeGameState:(state:string)=> void }) {
   const location = useLocation();
@@ -46,6 +47,7 @@ function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChan
       currentPlayer: 0,
       settings: settings,
       end: false,
+      startTime: undefined
     }
     console.log("Nouvelle partie :", newGame);
     props.onChange(newGame)

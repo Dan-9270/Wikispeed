@@ -11,7 +11,7 @@ interface ArticleDisplayerProps {
 const MemoizedSnailTimer = memo(SnailTimer);
 const MemoizedSnailArtifactOverlay = memo(SnailArtifactOverlay);
 
-export const ArticleDisplayer = ({ title, updateHistoryAndMap, hasSnailArtifact = false }: ArticleDisplayerProps) => {
+export const ArticleDisplayer = ({ title, updateHistoryAndMap, hasSnailArtifact = false}: ArticleDisplayerProps) => {
   const [content, setContent] = useState<string>('');
   const { isActive, activateSnail, remainingTime } = useSnailArtifact();
 
