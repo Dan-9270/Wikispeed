@@ -177,8 +177,15 @@ wss.on('connection', (ws: WebSocket) => {
                 history: data.players.history,
                 articles: data.articles,
               };
-              currentRoom.players.push(player);
-              currentRoom.members.forEach((memberWs, username) => {
+              const existingIndex = currentRoom.players.findIndex(p => p.id === player.id);
+
+              if (existingIndex !== -1) {
+                // Le joueur existe → on le remplace
+                currentRoom.players[existingIndex] = player;
+              } else {
+                // Sinon on l’ajoute
+                currentRoom.players.push(player);
+              }              currentRoom.members.forEach((memberWs, username) => {
                 console.log("player_at_the_end", data.players);
                 // Envoi des joueurs à tous les membres
                 memberWs.send(JSON.stringify({

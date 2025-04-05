@@ -108,6 +108,22 @@ function MultiGame() {
     })
 
     useEffect(() => {
+      const newplayer:Player = {
+        ...player,
+        id:getPlayerIdByName(map,username),
+        
+
+    }
+    console.log("historique", newplayer);
+      sharedChatManager.sendPlayer(newplayer);
+
+      sharedChatManager.setPlayersInfoListener((p) => {
+      setListPlayer(p);
+      });
+    }
+    , [player]);
+
+    useEffect(() => {
       if(isEnd){
 
         const newplayer:Player = {
@@ -156,7 +172,7 @@ function MultiGame() {
                        
           <div className='game-main-details'>
               <ArticleList names={player.articles } />
-              {/* <PlayerInfo players={[{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},{id:2,name:"Bibabo",time:200,avatar:Damien,score:20}]} articles={updatedArticlesMap} /> */}
+               <PlayerInfo players={listPlayer} articles={player.articles} /> 
               </div>
           </div>
 
