@@ -143,6 +143,7 @@ export const AutoCompleteInput = (props: {
       <div>
           {/* Champ de saisie */}
           <input
+            id="word"
               onKeyDown={handleKeyDown}
               className="words td-phone input-phone"
               type="text"

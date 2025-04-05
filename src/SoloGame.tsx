@@ -43,6 +43,26 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       players: [newPlayer],
     });
   };
+  const startSnail=()=>{
+    const newPlayer: Player = {
+      ...soloPlayer,
+      snail :Date.now()
+    };
+    props.onChange({
+      ...props.game,
+      players: [newPlayer],
+    });
+  }
+  const resetSnail=()=>{
+    const newPlayer: Player = {
+      ...soloPlayer,
+      snail :null
+    };
+    props.onChange({
+      ...props.game,
+      players: [newPlayer],
+    });
+  }
 
   function updateHistory(articleTitle: string) {
     const player = props.game.players[props.game.currentPlayer];
@@ -196,13 +216,20 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
         </figure>
         <div className='game-container'>
           <div className='game-info'>
-
-            {/* <Timer time={temps} onTimeUp={}/> */}
-
+            <Timer
+                deadlineMillis={temps !== undefined ? (props.game.startTime !== undefined ? props.game.startTime + temps * 60000 : undefined) : undefined}
+                onTimeUp={() => {
+                props.onChangeGameState("endgame");
+                props.onChange({
+                  ...props.game,
+                  end: true,
+                });
+              }}
+            />
           </div>
           <div className='game-main'>
 
-            <ArticleDisplayer title={props.game.players[props.game.currentPlayer].history.slice(-1)[0]} updateHistoryAndMap={props.game.players[props.game.currentPlayer].dictator != null ? dictatorUpdate : updateHistoryAndMap} />
+            <ArticleDisplayer title={props.game.players[props.game.currentPlayer].history.slice(-1)[0]} updateHistoryAndMap={updateHistoryAndMap} snail={soloPlayer.snail} resetSnail={resetSnail} />
 
             <div className='game-main-details'>
 

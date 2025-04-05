@@ -5,41 +5,41 @@ import type { Player } from '../types/Player.ts';
 import { createPortal } from "react-dom";
 
 
-
-export function Timer(props: { time: number, onTimeUp: (isOver :boolean) => void }) {
-    const [seconds, setSeconds] = useState(props.time*60);
-
-
-    useEffect(() => {
-        if (seconds <= 0) {
-            props.onTimeUp(true);
-//            console.log("Time is up!");
-            return;
-        }
-    }
-
-    )
+export function useNow(): number {
+    const [now, setNow] = useState(Date.now());
     useEffect(() => {
         const interval = setInterval(() => {
-        setSeconds((prevSeconds) => prevSeconds - 1);
+            setNow(Date.now());
         }, 1000);
-        if (seconds <= 0) {
-            clearInterval(interval);
-            props.onTimeUp(true);
-        }
 
         return () => clearInterval(interval);
     }, []);
+    return now;
+}
 
-    const minutes = Math.floor(seconds / 60);
-    const remainingSeconds = seconds % 60;
+export function Timer(props: { deadlineMillis: number | undefined, onTimeUp: () => void }) {
+    const now = useNow();
+
+    const isInfinite = props.deadlineMillis === undefined;
+    const timeRemaining = isInfinite ? Infinity : Math.floor(((props.deadlineMillis as number) - now) / 1000);
+    const minutes = Math.floor((Math.abs(timeRemaining) % 3600) / 60);
+    const seconds = Math.abs(timeRemaining) % 60;
+
+
+    useEffect(() => {
+        if (!isInfinite && timeRemaining <= 0) {
+            props.onTimeUp();
+        }
+    }, [isInfinite, timeRemaining,props]);
 
     return (
         <div className="timer">
-            <h3 className='manjari'>Temps Écoulé</h3>
-            <p className='manjari'>{minutes}:{remainingSeconds}</p>
+            <h3 className="manjari">Temps Restant</h3>
+            <p className="manjari">
+                {isInfinite ? '∞' : `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`}
+            </p>
         </div>
-  )
+    );
 }
 
 
@@ -69,9 +69,15 @@ export const ArticleList = (props: { names: Map<string,boolean> }) => {
     );
 };
 
-export const PlayerInfo = (props: { players: Player[], articles: string[] }) => {
+export const PlayerInfo = (props: { players: Player[], articles: Map<string,boolean> }) => {
     const [visibility, setVisibility] = useState(false);
     const [isDesktop, setIsDesktop] = useState(window.innerWidth > 900);
+    function arrayToMap(player: Player) {
+    if (Array.isArray(player.articles)) {
+        player.articles = new Map<string, boolean>(player.articles);
+            }
+        return player.articles;}
+
 
     useEffect(() => {
         const handleResize = () => setIsDesktop(window.innerWidth > 900);
@@ -86,9 +92,10 @@ export const PlayerInfo = (props: { players: Player[], articles: string[] }) => 
                     <h2>Joueurs</h2>
                     <ul>
                         {props.players.map((player, i) => (
+                            
                             <li key={i}>
                                 <p className="manjari">{player.name}</p>
-                                <p className="manjari player-score">{player.score}/{props.articles.length}</p>
+                                <p className="manjari player-score">{Array.from(arrayToMap(player).values()).filter(value => value).length} / {props.articles.size} {player.history.slice(-1)[0]}</p>
                             </li>
                         ))}
                     </ul>
@@ -104,7 +111,7 @@ export const PlayerInfo = (props: { players: Player[], articles: string[] }) => 
                                     {props.players.map((player, i) => (
                                         <li key={i}>
                                             <p className="manjari">{player.name}</p>
-                                            <p className="manjari player-score">{player.score}/{props.articles.length}</p>
+                                            <p className="manjari player-score">{player.score}/{props.articles.size}</p>
                                         </li>
                                     ))}
                                 </ul>
@@ -133,7 +140,6 @@ export const Inventory = (props:{artifact1 :Artifact, artifact2 : Artifact ; isE
     const artifacts = [props.artifact1,props.artifact2]
     return    props.isExist== true  && <div className='inventory'>
                 <ArtifactsList artifacts={artifacts} ></ArtifactsList>
-                </div>
-                
-   
+                </div>            
+
 }

@@ -1,19 +1,15 @@
-import { useEffect, useState, useCallback, memo } from 'react';
-import { useSnailArtifact, SnailArtifactOverlay, SnailTimer } from './SnailArtifact';
+import { useEffect, useState, useCallback } from 'react';
+import {SnailTimer} from "./SnailArtifact.tsx";
 
 interface ArticleDisplayerProps {
   title: string;
   updateHistoryAndMap: (newTitle: string) => void;
-
-  hasSnailArtifact?: boolean;
+  snail:number|null;
+  resetSnail: () => void;
 }
 
-const MemoizedSnailTimer = memo(SnailTimer);
-const MemoizedSnailArtifactOverlay = memo(SnailArtifactOverlay);
-
-export const ArticleDisplayer = ({ title, updateHistoryAndMap, hasSnailArtifact = false}: ArticleDisplayerProps) => {
+export const ArticleDisplayer = ({ title, updateHistoryAndMap,snail,resetSnail }: ArticleDisplayerProps) => {
   const [content, setContent] = useState<string>('');
-  const { isActive, activateSnail, remainingTime } = useSnailArtifact();
 
   const cleanArticle = useCallback((html: string) => {
     const parser = new DOMParser();
@@ -80,9 +76,6 @@ export const ArticleDisplayer = ({ title, updateHistoryAndMap, hasSnailArtifact 
         const cleanedContent = cleanArticle(data);
         if (isMounted) {
           setContent(cleanedContent);
-          if (hasSnailArtifact) {
-            activateSnail();
-          }
         }
       } catch (error) {
         console.error("Erreur lors de la récupération de l'article:", error);
@@ -93,7 +86,7 @@ export const ArticleDisplayer = ({ title, updateHistoryAndMap, hasSnailArtifact 
     return () => {
       isMounted = false;
     };
-  }, [title, hasSnailArtifact, activateSnail, cleanArticle]);
+  }, [title, cleanArticle]);
 
   useEffect(() => {
     const articleTitle = document.getElementById("article_tit");
@@ -108,12 +101,11 @@ export const ArticleDisplayer = ({ title, updateHistoryAndMap, hasSnailArtifact 
 
     const handleClick = (event: Event) => {
       const target = event.target as HTMLAnchorElement;
+      if (snail !== null) {
+        event.preventDefault();
+        return;
+      }
       if (target.tagName === 'A') {
-        if (isActive) {
-          event.preventDefault();
-          return;
-        }
-
         event.preventDefault();
         const newTitle = target.getAttribute("title");
         if (newTitle) {
@@ -126,25 +118,22 @@ export const ArticleDisplayer = ({ title, updateHistoryAndMap, hasSnailArtifact 
     return () => {
       container.removeEventListener('click', handleClick);
     };
-  }, [content, isActive, updateHistoryAndMap, ]);
-
+  }, [snail,content, updateHistoryAndMap]);
   useEffect(() => {
     const container = document.querySelector('.article-content');
     if (!container) return;
 
-    if (isActive) {
+    if (snail!==null) {
       container.classList.add('links-disabled');
     } else {
       container.classList.remove('links-disabled');
     }
-  }, [isActive]);
-
+  }, [snail]);
   return (
-    <div className="article-container">
-      <p id="article_tit" className="article_title">{title}</p>
-      <div className="article-content" dangerouslySetInnerHTML={{ __html: content }} />
-      <MemoizedSnailArtifactOverlay isActive={isActive} remainingTime={remainingTime} />
-      <MemoizedSnailTimer isActive={isActive} remainingTime={remainingTime} />
-    </div>
+      <div className="article-container">
+        <p id="article_tit" className="article_title">{title}</p>
+        <div className="article-content" dangerouslySetInnerHTML={{ __html: content }} />
+        <SnailTimer deadlineMillis={snail !== null ? snail + 60000 : undefined} reset={resetSnail} />
+      </div>
   );
 };

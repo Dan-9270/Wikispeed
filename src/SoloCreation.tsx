@@ -19,8 +19,8 @@ function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChan
   const avatar = location.state.avatar;
   console.log("Nom d'utilisateur:", username);
   console.log("Avatar:", avatar);
-  
-  const player = {id: 1, name: username, avatar: avatar, history: [], time: 0, score: 0, articles:new Map() };
+
+  const player = {id: 1, name: username, avatar: avatar, history: [], time: 0, score: 0, articles:new Map(),dictator:null,snail:null };
 
 
   const [nombreArticles, setNombreArticles] = useState<number>(0);
@@ -28,26 +28,27 @@ function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChan
   const [temps, setTemps] = useState<number>(0);
   const [randomMots, setRandomMots2] = useState<boolean>(false);
   const [choixMots, setChoixMots] = useState<string>("");
-  const [wordsList, setWordsList] = useState<string[]>([]); // Liste des mots ajoutés
+  const [wordsList, setWordsList] = useState<string[]>([]);
 
-  // Gestionnaire pour naviguer vers PageB avec les données
   const handlePlayGame = (event: React.FormEvent) => {
-    event.preventDefault();  // Empêcher la soumission du formulaire
+    event.preventDefault();
     const settings ={
         nombreArticles: nombreArticles,
         artefacts: artefacts,
-        temps: temps,
+        temps: temps === -1 ? undefined : temps,
         randomMots: randomMots,
         choixMots: choixMots,
         wordsList: wordsList,
     }
     
     const newGame = {
+      ...props.game,
       players:[player],
-      currentPlayer: 0,
+      currentPlayer:0,
       settings: settings,
       end: false,
-      startTime: undefined
+      startTime: undefined,
+      endTime: undefined
     }
     console.log("Nouvelle partie :", newGame);
     props.onChange(newGame)
@@ -80,10 +81,12 @@ function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChan
 
   const setRandomMots = (value: boolean) => {
     setRandomMots2(value);
-    if (value === true) {
+    if (value) {
       document.getElementById("impossibleUse")!.style.display = "none";
       document.getElementById("morewords")!.style.display = "none";  
       document.getElementById("word")!.style.display = "none";
+      setChoixMots("");
+      setWordsList([]);
     }
     else {
       document.getElementById("impossibleUse")!.style.display = "block";
@@ -114,6 +117,7 @@ function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChan
                 <span className="title">Parametre</span>
 
                 <table className="container_ul left-phone">
+                  <tbody>
                   <tr>
                     <td>
                       <span className="nbreArticle opt span-phone">Nombre d'articles</span>
@@ -183,6 +187,7 @@ function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChan
                       <AutoCompleteInput value={choixMots} onChange={setChoixMots} onKeyDown={handleKeyDown}></AutoCompleteInput>
                     </td>
                   </tr>
+                  </tbody>
                 </table>
                 <div className="morewords">
                   <ul id="morewords">

@@ -21,6 +21,7 @@ function MultiGame() {
   const username = location.state.userName;
   const avatar = location.state.img;
   const map = location.state.playerMap;
+  const players = location.state.players;
  // console.log("map:", map);
  
     // Si les données sont absentes ou invalides, redirige l'utilisateur ou montre un message d'erreur
@@ -46,9 +47,21 @@ function MultiGame() {
     const randomTitle = wordsList.length > 0 ? wordsList[Math.floor(Math.random() * wordsList.length)] : "Aucun mot disponible";
     
     const [articleTitle, setArticleTitle] = useState(randomTitle);
-    const [updatedArticlesMap, setArticlesMap] = useState<Map<string, boolean>>(articlesMap);
     const [isOver, setIsOver] = useState(false);
     const [isEnd, setEndGame] = useState(false);
+    const [listPlayer, setListPlayer] = useState<Player[]>([]);
+    const [hasSnailArtifact, setHasSnailArtifact] = useState(false);
+
+
+    const [player,setPlayer] = useState<Player>({
+      id:0,
+      name:username,
+      time:200,
+      avatar:avatar,
+      score:20,
+      history:[randomTitle],
+      articles:articlesMap.set(randomTitle, true) 
+    });
     const navigate = useNavigate();
 
     const getPlayerIdByName = (playersMap: Map<number, string>, name: string): number  => {
@@ -60,41 +73,85 @@ function MultiGame() {
       return -1// Retourne undefined si le joueur n'est pas trouvé
     };
   
-    const updateArticleStatus = (title: string) => {
-      setArticlesMap((prevMap) => {
-        const updatedMap = new Map(prevMap);
-        if (updatedMap.has(title)) {
-          updatedMap.set(title, true);
-        }
-        return updatedMap;
-      });
+    const updateHistoryAndMap = (articleTitle: string) => {
+      const newHistory = player.history ? [...player.history, articleTitle] : [articleTitle];
+      const newArticles = new Map(player.articles);
+      const value = newArticles.get(articleTitle);
+      console.log("aaaaaaaaaaaaaaaa");
+      if (value !== undefined && !value) {
+        newArticles.set(articleTitle, true);
+      }
+      const newPlayer: Player = {
+        ...player,
+        history: newHistory,
+        articles: newArticles,
+      };
+
+      setPlayer(newPlayer);
+      
     };
 
+    
     useEffect(() => {
-      const allArticlesFound = Array.from(updatedArticlesMap.values()).every(status => status === true);
+      const allArticlesFound = Array.from(player.articles.values()).every(status => status === true);
       if (allArticlesFound) {
         sharedChatManager.sendFinishGame();
         
-         
-      
       }
    
-    }, [updatedArticlesMap, navigate]);
+    }, [player.articles, navigate]);
  
     useEffect(()=>{
        sharedChatManager.setIsEndListener((isEnd) => {
           setEndGame(isEnd);
        });
 
-      if(isEnd){
-
-        const player:Player = {id:getPlayerIdByName(map,username),name:username,time:200,avatar:avatar,score:20,history:[],articles:new Map()}
-        console.log("player", player);
-
-        navigate('/endgame');
-         }
     })
 
+    useEffect(() => {
+      const newplayer:Player = {
+        ...player,
+        id:getPlayerIdByName(map,username),
+        
+
+    }
+    console.log("historique", newplayer);
+      sharedChatManager.sendPlayer(newplayer);
+
+      sharedChatManager.setPlayersInfoListener((p) => {
+      setListPlayer(p);
+      });
+    }
+    , [player]);
+
+    useEffect(() => {
+      if(isEnd){
+
+        const newplayer:Player = {
+            ...player,
+            id:getPlayerIdByName(map,username),
+            
+  
+        }
+        console.log("playsssssssssssssssssssssssssser", newplayer);
+          sharedChatManager.sendPlayer(newplayer);
+
+          sharedChatManager.setPlayersInfoListener((p) => {
+          setListPlayer(p);
+          });
+         
+    }}, [isEnd]);
+    useEffect(() => {
+      console.log("listPlayer", listPlayer);
+      if(isEnd){
+        setTimeout(() => {
+          console.log("listPlayesr", listPlayer);
+        navigate('/endgame',{state:{listPlayer,player,players}});
+        }
+        , 2000);
+      }
+    
+    }, [listPlayer]);
     return (
         <>
         <FinChatter chatManager={sharedChatManager} initialUserName={username} avatar={avatar} />
@@ -111,14 +168,11 @@ function MultiGame() {
               <Timer time={temps} onTimeUp={setIsOver} />
             </div>
           <div className='game-main'>
-            <ArticleDisplayer
-              title={articleTitle}
-              setTitle={setArticleTitle}
-              updateArticleStatus={updateArticleStatus}
-            />                              
+          <ArticleDisplayer title={player.history.slice(-1)[0]} updateHistoryAndMap={updateHistoryAndMap} hasSnailArtifact={hasSnailArtifact} />
+                       
           <div className='game-main-details'>
-              <ArticleList names={updatedArticlesMap } />
-              {/* <PlayerInfo players={[{id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20},{id:2,name:"Bibabo",time:200,avatar:Damien,score:20}]} articles={updatedArticlesMap} /> */}
+              <ArticleList names={player.articles } />
+               <PlayerInfo players={listPlayer} articles={player.articles} /> 
               </div>
           </div>
 

@@ -1,4 +1,4 @@
-import {LogoTitle, Podium, Ranking} from './component/Component'
+import {LogoTitle, PlayShare, Podium, Ranking, RePlayButton} from './component/Component'
 import {CreditButton} from './component/Component'
 import {BottomRedirection} from './component/Component'
 
@@ -11,16 +11,18 @@ import './style/wikispeed.css'
 import { Background } from './assets/back'
 import { Player } from './types/Player'
 import { sharedChatManager } from "./chatManager.ts";
+import { useLocation } from 'react-router-dom'
 
 
 function EndGame(){
-    const rank:Player[] = [
-        {id:1,name:"Damqdqsdqsdqdqsdien",time:200,avatar:Damien,score:20,history:[],articles:new Map()},
-        {id:2,name:"Damien",time:200,avatar:Damien,score:20,history:[],articles:new Map()},
-        {id:3,name:"Damien",time:200,avatar:Damien,score:20,history:[],articles:new Map()},
-        {id:4,name:"Damien",time:200,avatar:Damien,score:20,history:[],articles:new Map()},
-        {id:5,name:"Damien",time:200,avatar:Damien,score:20,history:[],articles:new Map()},
-    ]
+    const location = useLocation();
+    const listPlayer:Player[] = location.state.listPlayer;
+    const player:Player = location.state.player;
+    const players:String[] = location.state.players;
+
+
+    
+   console.log("listPlayer:", listPlayer);
     return <>
     <Background/>
         <main>
@@ -36,10 +38,11 @@ function EndGame(){
 
         <CreditButton/>
     <LogoTitle/>
-        <Podium ranking={rank}></Podium> 
+        <Podium ranking={listPlayer}></Podium> 
+        <RePlayButton player={player} players={players}/>
     <BottomRedirection content="See the ranking" link="#bottom"/>
             </section>
-         <Ranking ranking={rank}/> 
+         <Ranking ranking={listPlayer}/> 
         </main>
     </>
 }
