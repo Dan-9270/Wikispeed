@@ -170,6 +170,8 @@ function MultiShare() {
       document.getElementById("impossibleUse")!.style.display = "none";
       document.getElementById("morewords")!.style.display = "none";  
       document.getElementById("word")!.style.display = "none";
+      setChoixMots("");
+      setWordsList([]);
     }
     else {
       document.getElementById("impossibleUse")!.style.display = "block";
