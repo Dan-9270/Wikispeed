@@ -19,7 +19,8 @@ function MultiShare() {
   const location = useLocation();
   const username = location.state?.userName || "User";
   const avatar = location.state?.avatar;
-  const [players, setPlayers] = useState<string[]>([]);
+  const listPlayer = location.state?.players || [];
+  const [players, setPlayers] = useState<string[]>(listPlayer);
   const [roomId, setRoomId] = useState<string | null>(null);
 
   // États pour stocker les valeurs du formulaire
@@ -67,7 +68,7 @@ function MultiShare() {
       const userName = username;
     const img = avatar;
       console.log("playersMap:", playerMap);  
-      navigate("/multigame", { state: {parameters, userName, img,playerMap} });
+      navigate("/multigame", { state: {parameters, userName, img,playerMap,players} });
     });
   }, [playerMap]);
 

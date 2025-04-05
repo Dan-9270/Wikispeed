@@ -312,6 +312,9 @@
 .player-info ul li,.player-info-modal  ul li{
     display: flex;
     margin: 7%;
+    white-space: nowrap;
+    scrollbar-width: none;        /* Firefox */
+    overflow-x: auto;
 }
 .player-info ul li p,.player-info-modal ul li p{
     color: #FFD230;
@@ -320,12 +323,13 @@
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    width: 50%;
-    overflow-x:clip;
+    margin-right: 10px;
     word-break: keep-all;
+
 }
 .player-score::before{
     content: '  : ';
+    margin-right: 10px;
 }
 
 

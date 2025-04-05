@@ -10,6 +10,7 @@ import type { Player } from '../types/Player.ts';
 import {Artifact, Artifacts} from "./Artifact.tsx";
 import historyIcon from '../assets/history.svg';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 
@@ -237,6 +238,24 @@ export const PlayShare=(props: { onChangeGameState: (state: string) => void }) =
 }
 
 
+
+export const RePlayButton=(props:{player:Player,players:String[]})=>{
+  const navigate = useNavigate();
+
+  const returntoHome = () => {
+
+    navigate(`/multishare`,{state: {userName: props.player.name,avatar: props.player.avatar,players :props.players}});
+  
+  }
+  return (
+    <div className="container_button" onClick={returntoHome}>
+      <p className='button'>Rejouer</p>
+    </div>
+  );
+}
+
+
+
 export const DeletePLayer=(props:{player: string, onClick?: () => void})=>{
   return (
     <FontAwesomeIcon 
@@ -266,3 +285,4 @@ export const Impossible = (props :{username : string, owner : string}) => {
 
   )
 }
+

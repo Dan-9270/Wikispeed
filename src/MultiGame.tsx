@@ -21,6 +21,7 @@ function MultiGame() {
   const username = location.state.userName;
   const avatar = location.state.img;
   const map = location.state.playerMap;
+  const players = location.state.players;
  // console.log("map:", map);
  
     // Si les données sont absentes ou invalides, redirige l'utilisateur ou montre un message d'erreur
@@ -140,13 +141,12 @@ function MultiGame() {
           });
          
     }}, [isEnd]);
-
     useEffect(() => {
       console.log("listPlayer", listPlayer);
       if(isEnd){
         setTimeout(() => {
           console.log("listPlayesr", listPlayer);
-        navigate('/endgame',{state:{listPlayer}});
+        navigate('/endgame',{state:{listPlayer,player,players}});
         }
         , 2000);
       }

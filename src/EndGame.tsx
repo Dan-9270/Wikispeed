@@ -1,4 +1,4 @@
-import {LogoTitle, Podium, Ranking} from './component/Component'
+import {LogoTitle, PlayShare, Podium, Ranking, RePlayButton} from './component/Component'
 import {CreditButton} from './component/Component'
 import {BottomRedirection} from './component/Component'
 
@@ -17,6 +17,10 @@ import { useLocation } from 'react-router-dom'
 function EndGame(){
     const location = useLocation();
     const listPlayer:Player[] = location.state.listPlayer;
+    const player:Player = location.state.player;
+    const players:String[] = location.state.players;
+
+
     
    console.log("listPlayer:", listPlayer);
     return <>
@@ -35,6 +39,7 @@ function EndGame(){
         <CreditButton/>
     <LogoTitle/>
         <Podium ranking={listPlayer}></Podium> 
+        <RePlayButton player={player} players={players}/>
     <BottomRedirection content="See the ranking" link="#bottom"/>
             </section>
          <Ranking ranking={listPlayer}/> 
