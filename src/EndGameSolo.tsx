@@ -3,8 +3,6 @@ import {CreditButton} from './component/Component'
 import {PlayShare} from './component/Component'
 import images from './assets/monster/images'
 
-
-
 import './style/wikispeed.css'
 import { Background } from './assets/back'
 import { Game } from './Game'

@@ -162,7 +162,7 @@ function Home() {
         <ArtifactsList artifacts={artifacts} />
         <PlayButton />
         <Footer content1="Aide" content2="Confidentialités" content3="Mentions Légales" />
-        <Link to="/homephone">Aller à la page About</Link>
+        <Link to="/endgame">Aller à la page About</Link>
 
       </section>
     </>

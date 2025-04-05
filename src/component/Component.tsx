@@ -8,6 +8,8 @@ import { faSquareXmark} from "@fortawesome/free-solid-svg-icons";
 import { useRedirect } from "../script/Redirection";
 import type { Player } from '../types/Player.ts';
 import {Artifact, Artifacts} from "./Artifact.tsx";
+import historyIcon from '../assets/history.svg';
+import { useState } from 'react';
 
 
 
@@ -116,7 +118,41 @@ export const Podium=(props:{ranking:Array<Player>})=>{
     );
 }
 const Rank = (props :{player:Player,position:number}) => {
-    return <li className="playerRank"><p>{props.position}</p><img src={props.player.avatar} alt={props.player.name}/><p>{props.player.name}</p><p>{props.player.time}</p><p>{props.player.score}</p></li>
+    const [showHistory, setShowHistory] = useState(false);
+
+    return (
+        <>
+            <li className="playerRank">
+                <p>{props.position}</p>
+                <img src={props.player.avatar} alt={props.player.name}/>
+                <p>{props.player.name}</p>
+                <p>{props.player.time}</p>
+                <p>{props.player.score}</p>
+                <img 
+                    src={historyIcon} 
+                    alt="Historique" 
+                    className="history-icon"
+                    onClick={() => setShowHistory(true)}
+                />
+            </li>
+            {showHistory && (
+                <div className="history-popup-overlay" onClick={() => setShowHistory(false)}>
+                    <div className="history-popup" onClick={e => e.stopPropagation()}>
+                        <div className="card">
+                            <h2>Historique</h2>
+                            <div className="list-container">
+                                <ul>
+                                    {props.player.history.map((item, index) => (
+                                        <li key={index}>{index + 1}– {item}</li>
+                                    ))}
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+        </>
+    );
 }
 export const Ranking=(props :{ranking:Array<Player>})=>{
     return <ul className="ranking manjari" id="bottom">{
@@ -167,7 +203,6 @@ export function List(props: { children: string; onChange: (value: number) => voi
 export const SoloRanking=(props:{ranking:Player[]})=>{
   console.log("test", props.ranking[0]);
   return (
-
     <div className='SoloRanking'>
         <p className='rank_title'>Partie terminée !</p>
         <img className='rank_avatar' src={props.ranking[0].avatar} alt={props.ranking[0].name} />
@@ -176,6 +211,16 @@ export const SoloRanking=(props:{ranking:Player[]})=>{
         <p>Temps : 2:30</p>
         <p>  Nombre d'articles trouvés : {Array.from(props.ranking[0].articles.values()).filter(value => value).length} / {props.ranking[0].articles.size}</p>
         <p>Nombre d'articles parcourus : {props.ranking[0].history.length}</p>
+        <div className="card">
+          <h2>Historique</h2>
+          <div className="list-container">
+            <ul>
+              {props.ranking[0].history.map((item, index) => (
+                <li key={index}>{index + 1}– {item}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
     </div>
   );
 }

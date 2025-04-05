@@ -999,3 +999,76 @@ g{
     justify-content: space-between;
     max-width: 12vw;
 }
+
+.card {
+  background-color: #7761e2;
+  border-radius: 20px;
+  padding: 20px 30px;
+  color: white;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  width: 11vw;
+  margin: 0 auto;
+}
+
+.card h2 {
+  margin-bottom: 3%;
+  text-align: center;
+  font-size: 24px;
+  font-family: 'Manjari', sans-serif;
+}
+
+.list-container {
+  max-height: 8vh;
+  overflow-y: auto;
+  padding-right: 10px;
+}
+
+.card li {
+  margin-bottom: 8px;
+  font-size: 18px;
+  font-family: 'Manjari', sans-serif;
+}
+
+/* Scrollbar stylée */
+.list-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.list-container::-webkit-scrollbar-thumb {
+  background-color: #FFB700;
+  border-radius: 4px;
+}
+
+.list-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.history-icon {
+    width: 8%!important;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+
+.history-icon:hover {
+    transform: scale(1.1);
+}
+
+.history-popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.history-popup {
+    position: relative;
+    max-width: 90%;
+    max-height: 90vh;
+    overflow: auto;
+}
