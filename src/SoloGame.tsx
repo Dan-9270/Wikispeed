@@ -56,7 +56,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     setPopupDisplay({
       name: "Escargot",
       image: snail,
-      message: "La malédiction de l'escargot vient de frapper ! Vous êtes aussi lent que lui et vous ne pouvez plus changer d'article pendant 1 minutes, prenez le temps réfléchir.",
+      message: "La malédiction de l'escargot vient de frapper ! Vous êtes aussi lent que lui et vous ne pouvez plus changer d'article pendant 1 minutes, prenez le temps de réfléchir.",
       onclose: undefined,
     });
   }
