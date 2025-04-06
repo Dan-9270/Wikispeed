@@ -1536,6 +1536,19 @@ right: 29vw;
     color:#EE0000;
 }
 
+.dictator_green{
+  color:#57b620;
+}
+.dictator_red{
+  color:#892020;
+}
+.dictator_icon{
+  width: 25px;
+  height: 25px;
+  margin-left: 5px;
+  transform: translateY(4px);
+}
+
 
 .nohost{
   position: absolute;

@@ -3,6 +3,7 @@ import { Artifact } from './Artifact';
 import { ArtifactsList } from './Component';
 import type { Player } from '../types/Player.ts';
 import { createPortal } from "react-dom";
+import dictateur from '../assets/artifact/dictateur.svg';
 
 
 export function useNow(): number {
@@ -43,7 +44,7 @@ export function Timer(props: { deadlineMillis: number | undefined, onTimeUp: () 
 }
 
 
-export const ArticleList = (props: { names: Map<string,boolean> }) => {
+export const ArticleList = (props: { names: Map<string,boolean>, dictatorWord : string|null }) => {
     const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 900);
 
     useEffect(() => {
@@ -60,12 +61,12 @@ export const ArticleList = (props: { names: Map<string,boolean> }) => {
             <h2>Articles</h2>
             <ul className="manjariB">
                 {Array.from(props.names.entries()).map(([name, state], index) => (
-                    <li key={index} className={state ? "article-name green" : "article-name red" }>
-                        {name}{state==false?"FALSE":"TRUE"} {isSmallScreen && index !== props.names.size - 1 && " - "}
+                    <li key={index} className={state ? (props.dictatorWord==name || props.dictatorWord== null ? "article-name green" : "article-name dictator_green" ) : (props.dictatorWord==name || props.dictatorWord== null ? "article-name red" : "article-name dictator_red")}>
+                        {name} {props.dictatorWord=== name && <img className="dictator_icon" src={dictateur} alt="" /> }{isSmallScreen && index !== props.names.size - 1 && " - "}
                     </li>
                 ))}
             </ul>
-        </div>
+        </div>      
     );
 };
 
