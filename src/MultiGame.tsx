@@ -1,3 +1,4 @@
+import Damien from "./assets/avatar/Avatar_damien.svg";
 import mine from './assets/artifact/mine.svg'
 import map from './assets/artifact/map.svg'
 import {ChatBox, FinChatter} from "./component/Chat.tsx";
@@ -60,15 +61,9 @@ function MultiGame() {
       avatar:avatar,
       score:20,
       history:[randomTitle],
-<<<<<<< Updated upstream
       articles:articlesMap.set(randomTitle, true) ,
       dictator: null,
       snail: null,
-=======
-      articles:articlesMap.set(randomTitle, true), 
-      dictator:null,
-      snail:null,
->>>>>>> Stashed changes
     });
     const navigate = useNavigate();
 
@@ -173,8 +168,6 @@ function MultiGame() {
       }
     
     }, [listPlayer]);
-
-    console.log("listPlayer", listPlayer);
     return (
         <>
         <FinChatter chatManager={sharedChatManager} initialUserName={username} avatar={avatar} />
@@ -188,7 +181,6 @@ function MultiGame() {
 
         <div className='game-container'>
           <div className='game-info'>
-<<<<<<< Updated upstream
           <Timer
                 deadlineMillis={duration !== undefined ? (startTime !== undefined ? startTime + duration * 60000 : undefined) : undefined}
                 onTimeUp={timeUp}
@@ -198,20 +190,8 @@ function MultiGame() {
 
           <ArticleDisplayer title={player.history.slice(-1)[0]} updateHistoryAndMap={updateHistoryAndMap} snail={player.snail} resetSnail={resetSnail}/>
                        
-=======
-            <Timer
-                deadlineMillis={temps}
-                onTimeUp={() => {
-                
-              }}
-            />            
-            </div>
-          <div className='game-main'>
-          <ArticleDisplayer title={player.history.slice(-1)[0]} updateHistoryAndMap={updateHistoryAndMap} snail={player.snail} resetSnail={()=>{}} />
-
->>>>>>> Stashed changes
           <div className='game-main-details'>
-              <ArticleList names={player.articles} dictatorWord={player.dictator} />
+              <ArticleList names={player.articles } />
                <PlayerInfo players={listPlayer} articles={player.articles} /> 
               </div>
           </div>
