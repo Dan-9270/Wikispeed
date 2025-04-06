@@ -5,7 +5,7 @@ import './style/timer.css';
 import './style/game.css';
 import { ArticleDisplayer } from './component/Article';
 import { Background } from "./assets/back.tsx";
-import { useCallback,useState } from 'react';
+import { useState } from 'react';
 import type { Player } from './types/Player.ts';
 import { Game } from './Game.tsx';
 import { createPortal } from 'react-dom';
@@ -17,7 +17,6 @@ import back from './assets/artifact/back.svg';
 import mine from './assets/artifact/mine.svg';
 import map from './assets/artifact/map.svg';
 import snail from './assets/artifact/escargot.svg';
-import { Interface } from 'readline';
 
 function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChangeGameState: (state: string) => void }) {
   const { nombreArticles, artefacts, temps, randomMots, choixMots, wordsList } = props.game.settings;
@@ -119,12 +118,11 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
   }
 
   function eraser() {
-    setPopupDisplay
-    ({
+    setPopupDisplay({
         name: "Gomme",
         image: gomme,
         message: "Pas de chance, la Gomme viens d'être activté, vous avez perdu votre dernier article trouvé !",
-        onclose: undefined,
+        onclose: undefined
       });
 
     if (1 == 1) {
@@ -206,6 +204,103 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       updateHistory(currentTitle);
     }
   }
+  const extractArticleLinks = async (title: string): Promise<string[]> => {
+    try {
+      const response = await fetch(`https://fr.wikipedia.org/api/rest_v1/page/html/${title}`);
+      if (!response.ok) {
+        throw new Error(`Erreur lors de la récupération de l'article : ${response.statusText}`);
+      }
+      const htmlContent = await response.text();
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(htmlContent, 'text/html');
+
+      const sectionsToRemove = [
+        "Notes_et_références",
+        "Annexes",
+        "Voir_aussi",
+        "Bibliographie",
+        "Références",
+        "Liens_externes",
+        "Articles_connexes"
+      ];
+      sectionsToRemove.forEach(sectionId => {
+        const section = doc.getElementById(sectionId);
+        if (section) section.remove();
+      });
+      const allLinks = doc.querySelectorAll('a[title]');
+      const articleTitles: string[] = [];
+      allLinks.forEach((link) => {
+        const title = link.getAttribute('title');
+        if (title) {
+          articleTitles.push(title);
+        }
+      });
+
+      return articleTitles;
+
+    } catch (error) {
+      console.error("Erreur:", error);
+      return [];
+    }
+  };
+  async function placemine() {
+    const player = props.game.players[props.game.currentPlayer];
+
+    const previousMined = props.game.mined;
+    const newMined = new Map(previousMined);
+    const currentList = newMined.get(props.game.currentPlayer) || [];
+
+    const lastHistory = player.history[player.history.length - 1];
+
+    try {
+      const articleLinks = await extractArticleLinks(lastHistory);
+
+      console.log("articleLinks", articleLinks);
+
+      newMined.set(props.game.currentPlayer, [...currentList, [lastHistory, ...articleLinks]]);
+
+      props.onChange({
+        ...props.game,
+        mined: newMined,
+      });
+    } catch (error) {
+      console.error("Erreur lors de la récupération des liens d'articles :", error);
+    }
+  }
+  function mined(newMined : Map<number,string[][]>) {
+    let target = null;
+    for (let i = 5; i >= 1; i--) {
+      const index = soloPlayer.history.length - i;
+      if (index >= 0) {
+        target = soloPlayer.history[index];
+        break;
+      }
+    }
+
+    if (target) {
+      props.onChange({
+        ...props.game,
+        mined: newMined,
+        players: [
+          {...props.game.players[props.game.currentPlayer],
+            history: [...props.game.players[props.game.currentPlayer].history,target],
+          },
+        ],
+      });
+    }
+
+    setPopupDisplay({
+      name: "Mine",
+      image: mine,
+      message: "Igo, le terrain est miné, pour de vrai, pour de vrai, le terrain est miné\n" +
+          "Faut tailler, nous, on est loin d'l'époque où fallait détailler\n" +
+          "Maintenant, il m'faut des factures détaillées, hum\n" +
+          "Ça sentait toujours la caille, les taudis, les RS, les RS, les Cayenne\n" +
+          "Les petits, ils oublient d'respecter les doyens, les doyens, ils oublient d'respecter les petits",
+      onclose: undefined,
+    });
+  }
   console.log("dictator", props.game.players[props.game.currentPlayer].dictator);
   return (
     <>
@@ -229,13 +324,9 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
             />
           </div>
           <div className='game-main'>
-
-            <ArticleDisplayer title={props.game.players[props.game.currentPlayer].history.slice(-1)[0]} updateHistoryAndMap={props.game.players[props.game.currentPlayer].dictator !== null ? dictatorUpdate : updateHistoryAndMap} snail={soloPlayer.snail} resetSnail={resetSnail} />
-
+            <ArticleDisplayer title={props.game.players[props.game.currentPlayer].history.slice(-1)[0]} updateHistoryAndMap={props.game.players[props.game.currentPlayer].dictator !== null ? dictatorUpdate : updateHistoryAndMap} snail={soloPlayer.snail} resetSnail={resetSnail} mined={props.game.mined} triggerMined={mined} currentPlayer={props.game.currentPlayer} />
             <div className='game-main-details'>
-
               <ArticleList names={props.game.players[props.game.currentPlayer].articles} dictatorWord={props.game.players[props.game.currentPlayer].dictator} />
-
               <figure className="monster"><img src={benjamin} alt="benjamin" /></figure>
             </div>
           </div>
@@ -247,7 +338,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
             <svg width="225" height="100" viewBox="0 0 225 73" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bb'><path d="M111.675 -0.000378409C165.925 0.28796 237 19.4997 222 71.4994C206.999 123.499 165.925 114.16 111.674 113.872C57.4239 113.584 22.5001 123 2.99974 71.4993C-12 19 57.4247 -0.288717 111.675 -0.000378409Z" fill=" #4943C6" /></svg>
 
             <Inventory
-              artifact1={{ name: 'Eraser', description: '', img: mine, onActivate: dictator }}
+              artifact1={{ name: 'Eraser', description: '', img: mine, onActivate: placemine }}
               artifact2={{ name: 'Retour en arrière', description: '', img: back, onActivate:startSnail }}
               isExist={artefacts}
             />

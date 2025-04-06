@@ -13,8 +13,6 @@ export const SnailTimer = (props: { deadlineMillis: number | undefined, reset: (
       ? Math.abs(timeRemaining) % 60
       : 0;
 
-  console.log("timeremaining",timeRemaining);
-console.log("seconds", seconds);
   useEffect(() => {
     if (timeRemaining !== undefined && timeRemaining <= 0 ) {
       props.reset();

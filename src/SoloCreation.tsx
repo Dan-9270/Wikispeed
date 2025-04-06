@@ -48,7 +48,8 @@ function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChan
       settings: settings,
       end: false,
       startTime: undefined,
-      endTime: undefined
+      endTime: undefined,
+      mined:new Map<number, string[][]>([[0, []]]),
     }
     console.log("Nouvelle partie :", newGame);
     props.onChange(newGame)

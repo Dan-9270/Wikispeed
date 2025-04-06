@@ -21,6 +21,7 @@ export interface Game {
     end: boolean;
     startTime: number | undefined;
     endTime : number | undefined;
+    mined :Map <number, string[][]>;
 }
 
 export function useLocalStorage(key: string, initialValue: any) {
@@ -122,8 +123,8 @@ export const Game = () => {
         settings: setting,
         end: false,
         startTime:undefined,
-        endTime:undefined
-
+        endTime:undefined,
+        mined:new Map<number,string[][]>()
     });
 
     if(gameState === "build"){
@@ -140,7 +141,6 @@ export const Game = () => {
         // INITIALISE L'HISTORIQUE DANS LE PLAYER
         if (game.players[0].history.length === 0) {
             const randomTitle = game.settings.wordsList[Math.floor(Math.random() * game.settings.wordsList.length)];
-
             // Met à jour l'historique et la Map des articles du joueur
             const updatedPlayer = {
                 ...game.players[0],
@@ -152,10 +152,8 @@ export const Game = () => {
                 ...game,
                 players: [updatedPlayer],
             };
-
             setGame(updatedGame);
         }
-
 // INITIALISE LA MAP DANS LE PLAYER
         if (game.players.length > 0 && game.players[0].articles.size === 0) {
             const updatedGame = {

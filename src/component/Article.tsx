@@ -6,9 +6,12 @@ interface ArticleDisplayerProps {
   updateHistoryAndMap: (newTitle: string) => void;
   snail:number|null;
   resetSnail: () => void;
+  mined:Map<number,string[][]>;
+  triggerMined: (newmined:Map<number,string[][]>)=>void;
+  currentPlayer:number;
 }
 
-export const ArticleDisplayer = ({ title, updateHistoryAndMap,snail,resetSnail }: ArticleDisplayerProps) => {
+export const ArticleDisplayer = ({ title, updateHistoryAndMap,snail,resetSnail,mined,triggerMined,currentPlayer }: ArticleDisplayerProps) => {
   const [content, setContent] = useState<string>('');
 
   const cleanArticle = useCallback((html: string) => {
@@ -109,8 +112,31 @@ export const ArticleDisplayer = ({ title, updateHistoryAndMap,snail,resetSnail }
         event.preventDefault();
         const newTitle = target.getAttribute("title");
         if (newTitle) {
-          updateHistoryAndMap(newTitle);
+          let triggered = false;
+
+          for (const [key, lists] of mined.entries()) {
+            if (key === currentPlayer) continue;
+            for (let i = 0; i < lists.length; i++) {
+              const list = lists[i];
+              if (list.includes(newTitle)) {
+                const newMined = new Map(mined);
+                const updatedLists = [...lists];
+                updatedLists.splice(i, 1);
+                newMined.set(key, updatedLists);
+                triggerMined(newMined);
+                triggered = true;
+                break;
+              }
+            }
+
+            if (triggered) break;
+          }
+
+          if (!triggered) {
+            updateHistoryAndMap(newTitle);
+          }
         }
+
       }
     };
 
@@ -118,7 +144,7 @@ export const ArticleDisplayer = ({ title, updateHistoryAndMap,snail,resetSnail }
     return () => {
       container.removeEventListener('click', handleClick);
     };
-  }, [snail,content, updateHistoryAndMap]);
+  }, [snail,content, updateHistoryAndMap,triggerMined,mined]);
   useEffect(() => {
     const container = document.querySelector('.article-content');
     if (!container) return;
