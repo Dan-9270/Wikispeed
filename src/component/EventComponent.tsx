@@ -112,8 +112,8 @@ export const PlayerInfo = (props: { players: Player[], articles: Map<string,bool
                                     {props.players.map((player, i) => (
                                         <li key={i}>
                                             <p className="manjari">{player.name}</p>
-                                            <p className="manjari player-score">{player.score}/{props.articles.size}</p>
-                                        </li>
+                                            <p className="manjari player-score">{Array.from(arrayToMap(player).values()).filter(value => value).length} / {props.articles.size} {player.history.slice(-1)[0]}</p>
+                                            </li>
                                     ))}
                                 </ul>
                             </div>,
