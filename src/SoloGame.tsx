@@ -1,28 +1,42 @@
 import benjamin from './assets/monster/benjamin.png';
-import { ArticleList, Inventory, Timer } from './component/EventComponent';
+import {ArticleList, Inventory, Timer} from './component/EventComponent';
 import './style/wikispeed.css';
 import './style/timer.css';
 import './style/game.css';
-import { ArticleDisplayer } from './component/Article';
-import { Background } from "./assets/back.tsx";
-import { useState } from 'react';
-import type { Player } from './types/Player.ts';
-import { Game } from './Game.tsx';
-import { createPortal } from 'react-dom';
-import { ArtifactPopup } from './component/Artifact.tsx';
+import {ArticleDisplayer} from './component/Article';
+import {Background} from "./assets/back.tsx";
+import {useState} from 'react';
+import type {Player} from './types/Player.ts';
+import {Game} from './Game.tsx';
+import {createPortal} from 'react-dom';
+import {Artifact, ArtifactPopup} from './component/Artifact.tsx';
 import gomme from './assets/artifact/gomme.svg';
 import desorienter from './assets/artifact/compass.svg';
 import dictateur from './assets/artifact/dictateur.svg';
 import back from './assets/artifact/back.svg';
 import mine from './assets/artifact/mine.svg';
-import map from './assets/artifact/map.svg';
 import snail from './assets/artifact/escargot.svg';
-import { useEffect } from 'react';
 
 function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChangeGameState: (state: string) => void }) {
   const { nombreArticles, artefacts, temps, randomMots, choixMots, wordsList } = props.game.settings;
   const soloPlayer = props.game.players[0];
   console.log("game", soloPlayer.articles);
+  const bonusArtifacts: Artifact[]= []/*
+
+
+
+
+
+
+
+  a remplir avec les BONUS ET MALUS
+
+
+
+
+  */
+  const malusArtifacts: Artifact[]= []
+
 
   const updateHistoryAndMap = (articleTitle: string) => {
     const newHistory = soloPlayer.history ? [...soloPlayer.history, articleTitle] : [articleTitle];
@@ -31,7 +45,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     props.game.players[props.game.currentPlayer].dictator = null;
 
     if(!props.game.players[props.game.currentPlayer].history.includes(articleTitle)){
-      
+
     }
 
     if (value !== undefined && !value) {
@@ -96,39 +110,51 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
   }
 
   // FONCTION ARTEFACTS  
+  function randomMalus(probability:number) {
+    const rand = Math.random();
+
+    if (rand < 1 - probability) {
+      return -1;
+    }
+
+    const min = 0;
+    const max = malusArtifacts.length-1;
+    const range = max - min + 1;
+    return Math.floor(Math.random() * range) + min;
+  }
+
+  function randomBonus(probability:number) {
+    const rand = Math.random();
+
+    if (rand < 1 - probability) {
+      return -1;
+    }
+    const min = 0;
+    const max = bonusArtifacts.length-1;
+    const range = max - min + 1;
+    return Math.floor(Math.random() * range) + min;
+  }
 
   async function generationArtefacts(title: string) {
     const popularity = await fetchArticlePopularity(title);
-  
+
     if (popularity == null) {
-      return;
-    } else {
+      return 0;
+    }
+    else {
       const medianePopularity = popularity.firstArticlePopularity / 2;
-  
-      // Calcul du pourcentage basé sur la comparaison entre articlePopularity et medianePopularity
-      const calculatePercentage = (articlePopularity: number, medianePopularity: number) => {
-        const difference = articlePopularity - medianePopularity;
-  
-        if (difference > 0) {
-          // Si l'article est au-dessus de la médiane, calcule le pourcentage d'augmentation par rapport à la médiane
-          const percentage = (difference / medianePopularity) * 100;
-          // getrandomMalus();
-        } else {
-          // Si l'article est en-dessous ou égal à la médiane, on calcule le pourcentage basé sur la différence négative
-          const absoluteDifference = Math.abs(difference);  // Prendre la différence absolue
-          const percentage = (absoluteDifference / medianePopularity) * 100;
-          // getrandomBonus();
-      };
-  
-      // Calcul du pourcentage pour l'article en fonction de la médiane
-      const percentage = calculatePercentage(popularity.articlePopularity, medianePopularity);
-  
-      console.log(`Pourcentage de popularité de ${title} par rapport à la médiane : ${percentage}%`);
+      const difference = popularity.articlePopularity - medianePopularity;
+      const absoluteDifference = Math.abs(difference);
+      const probability = (absoluteDifference / medianePopularity);
+      if (difference > 0) {
+        return randomMalus(probability);
+      } else {
+        return randomBonus(probability);
+      }
     }
   }
-}
-  
-  
+
+
 
 
   const fetchArticlePopularity = async (title: string) => {
@@ -137,7 +163,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       console.log("query", query);
       const response = await fetch(query);
       const data = await response.json();
-      
+
       console.log("data", data);
       if (data && data.articlePopularity !== null) {
         return data;
@@ -170,7 +196,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       message: "Vous venez d'activer le retour en arrière, vous venez de remonter dans le temps",
       onclose: undefined,
     });
-    
+
     if (1 === 1) {
       updateHistoryAndMap(props.game.players[props.game.currentPlayer].history.slice(-2)[0]);
     }
@@ -178,11 +204,11 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
 
   function eraser() {
     setPopupDisplay({
-        name: "Gomme",
-        image: gomme,
-        message: "Pas de chance, la Gomme viens d'être activté, vous avez perdu votre dernier article trouvé !",
-        onclose: undefined
-      });
+      name: "Gomme",
+      image: gomme,
+      message: "Pas de chance, la Gomme viens d'être activté, vous avez perdu votre dernier article trouvé !",
+      onclose: undefined
+    });
 
     if (1 == 1) {
       for (let i = props.game.players[props.game.currentPlayer].history.length - 1; i >= 0; i--) {
@@ -228,7 +254,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     if (1 == 1) {
       if (!props.game.players[props.game.currentPlayer].dictator) {
         const availableTitles = props.game.settings.wordsList.filter(
-          (title) => !articlesMap.get(title)
+            (title) => !articlesMap.get(title)
         );
 
         if (availableTitles.length > 0) {
@@ -362,71 +388,71 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
   }
   console.log("dictator", props.game.players[props.game.currentPlayer].dictator);
   return (
-    <>
-      <section className='main-page game'>
-        <figure className='logo-solo'>
-          <svg width="30vw" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 400">
-            <polygon points="40,10 130,1 70,160 100,160 5,390 35,200 0,200" stroke="#000000" stroke-width="7px" fill="#FDB813" />
-          </svg>
-        </figure>
-        <div className='game-container'>
-          <div className='game-info'>
-            <Timer
-                deadlineMillis={temps !== undefined ? (props.game.startTime !== undefined ? props.game.startTime + temps * 60000 : undefined) : undefined}
-                onTimeUp={() => {
-                props.onChangeGameState("endgame");
-                props.onChange({
-                  ...props.game,
-                  end: true,
-                });
-              }}
-            />
-          </div>
-          <div className='game-main'>
-            <ArticleDisplayer title={props.game.players[props.game.currentPlayer].history.slice(-1)[0]} updateHistoryAndMap={props.game.players[props.game.currentPlayer].dictator !== null ? dictatorUpdate : updateHistoryAndMap} snail={soloPlayer.snail} resetSnail={resetSnail} mined={props.game.mined} triggerMined={mined} currentPlayer={props.game.currentPlayer} />
-            <div className='game-main-details'>
-              <ArticleList names={props.game.players[props.game.currentPlayer].articles} dictatorWord={props.game.players[props.game.currentPlayer].dictator} />
-              <figure className="monster"><img src={benjamin} alt="benjamin" /></figure>
+      <>
+        <section className='main-page game'>
+          <figure className='logo-solo'>
+            <svg width="30vw" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 135 400">
+              <polygon points="40,10 130,1 70,160 100,160 5,390 35,200 0,200" stroke="#000000" stroke-width="7px" fill="#FDB813" />
+            </svg>
+          </figure>
+          <div className='game-container'>
+            <div className='game-info'>
+              <Timer
+                  deadlineMillis={temps !== undefined ? (props.game.startTime !== undefined ? props.game.startTime + temps * 60000 : undefined) : undefined}
+                  onTimeUp={() => {
+                    props.onChangeGameState("endgame");
+                    props.onChange({
+                      ...props.game,
+                      end: true,
+                    });
+                  }}
+              />
+            </div>
+            <div className='game-main'>
+              <ArticleDisplayer title={props.game.players[props.game.currentPlayer].history.slice(-1)[0]} updateHistoryAndMap={props.game.players[props.game.currentPlayer].dictator !== null ? dictatorUpdate : updateHistoryAndMap} snail={soloPlayer.snail} resetSnail={resetSnail} mined={props.game.mined} triggerMined={mined} currentPlayer={props.game.currentPlayer} />
+              <div className='game-main-details'>
+                <ArticleList names={props.game.players[props.game.currentPlayer].articles} dictatorWord={props.game.players[props.game.currentPlayer].dictator} />
+                <figure className="monster"><img src={benjamin} alt="benjamin" /></figure>
+              </div>
+            </div>
+            <div className='game-bottom'>
+              <div className="bottom_bar">
+                <svg width="114" height="100" viewBox="0 0 114 72" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bl'><path d="M0 0H114C54.5 26 66 72 66 72H0V0Z" fill=" #4943C6" /></svg>
+                <svg width="114" height="100" viewBox="0 0 114 72" fill="blue" xmlns="http://www.w3.org/2000/svg" id='br'><path d="M114 0H0C59.5 26 48 72 48 72H114V0Z" fill=" #4943C6" /></svg>
+              </div>
+              <svg width="225" height="100" viewBox="0 0 225 73" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bb'><path d="M111.675 -0.000378409C165.925 0.28796 237 19.4997 222 71.4994C206.999 123.499 165.925 114.16 111.674 113.872C57.4239 113.584 22.5001 123 2.99974 71.4993C-12 19 57.4247 -0.288717 111.675 -0.000378409Z" fill=" #4943C6" /></svg>
+
+              <Inventory
+                  artifact1={{ name: 'Eraser', description: '', img: mine, onActivate: placemine }}
+                  artifact2={{ name: 'Retour en arrière', description: '', img: back, onActivate:backArtifact }}
+                  isExist={artefacts}
+              />
+
             </div>
           </div>
-          <div className='game-bottom'>
-            <div className="bottom_bar">
-              <svg width="114" height="100" viewBox="0 0 114 72" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bl'><path d="M0 0H114C54.5 26 66 72 66 72H0V0Z" fill=" #4943C6" /></svg>
-              <svg width="114" height="100" viewBox="0 0 114 72" fill="blue" xmlns="http://www.w3.org/2000/svg" id='br'><path d="M114 0H0C59.5 26 48 72 48 72H114V0Z" fill=" #4943C6" /></svg>
-            </div>
-            <svg width="225" height="100" viewBox="0 0 225 73" fill="blue" xmlns="http://www.w3.org/2000/svg" id='bb'><path d="M111.675 -0.000378409C165.925 0.28796 237 19.4997 222 71.4994C206.999 123.499 165.925 114.16 111.674 113.872C57.4239 113.584 22.5001 123 2.99974 71.4993C-12 19 57.4247 -0.288717 111.675 -0.000378409Z" fill=" #4943C6" /></svg>
+        </section>
+        <Background />
 
-            <Inventory
-              artifact1={{ name: 'Eraser', description: '', img: mine, onActivate: placemine }}
-              artifact2={{ name: 'Retour en arrière', description: '', img: back, onActivate:backArtifact }}
-              isExist={artefacts}
-            />
+        {popupDisplay !== null && createPortal(
+            <ArtifactPopup
+                artifactName={popupDisplay.name}
+                artifactImage={popupDisplay.image}
+                message={popupDisplay.message}
+                onClose={() => {
+                  setPopupDisplay(null);
+                }}
+            />,
+            document.body
+        )}
 
-          </div>
-        </div>
-      </section>
-      <Background />
-
-      {popupDisplay !== null && createPortal(
-        <ArtifactPopup
-          artifactName={popupDisplay.name}
-          artifactImage={popupDisplay.image}
-          message={popupDisplay.message}
-          onClose={() => {
-            setPopupDisplay(null);
-          }}
-        />,
-        document.body
-      )}
-
-      <button onClick={() => {
-        fetchArticlePopularity("Françoise_Fabian").then((pop) => {
-          console.log("Popularité de Françoise_Fabian :", pop.articlePopularity);
-        });
-      }}>
-        Test Popularité
-      </button>
-    </>
+        <button onClick={() => {
+          fetchArticlePopularity("Françoise_Fabian").then((pop) => {
+            console.log("Popularité de Françoise_Fabian :", pop.articlePopularity);
+          });
+        }}>
+          Test Popularité
+        </button>
+      </>
   );
 }
 
