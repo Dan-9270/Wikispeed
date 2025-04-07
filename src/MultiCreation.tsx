@@ -40,7 +40,7 @@ function MultiCreation() {
           <Background></Background>
             <CreditButton />
             <LogoTitle />
-            <MusicPlayer />
+            <MusicPlayer/>
 
 
       

@@ -13,6 +13,8 @@ import { useState, useEffect, use } from "react";
 import { ChatBox, FinChatter, RealChatter } from "./component/Chat.tsx";
 import Damien from "./assets/avatar/Avatar_damien.svg";
 import { sharedChatManager } from './chatManager';
+import { MusicPlayer } from './component/MusicComponent'
+
 
 function MultiShare() {
   const navigate = useNavigate();
@@ -193,7 +195,7 @@ function MultiShare() {
       .catch(err => console.error("Erreur de copie:", err));
   };
 
-  return (
+  return (    
    <div >
     <FinChatter chatManager={sharedChatManager} initialUserName={username} avatar={avatar} />
 
@@ -201,6 +203,8 @@ function MultiShare() {
         <LogoTitle />
         <Background />
         <CreditButton />
+        <MusicPlayer />
+
 
       <div className="big">
           <form > {/* Utiliser onSubmit pour gérer la soumission */}

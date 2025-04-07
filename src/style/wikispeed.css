@@ -419,6 +419,15 @@ text-transform: uppercase;
   .volumeControl:hover {
     color: #FFB700; /* Changement de couleur au survol */
   }
+
+  @media screen and (max-width: 500px) {
+    .musicGestion{
+      right: 10px;
+      top: 10px;
+      gap: 15px;
+    }
+  }
+  
   
 /* -------------------------- SELECT MODE -------------------------- */
 
@@ -755,6 +764,7 @@ line-height: normal;
   transition: transform 0.3s ease-in-out;
   display: flex;
   justify-content: center;
+  margin-bottom: 10%
 }
 
 .CreateGame:active{

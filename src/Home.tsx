@@ -6,13 +6,13 @@ import { SetProfile } from './component/SetProfile';
 import { MusicPlayer, SoundPlayer } from './component/MusicComponent';
 import mine from './assets/artifact/mine.svg';
 import map from './assets/artifact/map.svg';
-import snail from './assets/artifact/escargot.svg';
 import images from './assets/monster/images';
 import hover from './assets/music/hover.mp3';
 import click from './assets/music/click.mp3';
 import monster from './assets/music/monster.mp3';
 import { Background } from './assets/back';
 import './style/wikispeed.css';
+import { PlayButton } from './component/RouteComponent';
 import { Link } from "react-router-dom";
 
 
@@ -34,7 +34,7 @@ function Home() {
   const isInputValid = inputValue.trim() !== '';
   
   // Fonction de navigation
-  const navigateToPage = (link: string) => {
+  const navigateToPage = (link: string  ) => {
     if (!isInputValid) {
       alert('Veuillez remplir le champ utilisateur.');
       return;
@@ -47,6 +47,8 @@ function Home() {
     }
   };}
  
+  
+
   const artifacts = [
     { name: 'Mine', description: 'FTG Khephren si tu trouves ça moche, c\'est pas mon problème', img: mine },
     { name: 'Map', description: 'Flop sale bâtard', img: map },
@@ -90,27 +92,54 @@ function Home() {
                 isInputValid={isInputValid} // Contrôle la validation
                 onClick={() => navigateToPage('./game')} 
               />
+
             </SoundPlayer>
 
             <div className='profil-pc'>
               <SetProfile username={inputValue} onChange={(event) => setInputValue(event.target.value)} onAvatarChange={handleAvatarChange}/> 
             </div>
-            {!isNameChoosen && <div className='profil-phone'>
+            {!isNameChoosen && <>
+            <div className='profil-phone'>
               <SetProfile username={inputValue} onChange={(event) => setInputValue(event.target.value)} onAvatarChange={handleAvatarChange}/> 
-            </div>}
+            </div>
+            <NextHome title="Jouer" onClick={()=> {isInputValid ? setIsNameChosen(true) : ()=>{}}} /> 
+            </>}
 
-            <NextHome title="Jouer" onClick={() => { isInputValid ? setIsNameChosen(true) : null }} />
-            
             <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}> 
-              <SelectMode 
+
+            <SelectMode 
                 title="Multijoueur" 
                 img={images.bibabo} 
                 link="multicreation" 
                 isInputValid={isInputValid} // Contrôle la validation
-                onClick={() => navigateToPage('./multicreation')} 
+                onClick={() => {
+                  navigateToPage('./multicreation');
+                }}
               />
             </SoundPlayer>
           </div>
+
+          {isNameChoosen && 
+              <div className="phone-selection">                 
+                <SelectMode 
+                title="Solo" 
+                img={images.green} 
+                link="solocreation" 
+                isInputValid={isInputValid} // Contrôle la validation
+                onClick={() => navigateToPage('./game')} 
+                />
+              <div className="or"> <span className='manjari'>OU</span></div>
+                <SelectMode 
+                  title="Multi" 
+                  img={images.bibabo} 
+                  link="multicreation" 
+                  isInputValid={isInputValid} // Contrôle la validation
+                  onClick={() => {
+                    navigateToPage('./multicreation');
+                  }}
+                />              
+              </div>
+            }
         </div>
 
       </section>
@@ -120,8 +149,8 @@ function Home() {
         <Title title="How to play ?" />
         <div className="rule-list">
           <RuleBlox content="1. Crée une partie. Lance une partie en solo ou avec des amis." />
-          <RuleBlox content="2. Découvre ta liste d'articles. Tu reçois une liste d'articles Wikipédia à visiter." />
-          <RuleBlox content="3. Navigue d'article en article. Clique sur les liens internes de Wikipédia pour avancer d'un article à l'autre." />
+          <RuleBlox content="2. Découvre ta liste d’articles. Tu reçois une liste d’articles Wikipédia à visiter." />
+          <RuleBlox content="3. Navigue d’article en article. Clique sur les liens internes de Wikipédia pour avancer d’un article à l’autre." />
           <RuleBlox content="4. Sois le plus rapide ! Le premier à avoir visité tous ses articles remporte la partie.">
             <div id="monster_6">
               <img className="monsters" id="m6" src={images.cornu} alt="Monstre Cornu" />
@@ -131,10 +160,10 @@ function Home() {
 
         <Title title="Artéfacts" />
         <ArtifactsList artifacts={artifacts} />
-
-      
+        <PlayButton />
         <Footer content1="Aide" content2="Confidentialités" content3="Mentions Légales" />
-        <Link to="/endgame">Aller à la page About</Link>
+        <Link to="/homephone">Aller à la page About</Link>
+
       </section>
     </>
   );

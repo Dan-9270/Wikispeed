@@ -20,6 +20,7 @@ import dictateur from './assets/artifact/dictateur.svg';
 import mineImg from './assets/artifact/mine.svg';
 import map from './assets/artifact/map.svg';
 import snail from './assets/artifact/escargot.svg';
+import { MusicPlayer } from './component/MusicComponent'
 
 
 
