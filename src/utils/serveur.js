@@ -37,6 +37,16 @@ const rankingSchema = new mongoose.Schema({
     steps: Number,
     rank: Number
   });
+  const dailyArticleSchema = new mongoose.Schema({
+    date: {
+      type: Date, // ✅ Changement ici
+      required: true,
+      unique: true
+    },
+    title: String,
+  });
+  
+  const DailyArticle = mongoose.model('DailyArticle', dailyArticleSchema, 'DailyArticle');
   
 
   const Ranking = mongoose.model('Ranking', rankingSchema, 'Ranking');
@@ -45,37 +55,31 @@ const rankingSchema = new mongoose.Schema({
 // 📆 Caching d'article par jour
 let cachedArticle = null;
 let lastFetchDate = null;
+app.get('/get-article', async (req, res) => {
+  const dateParam = req.query.date; // Format attendu : YYYY-MM-DD
 
-async function fetchDailyArticle() {
-  const today = new Date().toISOString().split('T')[0];
-
-  if (lastFetchDate !== today || !cachedArticle) {
-    console.log('🔄 Nouvelle récupération d’article pour la date :', today);
-
-    try {
-      const response = await fetch('https://fr.wikipedia.org/api/rest_v1/page/random/summary');
-      const data = await response.json();
-      console.log('✅ Article récupéré :', data.title);
-
-      cachedArticle = data;
-      lastFetchDate = today;
-    } catch (error) {
-      console.error('❌ Erreur lors de la récupération de l’article :', error);
-      cachedArticle = { title: 'Erreur', extract: 'Impossible de charger un article.' };
-    }
-  } else {
-    console.log('📦 Article en cache utilisé :', cachedArticle.title);
+  if (!dateParam) {
+    return res.status(400).json({ error: 'Paramètre "date" requis (format : YYYY-MM-DD)' });
   }
 
-  return cachedArticle;
-}
+  try {
+    // Recherche l'article correspondant à la date au format "YYYY-MM-DD"
+    const article = await DailyArticle.findOne({ date: dateParam });
 
-// 🧠 GET : Récupérer l'article du jour
-app.get('/get-article', async (req, res) => {
-  const article = await fetchDailyArticle();
-  res.json(article);
+
+    if (!article) {
+      return res.status(404).json({ error: 'Aucun article trouvé pour cette date' });
+    }
+
+    // Retourner uniquement le titre de l'article
+    res.json({
+      title: article.title,
+    });
+  } catch (err) {
+    console.error('❌ Erreur MongoDB :', err);
+    res.status(500).json({ error: 'Erreur serveur' });
+  }
 });
-
 
 
 app.get("/ranking", async (req, res) => {

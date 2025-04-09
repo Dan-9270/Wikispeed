@@ -85,12 +85,16 @@ export const Loading = (props: { game: Game; gameState : String; onChange: (newG
     
           return article;
         };
+
     
         const fetchData = async () => {
-          const randomArticles = await fetchRandomArticles() || []; // Assurez-vous que ce soit un tableau vide s'il est undefined
+          const date = new Date().toISOString().split('T')[0]; // Obtenir la date actuelle au format YYYY-MM-DD
+          const randomArticlesResponse = await fetch(`http://localhost:3000/get-article?date=${date}`);
+          const randomArticles = randomArticlesResponse.ok ? await randomArticlesResponse.json() : [];
+          const randomArticlesTitle = randomArticles && randomArticles.title ? [randomArticles.title] : [];
           const locationArticle = await fetchArticle() || []; // Assurez-vous que ce soit un tableau vide s'il est undefined
     
-          const allArticles = [...locationArticle,...randomArticles]; // Fusionner les deux tableaux
+          const allArticles = [...locationArticle,...randomArticlesTitle]; // Fusionner les deux tableaux
           const newGame = { ...props.game };
           newGame.settings.wordsList = allArticles;
           console.log("Articles combinés :", allArticles);
