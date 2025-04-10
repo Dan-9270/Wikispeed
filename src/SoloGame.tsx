@@ -102,7 +102,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       image: mine,
       message: "Une mine a été ajouté a votre inventaire, posez la pour miner le terrain de vos adversaires",
       onclose: undefined,
-    },   
+    },
     {
         name: "Téléporteur",
         image: teleporteur,
@@ -158,8 +158,8 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       if (popupDisplay === null) {
         if (currentArtefactIndex === 1 || currentArtefactIndex === 2 || currentArtefactIndex === 3 ) {
           if(!soloPlayer.inventory.includes(currentArtefactIndex)){
-            setPopupDisplay(popupList[currentArtefactIndex - 1]);
             addToInventory(currentArtefactIndex);
+            setPopupDisplay(popupList[currentArtefactIndex - 1]);
           }
           else{
             const newPlayer: Player = {
@@ -173,8 +173,10 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
           }
 
         } else if (artefact.onActivate !== undefined) {
+          console.log("aeae",props.game.players[props.game.currentPlayer])
           setPopupDisplay(popupList[currentArtefactIndex - 1]);
           artefact.onActivate();
+
         }
       }
     }
@@ -423,6 +425,12 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
             ...props.game,
             players: [newPlayer],
           });
+          setPopupDisplay(    {
+            name: "Dictateur a été activé !",
+            image: dictateur,
+            message: "Le Dictateur a parlé, vous devez vous rendre sur l'article : " + props.game.players[props.game.currentPlayer].dictator + ", votre liste d'articles ne sera plus mise à jour tant que le dictateur ne sera pas satisfait !",
+            onclose: undefined,
+          })
         }
       }
     }
