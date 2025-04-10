@@ -163,8 +163,8 @@ function Home() {
 
      
       <section className="second-part" id="rules">
-        <BottomRedirection content="How To Play" link="#rules" />
-        <Title title="How to play ?" />
+        <BottomRedirection content="Comment jouer" link="#rules" />
+        <Title title="Comment jouer ?" />
         <div className="rule-list">
           <RuleBlox content="1. Crée une partie. Lance une partie en solo ou avec des amis." />
           <RuleBlox content="2. Découvre ta liste d’articles. Tu reçois une liste d’articles Wikipédia à visiter." />
