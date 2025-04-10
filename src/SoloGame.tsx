@@ -632,6 +632,11 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     }
 
   }
+  function isInWebView(): boolean {
+    const userAgent: string = navigator.userAgent || navigator.vendor || (window as any).opera;
+    const webViewRegex = /wv|WebView|(iPhone|iPod|iPad)(?!.*Safari)|Android(?!.*Chrome)/i;
+    return webViewRegex.test(userAgent);
+  }
   return (
       <>
         <section className='main-page game'>
@@ -690,7 +695,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
             />,
             document.body
         )}
-
+        {!isInWebView() && <>
         <button onClick={() => { const newPlayer = {
           ...props.game.players[props.game.currentPlayer],
           dictator:null,
@@ -805,8 +810,9 @@ gomme
 
 disorienter
         </button>
-        ²<p>{soloPlayer.currentArtefact}</p>
-
+        <p>{soloPlayer.currentArtefact}</p>
+        </>
+        }
       </>
   );
 }
