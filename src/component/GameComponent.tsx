@@ -145,7 +145,7 @@ export const Loading = (props: { game: Game; gameState : String; onChange: (newG
   }, [props.game.settings.randomMots, props.game.settings.nombreArticles, props.onChange, props.onChangeGameState]);
 
   return <div className="loading-container">
-    <p>LOADING</p>
+    <div className="spinner"></div>
     <Background></Background>
     </div>;
 };

@@ -1181,3 +1181,21 @@ g{
   font-size: 60;
   font-weight: bold;
 }
+
+
+.spinner {
+  width: 10vw; /* 10% de la largeur de l'écran */
+  height: 10vw; /* 10% de la largeur de l'écran */
+  max-width: 80px;  /* Taille maximale */
+  max-height: 80px; /* Taille maximale */
+  border: 6px solid #e20de2;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Animation de rotation infinie */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
