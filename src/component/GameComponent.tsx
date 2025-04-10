@@ -1,7 +1,7 @@
 import { FaPlay } from "react-icons/fa";
 import { useRedirect } from "../script/Redirection"
 import { SoundPlayer } from './MusicComponent'
-
+import { Background } from '../assets/back'
 import hover from '../assets/music/hover.mp3';
 import click from '../assets/music/click.mp3';
 import { useEffect, useState } from "react";
@@ -144,7 +144,10 @@ export const Loading = (props: { game: Game; gameState : String; onChange: (newG
     }
   }, [props.game.settings.randomMots, props.game.settings.nombreArticles, props.onChange, props.onChangeGameState]);
 
-  return <div className="loading-container">LOADING</div>;
+  return <div className="loading-container">
+    <p>LOADING</p>
+    <Background></Background>
+    </div>;
 };
 
   export const Setting = () =>{

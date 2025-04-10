@@ -7,6 +7,7 @@ import './style/wikispeed.css'
 import { Background } from './assets/back'
 import { Game } from './Game'
 import { useEffect } from 'react'
+import isInWebView from './component/buttonChallenge';
 
 function EndGameSolo(props:{game:Game; onChangeGameState:(state:string)=> void ,challenge:String}){
   if (props.challenge == "Challenge"){
@@ -58,7 +59,7 @@ function EndGameSolo(props:{game:Game; onChangeGameState:(state:string)=> void ,
     <CreditButton/>
     <LogoTitle/>
 
-        <SoloRanking
+    <SoloRanking
           ranking={props.game.players}
           gameduration={
             props.game.endTime !== undefined && props.game.startTime !== undefined

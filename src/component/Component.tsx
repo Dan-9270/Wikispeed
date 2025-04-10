@@ -229,7 +229,7 @@ export const SoloRanking = (props: { ranking: Player[], gameduration: number }) 
             <img className='rank_avatar' src={props.ranking[0].avatar} alt={props.ranking[0].name} />
             <p>{props.ranking[0].name}</p>
             <p className='rank_title'>Récap de la partie :</p>
-            <p>Temps : {formattedTime}</p>
+            {props.gameduration !== 0 ? <p>Temps : {formattedTime}</p> : null}
             <p>Nombre d'articles trouvés : {Array.from(props.ranking[0].articles.values()).filter(value => value).length} / {props.ranking[0].articles.size}</p>
             <p>Nombre d'articles parcourus : {props.ranking[0].history.length}</p>
             <div className="card">
