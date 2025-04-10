@@ -104,10 +104,11 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       onclose: undefined,
     },   
     {
-      name: "Téléporteur a été ajouté a votre inventaire",
-      image: teleporteur,
-      message: "Une téléporteur a été ajouté a votre inventaire, utilisez le pour vous téléporter a 2 liens d'un article cible",
-      onclose: undefined,
+        name: "Téléporteur",
+        image: teleporteur,
+        message: "Vous venez d'activer le téléporteur, vous allez être téléporté à 2 liens de l'article : ",
+        onclose: undefined,
+
     },
     {
       name: "Escargot a été activé !",
@@ -134,6 +135,20 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       onclose: undefined,
     }
   ]
+  const fetchArticleLinks = async (soloPlayerHistory: string[]) => {
+    try {
+      const lastVisited = soloPlayerHistory[soloPlayerHistory.length - 1];
+      const articleList = await extractArticleLinks(lastVisited);
+      if (articleList.length === 0) {
+        addToInventory(1);
+      }
+    } catch (error) {
+      console.error("Erreur lors de l'extraction des liens d'article :", error);
+    }
+  };
+  useEffect(() => {
+    fetchArticleLinks(soloPlayer.history);
+  }, [soloPlayer.history]);
   //DETECTION DES ARTÉFACTS EN COURS
   const currentArtefactIndex=soloPlayer.currentArtefact;
 
@@ -143,7 +158,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       console.log("ARTEFACT", artefact);
 
       if (popupDisplay === null) {
-        if (currentArtefactIndex === 1 || currentArtefactIndex === 2 || currentArtefactIndex === 3 ) {
+        if (currentArtefactIndex === 1 || currentArtefactIndex === 2) {
           if(!soloPlayer.inventory.includes(currentArtefactIndex)){
             setPopupDisplay(popupList[currentArtefactIndex - 1]);
             addToInventory(currentArtefactIndex);
