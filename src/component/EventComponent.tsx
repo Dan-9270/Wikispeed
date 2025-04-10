@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Artifact } from './Artifact';
 import { ArtifactsList } from './Component';
 import type { Player } from '../types/Player.ts';
@@ -56,13 +56,71 @@ export const ArticleList = (props: { names: Map<string,boolean>, dictatorWord : 
         return () => window.removeEventListener("resize", handleResize);
     }, []);
 
+    const [clickCount, setClickCount] = useState(0);
+    const [showSurprise, setShowSurprise] = useState(false);
+    const clickTimeout = useRef<NodeJS.Timeout | null>(null);
+    const displayTimeout = useRef<NodeJS.Timeout | null>(null);
+  
+    const handleImageClick = () => {
+      setClickCount((prev) => prev + 1);
+  
+      if (clickTimeout.current) {
+        clearTimeout(clickTimeout.current);
+      }
+  
+      clickTimeout.current = setTimeout(() => {
+        setClickCount(0);
+      }, 2000); // Réinitialise après 2s d’inactivité
+  
+      if (clickCount + 1 === 5) {
+        setClickCount(0);
+        setShowSurprise(true);
+  
+        displayTimeout.current = setTimeout(() => {
+          setShowSurprise(false);
+        }, 10000); // Cache après 10 secondes
+      }
+    };
+  
+    // Cleanup des timeouts si le composant est démonté
+    useEffect(() => {
+      return () => {
+        if (clickTimeout.current) clearTimeout(clickTimeout.current);
+        if (displayTimeout.current) clearTimeout(displayTimeout.current);
+      };
+    }, []);
+    
     return (
         <div className="article-list">
             <h2>Articles</h2>
             <ul className="manjariB">
                 {Array.from(props.names.entries()).map(([name, state], index) => (
                     <li key={index} className={state ? (props.dictatorWord==name || props.dictatorWord== null ? "article-name green" : "article-name dictator_green" ) : (props.dictatorWord==name || props.dictatorWord== null ? "article-name red" : "article-name dictator_red")}>
-                        {name} {props.dictatorWord=== name && <img className="dictator_icon" src={dictateur} alt="" /> }{isSmallScreen && index !== props.names.size - 1 && " - "}
+                             {name}
+      {props.dictatorWord === name && (
+        <img
+          className="dictator_icon"
+          src={dictateur}
+          alt=""
+          onClick={handleImageClick}
+          style={{ cursor: 'pointer' }}
+        />
+      )}
+      {showSurprise && (
+        <img
+          src="https://www.francetvinfo.fr/pictures/yhv_UhWJRbWhqG4JxTTBkWNnsFE/1200x900/2019/04/12/adolf_hitler_-_1933_-_sipa.jpg"
+          alt="Surprise!"
+          style={{
+            position: 'absolute',
+            top: '50px',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 1000,
+            width: '200px',
+          }}
+        />
+      )}
+      {isSmallScreen && index !== props.names.size - 1 && " - "}
                     </li>
                 ))}
             </ul>
