@@ -684,12 +684,14 @@ text-transform: uppercase;
 
 }
 .artifact-description p {
-  width: 80%;
-  word-wrap: break-word; /* Ancienne version */
+  width: 90%;
+  word-wrap: break-word;
   overflow-wrap: break-word;
+  text-align: center;
+  font-size: 1rem;
 }
 .title-description{
-  font-size: 3rem;
+  font-size: 2rem;
 
 }
 
@@ -712,7 +714,7 @@ transition: 0.3s;
 .artifact-description .artifact-active span{
   display: block;
   transform: translateY(18px);
-  font-size: 2rem;
+  font-size: 1.3rem;
 font-style: normal;
 font-weight: 600;
 line-height: normal;
