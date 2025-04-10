@@ -1613,4 +1613,67 @@ right: 29vw;
 .activate-artifact-button:hover {
   transform: scale(1.05);
 }
+.rankingBack {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* Fond assombri */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 999;
+}
 
+.rankingBack > div {
+    background-color: #4943C6;
+    padding: 2rem;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    max-height: 80%;
+    max-width: 600px;
+    width: 90%;
+    overflow-y: auto;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.rankingBack h2 {
+    margin-top: 0;
+    text-align: center;
+}
+
+.rankingBack ul {
+    list-style: none;
+    padding: 0;
+    margin: 1rem 0;
+}
+
+.rankingBack ul > div {
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid #ddd;
+}
+.rankingButton{
+    font-family: 'Manjari Bold', sans-serif;
+    text-transform: uppercase;
+    background-color: #4943C6;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: min-content;
+    padding: 10px 22px;
+    border-radius: 12px;
+    font-size: 1rem;
+    position: absolute;
+    top: 25px;
+    right:25px;
+    transition: 0.3s;
+    box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 100;
+    border:none;
+
+}

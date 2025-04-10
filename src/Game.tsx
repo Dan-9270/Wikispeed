@@ -5,8 +5,7 @@ import {useState, useEffect} from "react";
 import { Player } from "./types/Player";
 import { Loading } from "./component/GameComponent";
 import { useLocation } from "react-router-dom";
-import { Inventory } from "./component/EventComponent";
-import { channel } from "diagnostics_channel";
+
 
 interface Setting {
     nombreArticles: number;

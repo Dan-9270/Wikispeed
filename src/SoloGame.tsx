@@ -156,7 +156,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       const artefact = artefactList[currentArtefactIndex - 1];
 
       if (popupDisplay === null) {
-        if (currentArtefactIndex === 1 || currentArtefactIndex === 2) {
+        if (currentArtefactIndex === 1 || currentArtefactIndex === 2 || currentArtefactIndex === 3 ) {
           if(!soloPlayer.inventory.includes(currentArtefactIndex)){
             setPopupDisplay(popupList[currentArtefactIndex - 1]);
             addToInventory(currentArtefactIndex);
@@ -189,6 +189,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     let x=0;
     if(!props.game.players[props.game.currentPlayer].history.includes(articleTitle)){
       x = await generationArtefacts(articleTitle.replace(/ /g, "_"));
+      console.log(x);
     }
 
     if (value !== undefined && !value) {
@@ -501,6 +502,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
           });*/
         }
       } catch (error) {
+        console.error("Erreur lors de l'utilisation du téléporteur :", error);
       }
     }
   }
@@ -630,6 +632,11 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     }
 
   }
+  function isInWebView(): boolean {
+    const userAgent: string = navigator.userAgent || navigator.vendor || (window as any).opera;
+    const webViewRegex = /wv|WebView|(iPhone|iPod|iPad)(?!.*Safari)|Android(?!.*Chrome)/i;
+    return webViewRegex.test(userAgent);
+  }
   return (
       <>
         <section className='main-page game'>
@@ -688,7 +695,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
             />,
             document.body
         )}
-
+        {!isInWebView() && <>
         <button onClick={() => { const newPlayer = {
           ...props.game.players[props.game.currentPlayer],
           dictator:null,
@@ -803,8 +810,9 @@ gomme
 
 disorienter
         </button>
-        ²<p>{soloPlayer.currentArtefact}</p>
-
+        <p>{soloPlayer.currentArtefact}</p>
+        </>
+        }
       </>
   );
 }
