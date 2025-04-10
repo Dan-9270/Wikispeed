@@ -11,7 +11,7 @@ import { useLocation } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { sharedChatManager } from "./chatManager.ts";
 import { Player } from "./types/Player.ts";
-import { ArtifactPopup } from "./component/Artifact.tsx";
+import { Artifact, ArtifactPopup } from "./component/Artifact.tsx";
 import { createPortal } from "react-dom";
 import back from './assets/artifact/back.svg';
 import gomme from './assets/artifact/gomme.svg';
@@ -21,6 +21,8 @@ import mineImg from './assets/artifact/mine.svg';
 import map from './assets/artifact/map.svg';
 import snail from './assets/artifact/escargot.svg';
 import { MusicPlayer } from './component/MusicComponent'
+import teleporteur from './assets/artifact/teleporteur.svg';
+
 
 
 
@@ -90,12 +92,44 @@ function MultiGame() {
       }
       return -1// Retourne undefined si le joueur n'est pas trouvé
     };
+    async function generationArtefacts(title: string) {
+      const popularity = await fetchArticlePopularity(title);
+      if (popularity == null) {
+        return 0;
+      }
+      else {
+        const medianePopularity = popularity.firstArticlePopularity / 800;
+        console.log("firstArticlePopularity",popularity.firstArticlePopularity)
+        console.log("medianePopularity",medianePopularity)
+        console.log("articlePopularity",popularity.articlePopularity)
+        const difference = popularity.articlePopularity - medianePopularity;
+        const absoluteDifference = Math.abs(difference);
+        console.log("difference",difference)
+        const probability = (absoluteDifference / medianePopularity)/4 ;
+        console.log("probabilité",absoluteDifference ,"/",medianePopularity)
+        console.log(difference > 0?"malus":"bonus")
+        console.log("probability",probability)
+        if (difference > 0) {
+          return randomMalus(probability);
+        } else {
+          return randomBonus(probability);
+        }
+      }
+    }
   
+    
 
-    const updateHistoryAndMap = (articleTitle: string) => {
+    const updateHistoryAndMap = async (articleTitle: string) => {
       const newHistory = player.history ? [...player.history, articleTitle] : [articleTitle];
       const newArticles = new Map(player.articles);
       const value = newArticles.get(articleTitle);
+
+      let x=0;
+    if(!player.history.includes(articleTitle)){
+      x = await generationArtefacts(articleTitle.replace(/ /g, "_"));
+      console.log(x);
+    }
+
       
       console.log("aaaaaaaaaaaaaaaa");
       if (value !== undefined && !value) {
@@ -106,6 +140,7 @@ function MultiGame() {
         dictator: null,
         history: newHistory,
         articles: newArticles,
+        currentArtefact: x,
       };
 
       setPlayer(newPlayer);
@@ -171,8 +206,13 @@ function MultiGame() {
           });
          
     }}, [isEnd]);
+
+
+   
+
     useEffect(() => {
-      console.log("listPlayer", listPlayer);
+     
+       console.log("listPlayer", listPlayer);
       if(isEnd){
         setTimeout(() => {
           console.log("listPlayesr", listPlayer);
@@ -230,6 +270,8 @@ function MultiGame() {
             const newPlayer: Player = {
               ...player,
               articles: updatedArticles,
+              currentArtefact:0
+
             };
       
             setPlayer(newPlayer);
@@ -273,6 +315,8 @@ function MultiGame() {
             const newPlayer = {
               ...player,
               dictator: randomTitle,
+              currentArtefact:0
+
             };
   
             setPlayer(newPlayer);
@@ -324,7 +368,9 @@ function MultiGame() {
     const resetSnail=()=>{
       const newPlayer: Player = {
         ...player,
-        snail :null
+        snail :null,
+        currentArtefact:0
+
       };
      setPlayer(newPlayer);
     }
@@ -464,6 +510,269 @@ function MultiGame() {
 
     console.log("miiine", mine);
 
+
+    async function teleporter() {
+      const availableTitles = Array.from(player.articles.keys()).filter(
+            (title) => !articlesMap.get(title)
+          );
+  
+      if (availableTitles.length > 0) {
+        console.log("zzzzzzzzzzz");
+       
+        const randomTarget = availableTitles[Math.floor(Math.random() * availableTitles.length)];
+        const currentArticle = player.history[player.history.length - 1];
+  
+        try {
+          console.log("Response:", `http://localhost:3001/solve?start_id=${encodeURIComponent(currentArticle)}&target_id=${encodeURIComponent(randomTarget)}`);
+          const response = await fetch(`http://localhost:3001/solve?start_id=${encodeURIComponent(currentArticle)}&target_id=${encodeURIComponent(randomTarget)}`);
+          const data = await response.json();
+          console.log("dara",data)
+  
+          const pathAsList = (data.Path);
+          console.log("Parsed Path:", pathAsList);
+          if (data && data.Path && data.Path.length >= 2) {
+            const length = data.Path.length;
+            console.log("length",length)
+            if(length < 4) {
+              setPopupDisplay({
+                name: "Téléporteur",
+                image: teleporteur, 
+                message: `Vous n'avez été téléporté vers l'article car vous en êtes trop proche`,
+                onclose: undefined,
+              });
+              return;
+            }
+            setPopupDisplay({
+              name: "Téléporteur",
+              image: teleporteur,
+              message: "Vous venez d'activer le téléporteur, vous allez être téléporté à 2 liens de l'article : ",
+              onclose: undefined,
+            })
+            const teleportArticle = data.Path[length - 3];
+            console.log(teleportArticle)
+  
+            const newHistory = player.history ? [...player.history, teleportArticle] : [teleportArticle];
+            const newArticles = new Map(player.articles);
+            const value = newArticles.get(teleportArticle);
+  
+            if (value !== undefined && !value) {
+              newArticles.set(teleportArticle, true);
+            }
+  
+            const newInventory = player.inventory.filter(item => item !== 3);
+  
+            const newPlayer: Player = {
+              ...player,
+              history: newHistory,
+              articles: newArticles,
+              inventory: newInventory,
+              currentArtefact: 0,
+            };
+  
+            setPlayer(newPlayer);
+  
+            /*setPopupDisplay({
+              name: "Téléporteur",
+              image: "path/to/teleporter/image.svg", // Replace with the actual image path
+              message: `Vous avez été téléporté vers l'article : ${teleportArticle}`,
+              onclose: undefined,
+            });*/
+          }
+        } catch (error) {
+          console.error("Erreur lors de l'utilisation du téléporteur :", error);
+        }
+      }
+    }
+
+
+
+
+    function addToInventory(Artifact: number) {
+      if(player.inventory.length==2 || player.inventory.includes(Artifact)){
+        const newPlayer: Player = {
+          ...player,
+          currentArtefact:0,
+        };
+        setPlayer(newPlayer);
+        return;
+      }
+      const newPlayer: Player = {
+        ...player,
+        currentArtefact:0,
+        inventory:[...player.inventory,Artifact],
+      };
+      setPlayer(newPlayer);
+    }
+
+    const artefactList: Artifact[] = [    {
+      name: "Retour en arrière",
+      description: "Vous fait revenir sur la page précédente.",
+      img: back,
+      onActivate: backArtifact
+    },
+      {
+      name: "Mine",
+      description: "Pose la mine ou tu le souhaites et piège tes adversaires",
+      img: mineImg,
+      onActivate: placemine
+    },
+    {
+      name: "Téléporteur",
+      description: "Vous téléporte sur un article à 2 liens d'un article a trouver",
+      img: teleporteur,
+      onActivate: teleporter
+    },
+      {
+        name: "Escargot",
+        description: "La malédiction de l'escargot a frappé ! Vous ne pouvez plus changer de page pendant 1 minute.",
+        img: snail,
+        onActivate:startSnail
+      },
+      {
+        name: "Dictateur",
+        description: "Le dictateur vous donne un ordre, vous rendre sur un des articles cible et ignorer les autres.",
+        img: dictateur,
+        onActivate: dictator
+      },
+      {
+        name: "Gomme",
+        description: "Supprime le dernier article trouvé de la liste !",
+        img: gomme,
+        onActivate: eraser
+      },
+      {
+        name: "Désorienteur",
+        description: "Vous téléporte aléatoirement sur wikipedia, laissez parler votre chance",
+        img: desorienter,
+        onActivate: disorienter
+      }
+    ];
+    const popupList:popup[]=[
+      {
+        name: "Retour a été ajouté a votre inventaire",
+        image: back,
+        message: "Un bouton de retour a été ajouté a votre inventaire, utilisez le pour retourner sur l'article précédent",
+        onclose: undefined,
+      },
+      {
+        name: "Mine a été ajouté a votre inventaire",
+        image: mineImg,
+        message: "Une mine a été ajouté a votre inventaire, posez la pour miner le terrain de vos adversaires",
+        onclose: undefined,
+      },   
+      {
+        name: "Téléporteur a été ajouté a votre inventaire",
+        image: teleporteur,
+        message: "Une téléporteur a été ajouté a votre inventaire, utilisez le pour vous téléporter a 2 liens d'un article cible",
+        onclose: undefined,
+      },
+      {
+        name: "Escargot a été activé !",
+        image: snail,
+        message: "La malédiction de l'escargot vient de frapper ! Vous êtes aussi lent que lui et vous ne pouvez plus changer d'article pendant 1 minutes, prenez le temps de réfléchir.",
+        onclose: undefined,
+      },
+      {
+        name: "Dictateur a été activé !",
+        image: dictateur,
+        message: "Le Dictateur a parlé, vous devez vous rendre sur l'article : " + players.dictator + ", votre liste d'articles ne sera plus mise à jour tant que le dictateur ne sera pas satisfait !",
+        onclose: undefined,
+      },
+      {
+        name: "Gomme a été activé !",
+        image: gomme,
+        message: "Pas de chance, la Gomme viens d'être activté, vous avez perdu votre dernier article trouvé !",
+        onclose: undefined
+      },
+      {
+        name: "Désorienteur a été activé !",
+        image: desorienter,
+        message: "Le Désorienteur vient de s'activer, vous allez être amené vers un article aléatoire, bonne chance !",
+        onclose: undefined,
+      }
+    ]
+    //DETECTION DES ARTÉFACTS EN COURS
+    const currentArtefactIndex=player.currentArtefact;
+  
+    useEffect(() => {
+      if (currentArtefactIndex !== 0 && artefactList[currentArtefactIndex - 1] !== undefined) {
+        const artefact = artefactList[currentArtefactIndex - 1];
+        console.log("ARTEFACT", artefact);
+  
+        if (popupDisplay === null) {
+          if (currentArtefactIndex === 1 || currentArtefactIndex === 2 || currentArtefactIndex === 3 ) {
+            if(!player.inventory.includes(currentArtefactIndex)){
+              setPopupDisplay(popupList[currentArtefactIndex - 1]);
+              addToInventory(currentArtefactIndex);
+            }
+            else{
+              const newPlayer: Player = {
+                ...player,
+                currentArtefact:0,
+              };
+              setPlayer(newPlayer);
+            }
+  
+          } else if (artefact.onActivate !== undefined) {
+            setPopupDisplay(popupList[currentArtefactIndex - 1]);
+            artefact.onActivate();
+          }
+        }
+      }
+    }, [currentArtefactIndex, popupDisplay,addToInventory,artefactList,popupList,player.inventory,player]);
+
+
+
+    function randomMalus(probability:number) {
+      const rand = Math.random();
+      if (rand < 1 - probability) {
+        return 0;
+      }
+  
+      const min = 4;
+      console.log(",,,,,,",artefactList.length)
+      console.log(",,,,,,",artefactList)
+      const max = artefactList.length;
+      console.log(min,max)
+      const range = max - min + 1;
+      console.log("range",range)
+      console.log("Artéfact obtenu ",Math.floor(Math.random() * range) + min);
+      return Math.floor(Math.random() * range) + min;
+    }
+  
+    function randomBonus(probability:number) {
+      const rand = Math.random();
+  
+      if (rand < 1 - probability) {
+        return 0;
+      }
+      const min = 1;
+      const max = 3;
+      const range = max - min + 1;
+      return Math.floor(Math.random() * range) + min;
+    }
+  
+    
+  
+  
+  
+    const fetchArticlePopularity = async (title: string) => {
+      try {
+        const query = `http://localhost:3001/articles?title=${title}`;
+        console.log("query",query)
+        const response = await fetch(query);
+        const data = await response.json();
+  
+        if (data && data.articlePopularity !== null) {
+          return data;
+        } else {
+          return 0;
+        }
+      } catch {
+        return null;
+      }
+    };
+
     
     return (
         <>
@@ -508,11 +817,11 @@ function MultiGame() {
               <path d="M111.675 -0.000378409C165.925 0.28796 237 19.4997 222 71.4994C206.999 123.499 165.925 114.16 111.674 113.872C57.4239 113.584 22.5001 123 2.99974 71.4993C-12 19 57.4247 -0.288717 111.675 -0.000378409Z" fill=" #4943C6"/>
             </svg>
 
-            <Inventory
-              artifact1={{ name: 'Eraser', description: '', img: mineImg, onActivate: placemine }}
-              artifact2={{ name: 'Retour en arrière', description: '', img: back, onActivate:backArtifact }}
-              isExist={artefacts}
-            />
+           <Inventory
+                  artifact1={artefactList[player.inventory[0] - 1] || null}
+                  artifact2={artefactList[player.inventory[1] - 1] || null}
+                  isExist={artefacts}
+              />
           </div>
         </div>
       </section>
