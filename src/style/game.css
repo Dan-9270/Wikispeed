@@ -654,7 +654,6 @@ align-items : stretch;
 }
 
 .button{
-  margin-top: 10px;
   width: 15vw;
   height: 4vw;
   border-radius: 10px;
@@ -667,12 +666,7 @@ align-items : stretch;
   justify-content: center;
   align-items: center;
   gap: 4%;
-  color: #FFB700;
-  font-family: 'Manjari', sans-serif;
-  font-weight: 700;
 }
-
-
 
 .container .title{
   margin-top: 0;
@@ -683,7 +677,6 @@ align-items : stretch;
   text-transform: none;
   text-shadow: none;
   padding-top: 0;
-  
  
 }
 .container .opt{
@@ -1187,4 +1180,22 @@ g{
 .loading-container p{
   font-size: 60;
   font-weight: bold;
+}
+
+
+.spinner {
+  width: 10vw; /* 10% de la largeur de l'écran */
+  height: 10vw; /* 10% de la largeur de l'écran */
+  max-width: 80px;  /* Taille maximale */
+  max-height: 80px; /* Taille maximale */
+  border: 6px solid #e20de2;
+  border-top: 6px solid #3498db;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Animation de rotation infinie */
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
