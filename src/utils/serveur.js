@@ -83,17 +83,57 @@ app.get('/get-article', async (req, res) => {
 
 
 app.get("/ranking", async (req, res) => {
-    console.log("📥 Route /ranking appelée");
-  
-    try {
-      const users = await Ranking.find();
-      console.log("✅ Utilisateurs trouvés :", users);
-      res.json(users);
-    } catch (err) {
-      console.error("❌ Erreur MongoDB :", err);
-      res.status(500).json({ error: "Erreur serveur" });
-    }
-  });
+  console.log("📥 Route /ranking appelée");
+
+  const dateParam = req.query.date;
+  if (!dateParam) {
+    return res.status(400).json({ error: "Paramètre 'date' manquant" });
+  }
+
+  const date = new Date(dateParam);
+  const nextDate = new Date(date);
+  nextDate.setDate(date.getDate() + 1);
+
+  try {
+    const rankings = await Ranking.aggregate([
+      {
+        $match: {
+          date: {
+            $gte: date,
+            $lt: nextDate,
+          },
+        },
+      },
+      {
+        $sort: { rank: 1 },
+      },
+      {
+        $group: {
+          _id: "$username",
+          rank: { $first: "$rank" }, // Meilleur rank
+          steps: { $first: "$steps" }, // Steps associés au meilleur rank
+        },
+      },
+      {
+        $sort: { rank: 1 },
+      },
+      {
+        $project: {
+          _id: 0,
+          username: "$_id",
+          rank: 1,
+          steps: 1,
+        },
+      },
+    ]);
+
+    console.log("✅ Classement trouvé :", rankings);
+    res.json(rankings);
+  } catch (err) {
+    console.error("❌ Erreur MongoDB :", err);
+    res.status(500).json({ error: "Erreur serveur" });
+  }
+});
 
   
 
