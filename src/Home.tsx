@@ -21,6 +21,7 @@ import './style/wikispeed.css';
 import { PlayButton } from './component/RouteComponent';
 import { Link } from "react-router-dom";
 import WebViewButton from './component/buttonChallenge';
+import {ChallengeRanking} from "./component/ChallengeRanking.tsx";
 
 
 function Home() {
@@ -92,9 +93,8 @@ function Home() {
       </SoundPlayer>
 
       <Background />
-      <CreditButton />
       <MusicPlayer />
-
+      <ChallengeRanking/>
       <section className="main-page" id="top">
         <LogoTitle />
       
