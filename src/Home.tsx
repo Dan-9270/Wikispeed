@@ -4,8 +4,14 @@ import { LogoTitle, CreditButton, RuleBlox, ArtifactsList, Footer, Title, Bottom
 import { SelectMode, NextHome } from './component/SelectMode';
 import { SetProfile } from './component/SetProfile';
 import { MusicPlayer, SoundPlayer } from './component/MusicComponent';
-import mine from './assets/artifact/mine.svg';
+import gomme from './assets/artifact/gomme.svg';
 import map from './assets/artifact/map.svg';
+import desorienter from './assets/artifact/compass.svg';
+import dictateur from './assets/artifact/dictateur.svg';
+import back from './assets/artifact/back.svg';
+import mine from './assets/artifact/mine.svg';
+import snail from './assets/artifact/escargot.svg';
+import teleporteur from './assets/artifact/teleporteur.svg';
 import images from './assets/monster/images';
 import hover from './assets/music/hover.mp3';
 import click from './assets/music/click.mp3';
@@ -56,14 +62,15 @@ function Home() {
   }
 
  
-  
-
   const artifacts = [
-    { name: 'Mine', description: 'FTG Khephren si tu trouves ça moche, c\'est pas mon problème', img: mine },
-    { name: 'Map', description: 'Flop sale bâtard', img: map },
-    { name: 'Compas', description: 'Un guide de la navigation', img: map }, // Exemple d'artefact varié
-    { name: 'Carte', description: 'Une carte secrète', img: map },
-    { name: 'Boussole', description: 'Une boussole pour t\'orienter', img: map }
+    { name: 'Mine', description: 'Pose la mine ou tu le souhaites et piège tes adversaires.', img: mine },
+    { name: 'GPS', description: 'Vous indique a combien de lien vous êtes des articles restant à trouver.', img: map },
+    { name: 'Desorienteur', description: 'Vous téléporte aléatoirement sur wikipedia, laissez parler votre chance.', img: desorienter },
+    { name: 'Escargot', description: 'La malédiction de l\'escargot a frappé ! Vous ne pouvez plus changer de page pendant 1 minute.', img: snail },
+    { name: 'Gomme', description: 'Supprime le dernier article trouvé de la liste !', img: gomme },
+    { name: 'Dictateur', description: 'Le dictateur vous donne un ordre, vous rendre sur un des articles cible et ignorer les autres.', img: dictateur },
+    { name: 'Retour en arrière', description: 'Vous fait revenir sur la page précédente.', img: back },
+    { name: 'Téléporteur', description: 'Vous téléporte a deux lien d\'un article cible.', img: teleporteur },
   ];
 
   console.log('Nom d\'utilisateur :', isNameChoosen);
