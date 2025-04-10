@@ -8,9 +8,7 @@ import MultiGame from './MultiGame'
 import SoloCreation from './SoloCreation'
 import EndGame from './EndGame'
 import EndGameSolo from './EndGameSolo'
-//import Pagea from './pagea'
-//import Pageb from './pageb'
-import Test from './test'
+
  
 import './style/App.css'
 import './style/wikispeed.css'
@@ -29,14 +27,9 @@ function App() {
         <Route path="/homephone" element={<HomePhone />} />
         <Route path="/multicreation" element={<MultiCreation />} />
         <Route path="/multishare" element={<MultiShare />} />
-      
-        {/*<Route path="/pagea" element={<Pagea />} />
-        <Route path="/pageb" element={<Pageb />} />*/}
         <Route path="/multigame" element={<MultiGame />} />
         <Route path="/game" element={<Game />} />
-      
         <Route path="/endgame" element={<EndGame/>} />
-                <Route path="/test" element={<Test/>}/>
         </Routes>
     </Router>
    

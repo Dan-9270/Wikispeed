@@ -22,7 +22,7 @@ import { MusicPlayer } from './component/MusicComponent'
 
 function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChangeGameState: (state: string) => void }) {
   const [popupDisplay, setPopupDisplay] = useState<popup|null>(null);
-  const { nombreArticles, artefacts, temps, randomMots, choixMots, wordsList } = props.game.settings;
+  const { artefacts, temps } = props.game.settings;
   const soloPlayer = props.game.players[0];
 
   function addToInventory(Artifact: number) {
@@ -143,7 +143,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
         addToInventory(1);
       }
     } catch (error) {
-      console.error("Erreur lors de l'extraction des liens d'article :", error);
     }
   };
   useEffect(() => {
@@ -155,7 +154,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
   useEffect(() => {
     if (currentArtefactIndex !== 0 && artefactList[currentArtefactIndex - 1] !== undefined) {
       const artefact = artefactList[currentArtefactIndex - 1];
-      console.log("ARTEFACT", artefact);
 
       if (popupDisplay === null) {
         if (currentArtefactIndex === 1 || currentArtefactIndex === 2) {
@@ -191,7 +189,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     let x=0;
     if(!props.game.players[props.game.currentPlayer].history.includes(articleTitle)){
       x = await generationArtefacts(articleTitle.replace(/ /g, "_"));
-      console.log(x);
     }
 
     if (value !== undefined && !value) {
@@ -259,13 +256,8 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     }
 
     const min = 4;
-    console.log(",,,,,,",artefactList.length)
-    console.log(",,,,,,",artefactList)
     const max = artefactList.length;
-    console.log(min,max)
     const range = max - min + 1;
-    console.log("range",range)
-    console.log("Artéfact obtenu ",Math.floor(Math.random() * range) + min);
     return Math.floor(Math.random() * range) + min;
   }
 
@@ -288,16 +280,9 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     }
     else {
       const medianePopularity = popularity.firstArticlePopularity / 800;
-      console.log("firstArticlePopularity",popularity.firstArticlePopularity)
-      console.log("medianePopularity",medianePopularity)
-      console.log("articlePopularity",popularity.articlePopularity)
       const difference = popularity.articlePopularity - medianePopularity;
       const absoluteDifference = Math.abs(difference);
-      console.log("difference",difference)
       const probability = (absoluteDifference / medianePopularity)/4 ;
-      console.log("probabilité",absoluteDifference ,"/",medianePopularity)
-      console.log(difference > 0?"malus":"bonus")
-      console.log("probability",probability)
       if (difference > 0) {
         return randomMalus(probability);
       } else {
@@ -312,7 +297,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
   const fetchArticlePopularity = async (title: string) => {
     try {
       const query = `http://localhost:3001/articles?title=${title}`;
-      console.log("query",query)
       const response = await fetch(query);
       const data = await response.json();
 
@@ -332,7 +316,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     message: string;
     onclose: undefined;
   }
-
 
 
   function backArtifact() {
@@ -400,7 +383,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       const newArticles = new Map(soloPlayer.articles);
       const value = newArticles.get(articleTitle);
       props.game.players[props.game.currentPlayer].dictator = null;
-      console.log(newHistory);
       if (value !== undefined && !value) {
         newArticles.set(articleTitle, true);
       }
@@ -461,22 +443,16 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
     );
 
     if (availableTitles.length > 0) {
-      console.log("zzzzzzzzzzz");
-     
+
       const randomTarget = availableTitles[Math.floor(Math.random() * availableTitles.length)];
       const currentArticle = player.history[player.history.length - 1];
 
       try {
-        console.log("Response:", `http://localhost:3001/solve?start_id=${encodeURIComponent(currentArticle)}&target_id=${encodeURIComponent(randomTarget)}`);
         const response = await fetch(`http://localhost:3001/solve?start_id=${encodeURIComponent(currentArticle)}&target_id=${encodeURIComponent(randomTarget)}`);
         const data = await response.json();
-        console.log("dara",data)
 
-        const pathAsList = (data.Path);
-        console.log("Parsed Path:", pathAsList);
         if (data && data.Path && data.Path.length >= 2) {
           const length = data.Path.length;
-          console.log("length",length)
           if(length < 4) {
             setPopupDisplay({
               name: "Téléporteur",
@@ -493,7 +469,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
             onclose: undefined,
           })
           const teleportArticle = data.Path[length - 3];
-          console.log(teleportArticle)
 
           const newHistory = player.history ? [...player.history, teleportArticle] : [teleportArticle];
           const newArticles = new Map(player.articles);
@@ -526,7 +501,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
           });*/
         }
       } catch (error) {
-        console.error("Erreur lors de l'utilisation du téléporteur :", error);
       }
     }
   }
@@ -587,7 +561,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       return articleTitles;
 
     } catch (error) {
-      console.error("Erreur:", error);
       return [];
     }
   };
@@ -622,7 +595,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
         mined: newMined,
       });
     } catch (error) {
-      console.error("Erreur lors de la récupération des liens d'articles :", error);
     }
   }
   function mined(newMined : Map<number,string[][]>) {
@@ -705,8 +677,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
         <Background />
         <MusicPlayer/>
 
-        <button onClick={teleporter}>TP</button>
-
         {popupDisplay !== null && createPortal(
             <ArtifactPopup
                 artifactName={popupDisplay.name}
@@ -718,14 +688,6 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
             />,
             document.body
         )}
-
-        <button onClick={() => {
-          fetchArticlePopularity("Françoise_Fabian").then((pop) => {
-            console.log("Popularité de Françoise_Fabian :", pop.articlePopularity);
-          });
-        }}>
-          Test Popularité
-        </button>
 
         <button onClick={() => { const newPlayer = {
           ...props.game.players[props.game.currentPlayer],
@@ -740,9 +702,9 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
             players: [newPlayer],
           });
         }}>
-
           RESET
         </button>
+
         <button onClick={() => { const newPlayer = {
           ...props.game.players[props.game.currentPlayer],
           dictator:null,
@@ -841,8 +803,7 @@ gomme
 
 disorienter
         </button>
-        
-        <p>{soloPlayer.currentArtefact}</p>
+        ²<p>{soloPlayer.currentArtefact}</p>
 
       </>
   );

@@ -9,9 +9,8 @@ import images from './assets/monster/images'
 import { DeletePLayer } from './component/Component'
 import { AutoCompleteInput, PlayGame } from "./component/GameComponent.tsx";
 import { useNavigate, useLocation } from "react-router-dom";
-import { useState, useEffect, use } from "react";
-import { ChatBox, FinChatter, RealChatter } from "./component/Chat.tsx";
-import Damien from "./assets/avatar/Avatar_damien.svg";
+import { useState, useEffect } from "react";
+import { FinChatter } from "./component/Chat.tsx";
 import { sharedChatManager } from './chatManager';
 import { MusicPlayer } from './component/MusicComponent'
 
@@ -23,7 +22,6 @@ function MultiShare() {
   const avatar = location.state?.avatar;
   const listPlayer = location.state?.players || [];
   const [players, setPlayers] = useState<string[]>(listPlayer);
-  const [roomId, setRoomId] = useState<string | null>(null);
 
   // États pour stocker les valeurs du formulaire
   const [nombreArticles, setNombreArticles] = useState<number>(0);
@@ -38,13 +36,6 @@ function MultiShare() {
 
   const [playerMap, setPlayersMap] = useState<Map<number, string>>(new Map());
   let owner = players[0];
-  console.log("jesuis une liste de joueurs",players);
-  console.log("Owner:", owner);
-  console.log("Username:", username);
-  console.log("Avatar:", avatar);
-
-
-  console.log("isGame:", isGame);
 
 
   const fillPlayersMap = (playersList: string[]): Map<number, string> => {
@@ -66,20 +57,11 @@ function MultiShare() {
     });
     sharedChatManager.setParametersListener((parameters) => {
       setParameters(parameters);
-      console.log("ezezzezezeez:", parameters);
       const userName = username;
     const img = avatar;
-      console.log("playersMap:", playerMap);  
       navigate("/multigame", { state: {parameters, userName, img,playerMap,players} });
     });
   }, [playerMap]);
-
-  useEffect(() => {
-    if (copied) {
-      console.log("Room ID copied to clipboard:", roomId);
-    }
-  }
-  , [isGame]);
 
   useEffect(() => {
     if (isGame) {
@@ -89,17 +71,6 @@ function MultiShare() {
     }
   }, [isGame]);
 
-
-
-
-  const putBlackSettings = () => {
-    document.getElementById("impossibleUse")!.style.display = "none";}
-   
-
-  const handlePlayerRemove = (playerToRemove: string) => {
-    // Pour l'instant, on ne fait que logger car la suppression devrait être gérée par le serveur
-    console.log("Tentative de suppression du joueur:", playerToRemove);
-  };
 
   // Gestionnaire pour naviguer vers PageB avec les données
   const handlePlayGame = (event: React.FormEvent) => {
@@ -132,20 +103,17 @@ function MultiShare() {
           const data = await response.json();
           if (data?.title) articles.push(data.title);
         } catch (error) {
-          console.error("Erreur lors de la récupération d'un article Wikipedia:", error);
           articles.push(`Article ${i + 1}`);
         }
       }
   
-      console.log("articles:", articles); // ✅ Ce log fonctionnera maintenant
       return articles;
     };
     if(randomMots === true){
-    formData.wordsList = await fetchRandomArticles(); // ✅ Attendre la fin de la récupération des articles
+    formData.wordsList = await fetchRandomArticles(); 
     }else{
       await fetchRandomArticles();
     }
-    console.log("formData:", formData); // ✅ Maintenant, wordsList contient les bons articles
     sharedChatManager.sendParameters(formData);
   };
   
@@ -201,7 +169,6 @@ function MultiShare() {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000); // Reset après 2 secondes
       })
-      .catch(err => console.error("Erreur de copie:", err));
   };
 
   return (    

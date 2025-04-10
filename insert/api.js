@@ -1,18 +1,14 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import cors from 'cors';  // Ajoute l'import du package cors
+import cors from 'cors';  
 import Article from './Articles.js';
 import { exec } from "child_process";
 
 const app = express();
 
-// Activer CORS pour toutes les origines
 app.use(cors());
-
-// Middleware pour parser le corps de la requête en JSON
 app.use(express.json());
 
-// Connexion à MongoDB
 mongoose.connect('mongodb+srv://Server:PAitDBovuYfZKInh@qdcloud.8xeyc.mongodb.net/?retryWrites=true&w=majority&appName=QDcloud', {
   useNewUrlParser: true,
   useUnifiedTopology: true
@@ -20,7 +16,6 @@ mongoose.connect('mongodb+srv://Server:PAitDBovuYfZKInh@qdcloud.8xeyc.mongodb.ne
 .then(() => console.log('✅ Connexion à MongoDB réussie'))
 .catch((err) => console.error('❌ Erreur de connexion MongoDB :', err));
 
-// Route pour récupérer la popularité de l'article
 app.get("/articles", async (req, res) => {
   try {
     const { title } = req.query;
@@ -28,29 +23,25 @@ app.get("/articles", async (req, res) => {
     let query = {};
     let result = {};
 
-    // Recherche de l'article spécifique avec le titre fourni
     if (title) {
-      query = { title: { $regex: new RegExp(title, 'i') } }; // Recherche insensible à la casse
+      query = { title: { $regex: new RegExp(title, 'i') } };
     }
 
-    // Recherche de l'article avec le titre spécifié
     const article = await Article.find(query);
 
     if (article.length > 0) {
       result.articlePopularity = article[0].popular;
     } else {
-      result.articlePopularity = null; // Si l'article n'est pas trouvé
+      result.articlePopularity = null; 
     }
 
-    // Recherche du premier article dans la collection
-    const firstArticle = await Article.findOne(); // Trouve le premier article de la collection
+    const firstArticle = await Article.findOne(); 
     if (firstArticle) {
       result.firstArticlePopularity = firstArticle.popular;
     } else {
-      result.firstArticlePopularity = null; // Si la collection est vide
+      result.firstArticlePopularity = null; 
     }
 
-    // Renvoie les résultats avec la popularité des deux articles
     res.json(result);
   } catch (err) {
     console.error("❌ Erreur GET /articles :", err);
@@ -58,7 +49,6 @@ app.get("/articles", async (req, res) => {
   }
 });
 
-// Assure-toi que la sortie soit bien encodée en JSON
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -72,10 +62,9 @@ app.get("/solve", (req, res) => {
   const escapedStartId = `"${start_id}"`;
   const escapedTargetId = `"${target_id}"`;
 
-  // Lancer le script Python et récupérer la sortie JSON
   exec(
     `python3 solver.py ${escapedStartId} ${escapedTargetId}`,
-    { encoding: "utf8" }, // Assurer l'UTF-8 pour stdout
+    { encoding: "utf8" }, 
     (error, stdout, stderr) => {
       if (error) {
         console.error(`exec error: ${error}`);
@@ -87,16 +76,15 @@ app.get("/solve", (req, res) => {
       }
 
       try {
-        // Exemple de stdout : "Distance: 3\nPath: ['Paris', 'Station F', 'OpenAI', 'ChatGPT']"
         const lines = stdout.trim().split('\n');
         const data = {};
 
         lines.forEach(line => {
-          const [key, value] = line.split(/:\s(.+)/); // Split en gardant ce qu’il y a après ": " comme valeur
+          const [key, value] = line.split(/:\s(.+)/);  
           if (key === 'Distance') {
             data.Distance = parseInt(value);
           } else if (key === 'Path') {
-            data.Path = JSON.parse(value.replace(/'/g, '"')); // Remplace les quotes simples par doubles pour JSON.parse
+            data.Path = JSON.parse(value.replace(/'/g, '"'));
           }
         });
 
@@ -110,7 +98,6 @@ app.get("/solve", (req, res) => {
   );
 });
 
-// Lancer le serveur
 const port = 3001;
 app.listen(port, () => {
   console.log(`🚀 API Popularité en ligne sur http://localhost:${port}`);

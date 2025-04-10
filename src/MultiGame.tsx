@@ -1,5 +1,4 @@
-import Damien from "./assets/avatar/Avatar_damien.svg";
-import {ChatBox, FinChatter} from "./component/Chat.tsx";
+import {FinChatter} from "./component/Chat.tsx";
 import { ArticleList, Inventory, PlayerInfo, Timer } from './component/EventComponent'
 import './style/wikispeed.css'
 import './style/timer.css'
@@ -18,7 +17,6 @@ import gomme from './assets/artifact/gomme.svg';
 import desorienter from './assets/artifact/compass.svg';
 import dictateur from './assets/artifact/dictateur.svg';
 import mineImg from './assets/artifact/mine.svg';
-import map from './assets/artifact/map.svg';
 import snail from './assets/artifact/escargot.svg';
 import { MusicPlayer } from './component/MusicComponent'
 import teleporteur from './assets/artifact/teleporteur.svg';
@@ -43,15 +41,13 @@ function MultiGame() {
     
     // console.log("formData:", formData);
 
-    const { nombreArticles, artefacts, temps, randomMots, choixMots, wordsList } = formData;
+    const { nombreArticles, artefacts, temps, choixMots, wordsList } = formData;
      
     const duration = temps === -1 ? undefined : temps
     if(nombreArticles===0){
-      console.log(formData);
       return <div>Loading.</div>;
     }else{
     useEffect(() => {
-      console.log("Données reçues:", formData);
       if (choixMots) {
         setArticleTitle(choixMots);
       }
@@ -61,13 +57,9 @@ function MultiGame() {
     const randomTitle = wordsList.length > 0 ? wordsList[Math.floor(Math.random() * wordsList.length)] : "Aucun mot disponible";
     
     const [articleTitle, setArticleTitle] = useState(randomTitle);
-    const [isOver, setIsOver] = useState(false);
     const [isEnd, setEndGame] = useState(false);
     const [listPlayer, setListPlayer] = useState<Player[]>([]);
-    const [hasSnailArtifact, setHasSnailArtifact] = useState(false);
-
     const [mine, setMine] = useState<Map<number,string[][]>>(new Map());
-
 
     const [player,setPlayer] = useState<Player>({
       id:0,
@@ -99,16 +91,9 @@ function MultiGame() {
       }
       else {
         const medianePopularity = popularity.firstArticlePopularity / 800;
-        console.log("firstArticlePopularity",popularity.firstArticlePopularity)
-        console.log("medianePopularity",medianePopularity)
-        console.log("articlePopularity",popularity.articlePopularity)
         const difference = popularity.articlePopularity - medianePopularity;
         const absoluteDifference = Math.abs(difference);
-        console.log("difference",difference)
         const probability = (absoluteDifference / medianePopularity)/4 ;
-        console.log("probabilité",absoluteDifference ,"/",medianePopularity)
-        console.log(difference > 0?"malus":"bonus")
-        console.log("probability",probability)
         if (difference > 0) {
           return randomMalus(probability);
         } else {
@@ -127,11 +112,8 @@ function MultiGame() {
       let x=0;
     if(!player.history.includes(articleTitle)){
       x = await generationArtefacts(articleTitle.replace(/ /g, "_"));
-      console.log(x);
     }
 
-      
-      console.log("aaaaaaaaaaaaaaaa");
       if (value !== undefined && !value) {
         newArticles.set(articleTitle, true);
       }
@@ -173,7 +155,6 @@ function MultiGame() {
         
 
     }
-    console.log("historique", newplayer);
       sharedChatManager.sendPlayer(newplayer);
 
       sharedChatManager.setPlayersInfoListener((p) => {
@@ -181,7 +162,6 @@ function MultiGame() {
       });
     }
     , [player]);
-
 
 
     const timeUp = () => {
@@ -198,7 +178,6 @@ function MultiGame() {
             
   
         }
-        console.log("playsssssssssssssssssssssssssser", newplayer);
           sharedChatManager.sendPlayer(newplayer);
 
           sharedChatManager.setPlayersInfoListener((p) => {
@@ -212,10 +191,8 @@ function MultiGame() {
 
     useEffect(() => {
      
-       console.log("listPlayer", listPlayer);
       if(isEnd){
         setTimeout(() => {
-          console.log("listPlayesr", listPlayer);
         navigate('/endgame',{state:{listPlayer,player,players}});
         }
         , 2000);
@@ -309,9 +286,7 @@ function MultiGame() {
   
           if (availableTitles.length > 0) {
             const randomTitle = availableTitles[Math.floor(Math.random() * availableTitles.length)];
-            player.dictator = randomTitle;
-            console.log("dictator", player.dictator);
-  
+            player.dictator = randomTitle;  
             const newPlayer = {
               ...player,
               dictator: randomTitle,
@@ -378,8 +353,6 @@ function MultiGame() {
     useEffect(() => {
       sharedChatManager.setMineListener((mine) => {
         setMine(new Map(mine));
-        
-        console.log("mine", mine);
       });
     });
 
@@ -419,8 +392,6 @@ function MultiGame() {
         }
         setPlayer(newPlayer);
 
-        console.log("essaie",newMined.get(getPlayerIdByName(map, username)) ?? [])
-        console.log("newMined", newMined);
         const changedKey = findChangedKey(mine, newMined);
         sharedChatManager.sendMine(changedKey?? -1, newMined.get(changedKey??-1) ?? []);
     
@@ -484,7 +455,6 @@ function MultiGame() {
         return articleTitles;
   
       } catch (error) {
-        console.error("Erreur:", error);
         return [];
       }
     };
@@ -497,42 +467,28 @@ function MultiGame() {
       const lastHistory = player.history[player.history.length - 1];
   
       try {
-        const articleLinks = await extractArticleLinks(lastHistory);
-  
-        console.log("articleLinks", articleLinks);
-  
+        const articleLinks = await extractArticleLinks(lastHistory);  
         sharedChatManager.sendMine(getPlayerIdByName(map, username), [...currentList, [lastHistory, ...articleLinks]]);
   
       } catch (error) {
-        console.error("Erreur lors de la récupération des liens d'articles :", error);
       }
     }
-
-    console.log("miiine", mine);
-
 
     async function teleporter() {
       const availableTitles = Array.from(player.articles.keys()).filter(
             (title) => !articlesMap.get(title)
           );
   
-      if (availableTitles.length > 0) {
-        console.log("zzzzzzzzzzz");
-       
+      if (availableTitles.length > 0) {       
         const randomTarget = availableTitles[Math.floor(Math.random() * availableTitles.length)];
         const currentArticle = player.history[player.history.length - 1];
   
         try {
-          console.log("Response:", `http://localhost:3001/solve?start_id=${encodeURIComponent(currentArticle)}&target_id=${encodeURIComponent(randomTarget)}`);
           const response = await fetch(`http://localhost:3001/solve?start_id=${encodeURIComponent(currentArticle)}&target_id=${encodeURIComponent(randomTarget)}`);
           const data = await response.json();
-          console.log("dara",data)
   
-          const pathAsList = (data.Path);
-          console.log("Parsed Path:", pathAsList);
           if (data && data.Path && data.Path.length >= 2) {
             const length = data.Path.length;
-            console.log("length",length)
             if(length < 4) {
               setPopupDisplay({
                 name: "Téléporteur",
@@ -549,7 +505,6 @@ function MultiGame() {
               onclose: undefined,
             })
             const teleportArticle = data.Path[length - 3];
-            console.log(teleportArticle)
   
             const newHistory = player.history ? [...player.history, teleportArticle] : [teleportArticle];
             const newArticles = new Map(player.articles);
@@ -579,7 +534,6 @@ function MultiGame() {
             });*/
           }
         } catch (error) {
-          console.error("Erreur lors de l'utilisation du téléporteur :", error);
         }
       }
     }
@@ -697,7 +651,6 @@ function MultiGame() {
     useEffect(() => {
       if (currentArtefactIndex !== 0 && artefactList[currentArtefactIndex - 1] !== undefined) {
         const artefact = artefactList[currentArtefactIndex - 1];
-        console.log("ARTEFACT", artefact);
   
         if (popupDisplay === null) {
           if (currentArtefactIndex === 1 || currentArtefactIndex === 2 || currentArtefactIndex === 3 ) {
@@ -730,13 +683,8 @@ function MultiGame() {
       }
   
       const min = 4;
-      console.log(",,,,,,",artefactList.length)
-      console.log(",,,,,,",artefactList)
       const max = artefactList.length;
-      console.log(min,max)
       const range = max - min + 1;
-      console.log("range",range)
-      console.log("Artéfact obtenu ",Math.floor(Math.random() * range) + min);
       return Math.floor(Math.random() * range) + min;
     }
   
@@ -759,7 +707,6 @@ function MultiGame() {
     const fetchArticlePopularity = async (title: string) => {
       try {
         const query = `http://localhost:3001/articles?title=${title}`;
-        console.log("query",query)
         const response = await fetch(query);
         const data = await response.json();
   

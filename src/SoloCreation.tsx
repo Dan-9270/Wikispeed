@@ -14,15 +14,9 @@ import { MusicPlayer } from './component/MusicComponent'
 
 function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChangeGameState:(state:string)=> void }) {
   const location = useLocation();
-  if (!location.state) {
-    console.log("Aucun état trouvé");}
   const username = location.state.username;
   const avatar = location.state.avatar;
-  console.log("Nom d'utilisateur:", username);
-  console.log("Avatar:", avatar);
-
   const player = {id: 1, name: username, avatar: avatar, history: [], time: 0, score: 0, articles:new Map(),dictator:null,snail:null, inventory:[], currentArtefact:0};
-
 
   const [nombreArticles, setNombreArticles] = useState<number>(0);
   const [artefacts, setArtefacts] = useState<boolean>(false);
@@ -52,7 +46,6 @@ function SoloCreation(props:{game : Game; onChange:(newGame:Game)=> void; onChan
       endTime: undefined,
       mined:new Map<number, string[][]>([[0, []]]),
     }
-    console.log("Nouvelle partie :", newGame);
     props.onChange(newGame)
     props.onChangeGameState("loading")
   };
