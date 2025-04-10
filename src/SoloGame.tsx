@@ -755,8 +755,93 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
           });
         }}>
 
-          TEST
+          Teleporteur
         </button>
+        <button onClick={() => { const newPlayer = {
+          ...props.game.players[props.game.currentPlayer],
+          dictator:null,
+          currentArtefact:1,
+          snail:null
+        };
+          props.onChange({
+            ...props.game,
+            players: [newPlayer],
+          });
+        }}>
+
+          Back
+        </button>
+        <button onClick={() => { const newPlayer = {
+          ...props.game.players[props.game.currentPlayer],
+          dictator:null,
+          currentArtefact:2,
+          snail:null
+        };
+          props.onChange({
+            ...props.game,
+            players: [newPlayer],
+          });
+        }}>
+
+          Mine
+        </button>
+        <button onClick={() => { const newPlayer = {
+          ...props.game.players[props.game.currentPlayer],
+          dictator:null,
+          currentArtefact:4,
+          snail:null
+        };
+          props.onChange({
+            ...props.game,
+            players: [newPlayer],
+          });
+        }}>
+
+          snail
+        </button>        <button onClick={() => { const newPlayer = {
+          ...props.game.players[props.game.currentPlayer],
+          dictator:null,
+          currentArtefact:5,
+          snail:null
+        };
+          props.onChange({
+            ...props.game,
+            players: [newPlayer],
+          });
+        }}>
+
+          dictateur
+        </button>
+        <button onClick={() => { const newPlayer = {
+          ...props.game.players[props.game.currentPlayer],
+          dictator:null,
+          currentArtefact:6,
+          snail:null
+        };
+          props.onChange({
+            ...props.game,
+            players: [newPlayer],
+          });
+        }}>
+
+gomme
+        </button>
+
+        <button onClick={() => { const newPlayer = {
+          ...props.game.players[props.game.currentPlayer],
+          dictator:null,
+          currentArtefact:7,
+          snail:null
+        };
+          props.onChange({
+            ...props.game,
+            players: [newPlayer],
+          });
+        }}>
+
+disorienter
+        </button>
+        
         <p>{soloPlayer.currentArtefact}</p>
 
       </>
