@@ -14,6 +14,7 @@ import { Background } from './assets/back';
 import './style/wikispeed.css';
 import { PlayButton } from './component/RouteComponent';
 import { Link } from "react-router-dom";
+import WebViewButton from './component/buttonChallenge';
 
 
 function Home() {
@@ -89,7 +90,7 @@ function Home() {
 
       <section className="main-page" id="top">
         <LogoTitle />
-
+      <button onClick={goToChallengeQuotidien}  > BOSS </button> 
         <div className="selection-container">
           <div className="selection">
             <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>                
@@ -152,7 +153,7 @@ function Home() {
 
       </section>
 
-<button onClick={()=>goToChallengeQuotidien()}>tttt</button>
+     
       <section className="second-part" id="rules">
         <BottomRedirection content="How To Play" link="#rules" />
         <Title title="How to play ?" />
