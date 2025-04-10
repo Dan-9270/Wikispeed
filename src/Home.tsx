@@ -90,7 +90,7 @@ function Home() {
 
       <section className="main-page" id="top">
         <LogoTitle />
-      <button onClick={goToChallengeQuotidien}  > BOSS </button> 
+      
         <div className="selection-container">
           <div className="selection">
             <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>                
@@ -112,6 +112,7 @@ function Home() {
               <SetProfile username={inputValue} onChange={(event) => setInputValue(event.target.value)} onAvatarChange={handleAvatarChange}/> 
             </div>
             <NextHome title="Jouer" onClick={()=> {isInputValid ? setIsNameChosen(true) : ()=>{}}} /> 
+              <WebViewButton onClick={goToChallengeQuotidien} />
             </>}
 
             <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}> 

@@ -16,8 +16,8 @@ const WebViewButton: React.FC<WebViewButtonProps> = ({ onClick }) => {
 
   return (
     <div>
-      <button disabled={!isWebView} onClick={onClick}>
-        {isWebView ? 'Bouton actif (WebView)' : 'Désactivé (pas WebView)'}
+      <button disabled={!isWebView} onClick={onClick} className='button'>
+        {isWebView && 'CHALLENGE' }
       </button>
     </div>
   );
