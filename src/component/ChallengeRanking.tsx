@@ -21,7 +21,7 @@ export const ChallengeRanking=()=>{
             .then(data => setRanking(data))
             .catch(err => console.error(err));
     }, []);
-    if(webview){
+    if(!webview){
         return;
     }
     return <>
