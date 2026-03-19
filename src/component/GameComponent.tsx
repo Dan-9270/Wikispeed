@@ -7,6 +7,7 @@ import click from '../assets/music/click.mp3';
 import { useEffect, useState } from "react";
 import { Game } from "../Game";
 import { getClosestArticle, getCurrentPosition } from "../functions/geolocalisation";
+import { apiUrl } from "../config/endpoints";
 
 export const CreateGame = (props: { children?: React.ReactNode }) => {
     const redirectTo = useRedirect()
@@ -55,7 +56,7 @@ export const Loading = (props: { game: Game; gameState : String; onChange: (newG
           console.log("Vérification de l'article du jour...");
         
           try {
-            const response = await fetch('http://localhost:3000/get-article');
+            const response = await fetch(apiUrl('/get-article'));
             const data = await response.json();
             
             console.log("Article du jour : ", data.title);
@@ -89,7 +90,7 @@ export const Loading = (props: { game: Game; gameState : String; onChange: (newG
     
         const fetchData = async () => {
           const date = new Date().toISOString().split('T')[0]; // Obtenir la date actuelle au format YYYY-MM-DD
-          const randomArticlesResponse = await fetch(`http://localhost:3000/get-article?date=${date}`);
+          const randomArticlesResponse = await fetch(apiUrl(`/get-article?date=${date}`));
           const randomArticles = randomArticlesResponse.ok ? await randomArticlesResponse.json() : [];
           const randomArticlesTitle = randomArticles && randomArticles.title ? [randomArticles.title] : [];
           const locationArticle = await fetchArticle() || []; // Assurez-vous que ce soit un tableau vide s'il est undefined

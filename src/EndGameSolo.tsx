@@ -8,6 +8,7 @@ import { Background } from './assets/back'
 import { Game } from './Game'
 import { useEffect } from 'react'
 import isInWebView from './component/buttonChallenge';
+import { apiUrl } from './config/endpoints';
 
 function EndGameSolo(props:{game:Game; onChangeGameState:(state:string)=> void ,challenge:String}){
   if (props.challenge == "Challenge"){
@@ -23,7 +24,7 @@ function EndGameSolo(props:{game:Game; onChangeGameState:(state:string)=> void ,
     }
   
     const addScore = async () => {
-      const response = await fetch("http://localhost:3000/add-score", {
+      const response = await fetch(apiUrl('/add-score'), {
         method: "POST", // Utilise POST ici
         headers: {
           "Content-Type": "application/json"

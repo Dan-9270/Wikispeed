@@ -24,7 +24,8 @@ export interface Room {
 }
 let rooms = new Map<string, Room>();
 
-const wss = new WebSocket.Server({ port: 2025 });
+const wsPort = Number.parseInt(process.env.WS_PORT || '2025', 10);
+const wss = new WebSocket.Server({ port: wsPort });
 
 wss.on('connection', (ws: WebSocket) => {
   console.log('New client connected');
@@ -267,3 +268,5 @@ wss.on('connection', (ws: WebSocket) => {
     ws.close();
   });
 });
+
+console.log(`WebSocket server started on ws://0.0.0.0:${wsPort}`);

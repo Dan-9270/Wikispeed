@@ -2,7 +2,7 @@ import {LogoTitle, PlayShare, Podium, Ranking, RePlayButton} from './component/C
 import {CreditButton} from './component/Component'
 import {BottomRedirection} from './component/Component'
 import { MusicPlayer } from './component/MusicComponent'
-import Damien from './assets/avatar/Avatar_damien.svg'
+import Damien from './assets/avatar/Avatar_Damien.svg'
 import images from './assets/monster/images'
 
 

@@ -1,4 +1,6 @@
-const URL = "ws://localhost:2025";
+import { wsUrl } from "../config/endpoints";
+
+const URL = wsUrl();
 const socket = new WebSocket(URL);
 
 socket.onopen = () => console.log("✅ WebSocket connecté !");

@@ -1,6 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { ChatManager,Messaged, RealChatManager } from "./Chat";
 import { Player } from '../types/Player';
+import { wsUrl } from '../config/endpoints';
 
 export class RealWebSocketChatManager implements RealChatManager {
   private socket: WebSocket | null = null;
@@ -21,7 +22,7 @@ export class RealWebSocketChatManager implements RealChatManager {
       this.socket.close();
     }
 
-    this.socket = new WebSocket('ws://localhost:2025/');
+    this.socket = new WebSocket(wsUrl());
 
     this.socket.onopen = () => {
       console.log('Connected to WebSocket server');

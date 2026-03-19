@@ -7,7 +7,14 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:chatserver": "npm --prefix chatserver run build",
+    "build:docker": "vite build && npm run build:chatserver",
+    "start:api": "node src/utils/serveur.js",
+    "start:solver": "node insert/api.js",
+    "start:ws": "node chatserver/build/server.js",
+    "start:proxy": "node docker/proxy-server.js",
+    "start:docker": "concurrently -k -s first \"npm run start:api\" \"npm run start:solver\" \"npm run start:ws\" \"npm run start:proxy\""
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.2",
@@ -15,9 +22,11 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.2",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "cors": "^2.8.5",
+    "concurrently": "^9.1.2",
     "express": "^5.1.0",
     "fs": "^0.0.1-security",
     "heap": "^0.2.7",
+    "http-proxy-middleware": "^3.0.5",
     "mongoose": "^8.13.2",
     "node-fetch": "^3.3.2",
     "react": "^19.0.0",

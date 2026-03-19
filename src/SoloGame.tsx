@@ -4,6 +4,7 @@ import './style/wikispeed.css';
 import './style/timer.css';
 import './style/game.css';
 import {ArticleDisplayer} from './component/Article';
+import { solverUrl } from "./config/endpoints";
 import {Background} from "./assets/back.tsx";
 import {useState ,useEffect} from 'react';
 import type {Player} from './types/Player.ts';
@@ -299,7 +300,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
 
   const fetchArticlePopularity = async (title: string) => {
     try {
-      const query = `http://localhost:3001/articles?title=${title}`;
+      const query = solverUrl(`/articles?title=${title}`);
       const response = await fetch(query);
       const data = await response.json();
 
@@ -457,7 +458,7 @@ function SoloGame(props: { game: Game; onChange: (newGame: Game) => void; onChan
       const currentArticle = player.history[player.history.length - 1];
 
       try {
-        const response = await fetch(`http://localhost:3001/solve?start_id=${encodeURIComponent(currentArticle)}&target_id=${encodeURIComponent(randomTarget)}`);
+        const response = await fetch(solverUrl(`/solve?start_id=${encodeURIComponent(currentArticle)}&target_id=${encodeURIComponent(randomTarget)}`));
         const data = await response.json();
 
         if (data && data.Path && data.Path.length >= 2) {

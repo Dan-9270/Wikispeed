@@ -1,5 +1,36 @@
 # React + TypeScript + Vite
 
+## Docker (single container)
+
+This repository now supports running frontend + API + solver API + websocket server in one Docker container.
+
+Build image:
+
+```bash
+docker build -t wikispeed-all-in-one .
+```
+
+Run container:
+
+```bash
+docker run --rm -p 8080:8080 \
+  -e MONGODB_URI="your-mongo-uri" \
+  -e MONGODB_URI_SOLVER="your-solver-mongo-uri" \
+  wikispeed-all-in-one
+```
+
+App entrypoint will be available on:
+
+```text
+http://localhost:8080
+```
+
+The frontend uses internal proxied paths:
+
+- `/api/*` -> score/ranking API
+- `/solver/*` -> solver/popularity API
+- `/ws` -> websocket chat/game server
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 Currently, two official plugins are available:

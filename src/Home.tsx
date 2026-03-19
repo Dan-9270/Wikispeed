@@ -29,7 +29,7 @@ function Home() {
   const navigate = useNavigate();
   const [gameState, setGameState] = useState("Challenge"); // État pour le jeu
   const [inputValue, setInputValue] = useState<string>('');
-  const [avatar, setAvatar] = useState<string>('/src/assets/avatar/Avatar_damien.svg'); 
+  const [avatar, setAvatar] = useState<string>('/src/assets/avatar/Avatar_Damien.svg'); 
   const [isNameChoosen, setIsNameChosen] = useState(false); // État pour savoir si le nom est choisi
 
   const navigateToSolo = useNavigate(); 

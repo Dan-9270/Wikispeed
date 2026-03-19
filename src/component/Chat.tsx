@@ -5,7 +5,7 @@ import {createPortal} from "react-dom";
 import React, { createContext, useContext } from 'react';
 import { SoundPlayer } from './MusicComponent.tsx';
 import { useRedirect } from '../script/Redirection.ts';
-import Damien from "../assets/avatar/Avatar_damien.svg";
+import Damien from "../assets/avatar/Avatar_Damien.svg";
 import { v4 as uuidv4 } from 'uuid';
 import { useNavigate } from 'react-router-dom';
 import hover from '../assets/music/hover.mp3';

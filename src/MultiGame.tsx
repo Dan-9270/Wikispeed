@@ -21,6 +21,7 @@ import snail from './assets/artifact/escargot.svg';
 import { MusicPlayer } from './component/MusicComponent'
 import teleporteur from './assets/artifact/teleporteur.svg';
 
+import { solverUrl } from './config/endpoints';
 
 
 
@@ -32,7 +33,6 @@ function MultiGame() {
   const avatar = location.state.img;
   const map = location.state.playerMap;
   const players = location.state.players;
- // console.log("map:", map);
  
     // Si les données sont absentes ou invalides, redirige l'utilisateur ou montre un message d'erreur
     if (!formData) {
@@ -484,7 +484,7 @@ function MultiGame() {
         const currentArticle = player.history[player.history.length - 1];
   
         try {
-          const response = await fetch(`http://localhost:3001/solve?start_id=${encodeURIComponent(currentArticle)}&target_id=${encodeURIComponent(randomTarget)}`);
+          const response = await fetch(solverUrl(`/solve?start_id=${encodeURIComponent(currentArticle)}&target_id=${encodeURIComponent(randomTarget)}`));
           const data = await response.json();
   
           if (data && data.Path && data.Path.length >= 2) {
@@ -706,7 +706,7 @@ function MultiGame() {
   
     const fetchArticlePopularity = async (title: string) => {
       try {
-        const query = `http://localhost:3001/articles?title=${title}`;
+        const query = solverUrl(`/articles?title=${title}`);
         const response = await fetch(query);
         const data = await response.json();
   

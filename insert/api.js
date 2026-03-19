@@ -5,11 +5,14 @@ import Article from './Articles.js';
 import { exec } from "child_process";
 
 const app = express();
+const port = Number.parseInt(process.env.SOLVER_PORT || '3001', 10);
+const host = process.env.SOLVER_HOST || '0.0.0.0';
+const mongoUri = process.env.MONGODB_URI_SOLVER || process.env.MONGODB_URI || 'mongodb+srv://User:User@qdcloud.8xeyc.mongodb.net/?retryWrites=true&w=majority&appName=QDcloud';
 
 app.use(cors());
 app.use(express.json());
 
-mongoose.connect('mongodb+srv://User:User@qdcloud.8xeyc.mongodb.net/?retryWrites=true&w=majority&appName=QDcloud', {
+mongoose.connect(mongoUri, {
   useNewUrlParser: true,
   useUnifiedTopology: true
 })
@@ -98,7 +101,6 @@ app.get("/solve", (req, res) => {
   );
 });
 
-const port = 3001;
-app.listen(port, () => {
+app.listen(port, host, () => {
   console.log(`🚀 API Popularité en ligne sur http://localhost:${port}`);
 });

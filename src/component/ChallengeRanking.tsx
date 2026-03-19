@@ -1,4 +1,5 @@
 import {useState, useEffect} from "react";
+import { apiUrl } from "../config/endpoints";
 
 interface rankingElement {
     username: string;
@@ -15,8 +16,8 @@ export const ChallengeRanking=()=>{
     const today = new Date().toISOString().split('T')[0];
     const [ranking, setRanking] = useState<rankingElement[]>([]);
     useEffect(() => {
-        console.log("ranking",`http://localhost:3000/ranking?date=${today}`)
-        fetch(`http://localhost:3000/ranking?date=2025-04-09`)
+        console.log("ranking", apiUrl(`/ranking?date=${today}`))
+        fetch(apiUrl('/ranking?date=2025-04-09'))
             .then(res => res.json())
             .then(data => setRanking(data))
             .catch(err => console.error(err));

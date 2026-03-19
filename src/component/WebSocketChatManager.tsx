@@ -1,4 +1,5 @@
 import { ChatManager,Messaged } from "./Chat";
+import { wsUrl } from "../config/endpoints";
 
 export class WebSocketChatManager implements ChatManager {
   private socket: WebSocket | null = null;
@@ -9,7 +10,7 @@ export class WebSocketChatManager implements ChatManager {
       this.socket.close();
     }
 
-    this.socket = new WebSocket('ws://localhost:2025/');
+    this.socket = new WebSocket(wsUrl());
 
     this.socket.onopen = () => {
       console.log('Connected to WebSocket server');

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import ReactDOM from "react-dom";
-import damien from "../assets/avatar/Avatar_damien.svg";
+import damien from "../assets/avatar/Avatar_Damien.svg";
 import benjamin from "../assets/avatar/Avatar_Benjamin.svg";
 import pommier from "../assets/avatar/Avatar_Pommier.svg";
 import titouan from "../assets/avatar/Avatar_Titouan.svg";

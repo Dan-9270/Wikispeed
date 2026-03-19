@@ -10,10 +10,12 @@ const app = express();
 app.use(express.json());
 app.use(cors()); 
 app.use(express.static("public"));
-const port = 3000;
+const port = Number.parseInt(process.env.API_PORT || '3000', 10);
+const host = process.env.API_HOST || '0.0.0.0';
+const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://Dylan:Dylan@qdcloud.8xeyc.mongodb.net/?retryWrites=true&w=majority&appName=QDcloud';
 
 // 🔌 Connexion à MongoDB
-mongoose.connect('mongodb+srv://Dylan:Dylan@qdcloud.8xeyc.mongodb.net/?retryWrites=true&w=majority&appName=QDcloud')
+mongoose.connect(mongoUri)
   .then(() => {
     console.log('✅ Connecté à MongoDB Atlas');
   })
@@ -190,7 +192,7 @@ app.get("/ranking", async (req, res) => {
 
 
 
-app.listen(port, () => {
+app.listen(port, host, () => {
     console.log(`🚀 Serveur lancé sur http://localhost:${port}`);
   });
   

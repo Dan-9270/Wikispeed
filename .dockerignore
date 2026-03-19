@@ -1,0 +1,9 @@
+node_modules
+chatserver/node_modules
+backend/node_modules
+dist
+chatserver/dist
+.git
+.gitignore
+.vscode
+npm-debug.log*
