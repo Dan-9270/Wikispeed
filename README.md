@@ -5,7 +5,7 @@
 The project runs with one service per domain plus a reverse proxy:
 
 - `frontend` (Vite preview on port `4173`)
-- `frontend-api` (`frontend/src/utils/serveur.js` on port `3000`)
+- `frontend-api` (`frontend-api/server.js` on port `3000`)
 - `insert` (`insert/api.js` + `solver.py` on port `3001`)
 - `chatserver` (WebSocket server on port `2025`)
 - `reverse-proxy` (Nginx on port `8080`)

@@ -7,8 +7,7 @@ services:
 
   frontend-api:
     build:
-      context: ./frontend
-    command: ["node", "src/utils/serveur.js"]
+      context: ./frontend-api
     environment:
       API_PORT: "3000"
       API_HOST: "0.0.0.0"
