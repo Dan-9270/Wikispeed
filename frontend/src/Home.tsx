@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react'; // Importer useState pour gérer l'état du nom d'utilisateur
+import { useEffect, useState } from 'react'; // Importer useState pour gérer l'état du nom d'utilisateur
 import { useNavigate } from 'react-router-dom'; // Importer useNavigate pour gérer la navigation
 import { LogoTitle, CreditButton, RuleBlox, ArtifactsList, Footer, Title, BottomRedirection } from './component/Component';
 import { SelectMode, NextHome } from './component/SelectMode';
@@ -21,7 +21,7 @@ import './style/wikispeed.css';
 import { PlayButton } from './component/RouteComponent';
 import { Link } from "react-router-dom";
 import WebViewButton from './component/buttonChallenge';
-import {ChallengeRanking} from "./component/ChallengeRanking.tsx";
+import { ChallengeRanking } from "./component/ChallengeRanking.tsx";
 
 
 function Home() {
@@ -29,10 +29,10 @@ function Home() {
   const navigate = useNavigate();
   const [gameState, setGameState] = useState("Challenge"); // État pour le jeu
   const [inputValue, setInputValue] = useState<string>('');
-  const [avatar, setAvatar] = useState<string>('/src/assets/avatar/Avatar_Damien.svg'); 
+  const [avatar, setAvatar] = useState<string>('/src/assets/avatar/Avatar_damien.svg');
   const [isNameChoosen, setIsNameChosen] = useState(false); // État pour savoir si le nom est choisi
 
-  const navigateToSolo = useNavigate(); 
+  const navigateToSolo = useNavigate();
 
   const handleAvatarChange = (newAvatar: string) => {
     setAvatar(newAvatar); // Mets à jour l'avatar
@@ -44,25 +44,26 @@ function Home() {
   const isInputValid = inputValue.trim() !== '';
 
   // Fonction de navigation
-  const navigateToPage = (link: string  ) => {
+  const navigateToPage = (link: string) => {
     if (!isInputValid) {
       alert('Veuillez remplir le champ utilisateur.');
       return;
     }
     else {
       try {
-      navigateToSolo(link, { state: { username: inputValue , avatar: avatar} });
-    } catch (error) {
-      console.error('Erreur de navigation :', error);
-    }
-  };}
-
-  const goToChallengeQuotidien =() =>{
-
-    navigate("/game", { state: {gameState , username : inputValue , avatar : avatar} })
+        navigateToSolo(link, { state: { username: inputValue, avatar: avatar } });
+      } catch (error) {
+        console.error('Erreur de navigation :', error);
+      }
+    };
   }
 
- 
+  const goToChallengeQuotidien = () => {
+
+    navigate("/game", { state: { gameState, username: inputValue, avatar: avatar } })
+  }
+
+
   const artifacts = [
     { name: 'Mine', description: 'Pose la mine ou tu le souhaites et piège tes adversaires.', img: mine },
     { name: 'GPS', description: 'Vous indique a combien de lien vous êtes des articles restant à trouver.', img: map },
@@ -77,7 +78,7 @@ function Home() {
   console.log('Nom d\'utilisateur :', isNameChoosen);
   return (
     <>
-      <SoundPlayer hoverSound={monster} clickSound={click} volume={0.3}>                
+      <SoundPlayer hoverSound={monster} clickSound={click} volume={0.3}>
         <div id="monster_1">
           <img className="monsters mleft-rotate" id="m1" src={images.benjamin} alt="Monstre Benjamin" />
         </div>
@@ -94,40 +95,40 @@ function Home() {
 
       <Background />
       <MusicPlayer />
-      <ChallengeRanking/>
+      <ChallengeRanking />
       <section className="main-page" id="top">
         <LogoTitle />
-      
+
         <div className="selection-container">
           <div className="selection">
-            <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>                
-            <SelectMode 
-                title="Solo" 
-                img={images.green} 
+            <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>
+              <SelectMode
+                title="Solo"
+                img={images.green}
                 link=""
                 isInputValid={isInputValid} // Contrôle la validation
-                onClick={() => navigateToPage('./game')} 
+                onClick={() => navigateToPage('./game')}
               />
 
             </SoundPlayer>
 
             <div className='profil-pc'>
-              <SetProfile username={inputValue} onChange={(event) => setInputValue(event.target.value)} onAvatarChange={handleAvatarChange}/> 
+              <SetProfile username={inputValue} onChange={(event) => setInputValue(event.target.value)} onAvatarChange={handleAvatarChange} />
             </div>
             {!isNameChoosen && <>
-            <div className='profil-phone'>
-              <SetProfile username={inputValue} onChange={(event) => setInputValue(event.target.value)} onAvatarChange={handleAvatarChange}/> 
-            </div>
-            <NextHome title="Jouer" onClick={()=> {isInputValid ? setIsNameChosen(true) : ()=>{}}} /> 
+              <div className='profil-phone'>
+                <SetProfile username={inputValue} onChange={(event) => setInputValue(event.target.value)} onAvatarChange={handleAvatarChange} />
+              </div>
+              <NextHome title="Jouer" onClick={() => { isInputValid ? setIsNameChosen(true) : () => { } }} />
               <WebViewButton onClick={goToChallengeQuotidien} />
             </>}
 
-            <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}> 
+            <SoundPlayer hoverSound={hover} clickSound={click} volume={0.3}>
 
-            <SelectMode 
-                title="Multijoueur" 
-                img={images.bibabo} 
-                link="multicreation" 
+              <SelectMode
+                title="Multijoueur"
+                img={images.bibabo}
+                link="multicreation"
                 isInputValid={isInputValid} // Contrôle la validation
                 onClick={() => {
                   navigateToPage('./multicreation');
@@ -136,32 +137,32 @@ function Home() {
             </SoundPlayer>
           </div>
 
-          {isNameChoosen && 
-              <div className="phone-selection">
-                <SelectMode
+          {isNameChoosen &&
+            <div className="phone-selection">
+              <SelectMode
                 title="Solo"
                 img={images.green}
                 link="solocreation"
                 isInputValid={isInputValid} // Contrôle la validation
                 onClick={() => navigateToPage('./game')}
-                />
+              />
               <div className="or"> <span className='manjari'>OU</span></div>
-                <SelectMode 
-                  title="Multi" 
-                  img={images.bibabo} 
-                  link="multicreation" 
-                  isInputValid={isInputValid} // Contrôle la validation
-                  onClick={() => {
-                    navigateToPage('./multicreation');
-                  }}
-                />              
-              </div>
-            }
+              <SelectMode
+                title="Multi"
+                img={images.bibabo}
+                link="multicreation"
+                isInputValid={isInputValid} // Contrôle la validation
+                onClick={() => {
+                  navigateToPage('./multicreation');
+                }}
+              />
+            </div>
+          }
         </div>
 
       </section>
 
-     
+
       <section className="second-part" id="rules">
         <BottomRedirection content="Comment jouer" link="#rules" />
         <Title title="Comment jouer ?" />
