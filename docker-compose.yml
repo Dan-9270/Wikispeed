@@ -11,7 +11,7 @@ services:
     environment:
       API_PORT: "3000"
       API_HOST: "0.0.0.0"
-      MONGODB_URI: ${MONGODB_URI:-mongodb+srv://Dylan:Dylan@qdcloud.8xeyc.mongodb.net/?retryWrites=true&w=majority&appName=QDcloud}
+      MONGODB_URI: ${MONGODB_URI:-mongodb+srv://msbWiki:Test.123@wikispeed.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000}
     expose:
       - "3000"
 
@@ -29,7 +29,7 @@ services:
     environment:
       SOLVER_PORT: "3001"
       SOLVER_HOST: "0.0.0.0"
-      MONGODB_URI_SOLVER: ${MONGODB_URI_SOLVER:-mongodb+srv://User:User@qdcloud.8xeyc.mongodb.net/?retryWrites=true&w=majority&appName=QDcloud}
+      MONGODB_URI_SOLVER: ${MONGODB_URI_SOLVER:-mongodb+srv://msbWiki:Test.123@wikispeed.global.mongocluster.cosmos.azure.com/?tls=true&authMechanism=SCRAM-SHA-256&retrywrites=false&maxIdleTimeMS=120000}
     expose:
       - "3001"
 
