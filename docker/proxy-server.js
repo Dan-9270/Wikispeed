@@ -5,7 +5,7 @@ import { createProxyMiddleware } from "http-proxy-middleware";
 
 const app = express();
 
-const port = Number.parseInt(process.env.PORT || "8080", 10);
+const port = Number.parseInt(process.env.PORT || "80", 10);
 const apiPort = Number.parseInt(process.env.API_PORT || "3000", 10);
 const solverPort = Number.parseInt(process.env.SOLVER_PORT || "3001", 10);
 const wsPort = Number.parseInt(process.env.WS_PORT || "2025", 10);

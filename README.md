@@ -8,7 +8,7 @@ The project runs with one service per domain plus a reverse proxy:
 - `frontend-api` (`frontend-api/server.js` on port `3000`)
 - `insert` (`insert/api.js` + `solver.py` on port `3001`)
 - `chatserver` (WebSocket server on port `2025`)
-- `reverse-proxy` (Nginx on port `8080`)
+- `reverse-proxy` (Nginx on port `80`)
 
 Start everything from the repository root:
 
@@ -19,7 +19,7 @@ docker compose up --build
 App entrypoint:
 
 ```text
-http://localhost:8080
+http://localhost:80
 ```
 
 Reverse proxy routes:
