@@ -164,7 +164,7 @@ function Home() {
 
 
       <section className="second-part" id="rules">
-        <BottomRedirection content="Comment jouer" link="#rules" />
+        <BottomRedirection content="Ceci est un test" link="#rules" />
         <Title title="Comment jouer ?" />
         <div className="rule-list">
           <RuleBlox content="1. Crée une partie. Lance une partie en solo ou avec des amis." />
